@@ -48,13 +48,13 @@ uint16_t UCLPropertyHead::getQuickMatcher() const
             quickMatcher = (lPart>>16) & 0xffff;
             break;
         case 2:
-            quickMatcher = (lPart>>24) & 0xffffff;
+            quickMatcher = (lPart>>24) & 0xffff;
             break;
         case 3:
-            quickMatcher = (lPart>>32) & 0xffffffff;
+            quickMatcher = (lPart>>32) & 0xffff;
             break;
         case 4:
-            quickMatcher = (lPart>>40) & 0xffffffffff;
+            quickMatcher = (lPart>>40) & 0xffff;
             break;
     }
     return quickMatcher;
