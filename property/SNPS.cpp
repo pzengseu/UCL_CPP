@@ -16,7 +16,7 @@ bool SNPSPhysicalElements::setCategory(uint8_t category)
 bool SNPSPhysicalElements::setSizeOfPhysicalElements(uint8_t size)
 {
     assert(size<16);
-    lPart = lPart & (0xffffffffffffffc3 | (size<<2));
+    lPart = (lPart & 0xffffffffffffffc3) | (size<<2);
     return true;
 }
 
@@ -31,16 +31,16 @@ bool SNPSPhysicalElements::setQuickMatcher(uint8_t quickMatcher)
     switch (lPartValueBytesNum)
     {
         case 1:
-            lPart = lPart & (0xffffffffff00ffff | (quickMatcher<<16));
+            lPart = (lPart & 0xffffffffff00ffff) | (quickMatcher<<16);
             break;
         case 2:
-            lPart = lPart & (0xffffffff00ffffff | (quickMatcher<<16));
+            lPart = (lPart & 0xffffffff00ffffff) | (quickMatcher<<24);
             break;
         case 3:
-            lPart = lPart & (0xffffff00ffffffff | (quickMatcher<<16));
+            lPart = (lPart & 0xffffff00ffffffff) | (quickMatcher<<32);
             break;
         case 4:
-            lPart = lPart & (0xffff00ffffffffff | (quickMatcher<<16));
+            lPart = (lPart & 0xffff00ffffffffff) | (quickMatcher<<40);
             break;
     }
     return true;

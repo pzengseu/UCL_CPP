@@ -8,7 +8,7 @@
 bool UCLPropertyHead::setSize(uint8_t size)
 {
     assert(size<16);
-    lPart = lPart & (0xffffffffffffffc3 | (size<<2));
+    lPart = (lPart & 0xffffffffffffffc3) | (size<<2);
     return true;
 }
 
@@ -23,16 +23,16 @@ bool UCLPropertyHead::setQuickMatcher(uint16_t quickMatcher)
     switch (lPartValueBytesNum)
     {
         case 1:
-            lPart = lPart & (0xffffffff0000ffff | (quickMatcher<<16));
+            lPart = (lPart & 0xffffffff0000ffff) | (quickMatcher<<16);
             break;
         case 2:
-            lPart = lPart & (0xffffff0000ffffff | (quickMatcher<<16));
+            lPart = (lPart & 0xffffff0000ffffff) | (quickMatcher<<24);
             break;
         case 3:
-            lPart = lPart & (0xffff0000ffffffff | (quickMatcher<<16));
+            lPart = (lPart & 0xffff0000ffffffff) | (quickMatcher<<32);
             break;
         case 4:
-            lPart = lPart & (0xff0000ffffffffff | (quickMatcher<<16));
+            lPart = (lPart & 0xff0000ffffffffff) | (quickMatcher<<40);
             break;
     }
     return true;

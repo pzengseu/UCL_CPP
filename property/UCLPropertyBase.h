@@ -20,7 +20,12 @@ protected:
     string vPart;
 
 public:
-    UCLPropertyBase() {}
+    UCLPropertyBase()
+    {
+        tPart = 0;
+        lPart = 0;
+        vPart = "";
+    }
     virtual ~UCLPropertyBase() {}
 
     //type
@@ -32,7 +37,7 @@ public:
     virtual uint8_t getCategory() const;
 
     //help, second type 4b
-    virtual bool setHelp(uint8_t help);
+    virtual bool setHelp(uint8_t help=0);
     virtual uint8_t getHelp() const;
 
     //lPart
