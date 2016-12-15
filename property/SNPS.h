@@ -16,8 +16,8 @@ public:
     bool setCategory(uint8_t category=0x1);
 
     //the size of phyiscalElements
-    bool setSizeOfPhysicalElements(uint8_t size);
-    uint8_t getSizeOfPhysicalElements() const;
+    bool setSize(uint8_t size);
+    uint8_t getSize() const;
 
     //quickmatcher
     bool setQuickMatcher(uint8_t quickMatcher);

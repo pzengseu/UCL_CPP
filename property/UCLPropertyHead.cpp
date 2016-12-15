@@ -19,6 +19,20 @@ uint8_t UCLPropertyHead::getSize() const
 
 bool UCLPropertyHead::setQuickMatcher(uint16_t quickMatcher)
 {
+    //根据quickMatcher信息计算属性元素个数
+    uint16_t temp = quickMatcher;
+    uint8_t size = 0;
+    while(temp)
+    {
+        if(temp&0x1)
+        {
+            size++;
+        }
+        temp >>= 1;
+    }
+    setSize(size);
+
+    //设置LPart　quickMatcher部分
     uint8_t lPartValueBytesNum = getLPartValueBytesNum();
     switch (lPartValueBytesNum)
     {

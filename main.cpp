@@ -11,7 +11,6 @@ void testUCLPropertyHead();
 void testSNPSPhysicalElements();
 
 int main() {
-    testUCLPropertyBase();
     testUCLPropertyHead();
     testSNPSPhysicalElements();
     return 0;
@@ -44,9 +43,9 @@ void testUCLPropertyHead()
 
     cout<<setbase(16)<<(int)property.getCategory()<<";";
     cout<<setbase(16)<<(int)property.getHelp()<<";"<<(int)property.getTPart()<<endl;
-    cout<<setbase(16)<<(int)property.getLPart()<<endl;
+    cout<<setbase(16)<<property.getLPart()<<endl;
     cout<<setbase(16)<<property.getVPart()<<endl;
-    cout<<(int)property.getLPartBytesNum();
+    cout<<(int)property.getSize()<<endl;
 }
 
 void testSNPSPhysicalElements() {
@@ -61,6 +60,7 @@ void testSNPSPhysicalElements() {
 
     cout<<setbase(16)<<(int)property.getCategory()<<";";
     cout<<setbase(16)<<(int)property.getHelp()<<";"<<(int)property.getTPart()<<endl;
-    cout<<setbase(16)<<(int)property.getLPart()<<endl;
+    cout<<setbase(16)<<(long)property.getLPart()<<endl;
     cout<<setbase(16)<<property.getVPart()<<endl;
+    cout<<(int)property.getSize();
 }

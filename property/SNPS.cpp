@@ -13,20 +13,34 @@ bool SNPSPhysicalElements::setCategory(uint8_t category)
     return true;
 }
 
-bool SNPSPhysicalElements::setSizeOfPhysicalElements(uint8_t size)
+bool SNPSPhysicalElements::setSize(uint8_t size)
 {
     assert(size<16);
     lPart = (lPart & 0xffffffffffffffc3) | (size<<2);
     return true;
 }
 
-uint8_t SNPSPhysicalElements::getSizeOfPhysicalElements() const
+uint8_t SNPSPhysicalElements::getSize() const
 {
     return (lPart>>2) & 0xf;
 }
 
 bool SNPSPhysicalElements::setQuickMatcher(uint8_t quickMatcher)
 {
+    //根据quickMatcher信息计算属性元素个数
+    uint8_t temp = quickMatcher;
+    uint8_t size = 0;
+    while(temp)
+    {
+        if(temp&0x1)
+        {
+            size++;
+        }
+        temp >>= 1;
+    }
+    setSize(size);
+
+    //设置LPart　quickMatcher部分
     uint8_t lPartValueBytesNum = getLPartValueBytesNum();
     switch (lPartValueBytesNum)
     {
