@@ -15,13 +15,13 @@ public:
     //the category of physicalElements
     bool setCategory(uint8_t category=0x1);
 
+    //取消物理要素速配信息子分量，将长度值子分量０－５位当做速配信息
     //the size of phyiscalElements
-    bool setSize(uint8_t size);
     uint8_t getSize() const;
 
     //quickmatcher
-    bool setQuickMatcher(uint8_t quickMatcher);
-    uint16_t getQuickMatcher() const;
+    bool setLPartQuickMatcher(uint8_t quickMatcher);
+    uint16_t getLPartQuickMatcher() const;
 };
 
 //Nominated Receiver

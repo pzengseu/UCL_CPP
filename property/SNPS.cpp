@@ -13,73 +13,31 @@ bool SNPSPhysicalElements::setCategory(uint8_t category)
     return true;
 }
 
-bool SNPSPhysicalElements::setSize(uint8_t size)
-{
-    assert(size<16);
-    lPart = (lPart & 0xffffffffffffffc3) | (size<<2);
-    return true;
-}
-
 uint8_t SNPSPhysicalElements::getSize() const
 {
-    return (lPart>>2) & 0xf;
-}
-
-bool SNPSPhysicalElements::setQuickMatcher(uint8_t quickMatcher)
-{
-    //根据quickMatcher信息计算属性元素个数
-    uint8_t temp = quickMatcher;
+    uint8_t quickMatcher = lPart & 0x3f;
     uint8_t size = 0;
-    while(temp)
+    while(quickMatcher)
     {
-        if(temp&0x1)
+        if(quickMatcher&0x1)
         {
             size++;
         }
-        temp >>= 1;
+        quickMatcher >>= 1;
     }
-    setSize(size);
+    return size;
+}
 
-    //设置LPart　quickMatcher部分
-    uint8_t lPartValueBytesNum = getLPartValueBytesNum();
-    switch (lPartValueBytesNum)
-    {
-        case 1:
-            lPart = (lPart & 0xffffffffff00ffff) | (quickMatcher<<16);
-            break;
-        case 2:
-            lPart = (lPart & 0xffffffff00ffffff) | (quickMatcher<<24);
-            break;
-        case 3:
-            lPart = (lPart & 0xffffff00ffffffff) | (quickMatcher<<32);
-            break;
-        case 4:
-            lPart = (lPart & 0xffff00ffffffffff) | (quickMatcher<<40);
-            break;
-    }
+bool SNPSPhysicalElements::setLPartQuickMatcher(uint8_t quickMatcher)
+{
+    assert(quickMatcher<=0x3f);
+    lPart = (lPart & 0xffffffffffffffc0) | quickMatcher;
     return true;
 }
 
-uint16_t SNPSPhysicalElements::getQuickMatcher() const
+uint16_t SNPSPhysicalElements::getLPartQuickMatcher() const
 {
-    uint8_t lPartValueBytesNum = getLPartValueBytesNum();
-    uint16_t quickMatcher;
-    switch (lPartValueBytesNum)
-    {
-        case 1:
-            quickMatcher = (lPart>>16) & 0xff;
-            break;
-        case 2:
-            quickMatcher = (lPart>>24) & 0xff;
-            break;
-        case 3:
-            quickMatcher = (lPart>>32) & 0xff;
-            break;
-        case 4:
-            quickMatcher = (lPart>>40) & 0xff;
-            break;
-    }
-    return quickMatcher;
+    return lPart & 0x3f;
 }
 
 //Nominated Receiver

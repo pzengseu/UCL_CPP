@@ -28,14 +28,14 @@ uint8_t UCLPropertyBase::getCategory() const
     return (tPart & 0x0f);
 }
 
-bool UCLPropertyBase::setHelp(uint8_t help)
+bool UCLPropertyBase::setHelper(uint8_t help)
 {
     assert(help<16);
     tPart = (tPart & 0x0f) | (help << 4);
     return true;
 }
 
-uint8_t UCLPropertyBase::getHelp() const
+uint8_t UCLPropertyBase::getHelper() const
 {
     uint8_t help = tPart >> 4;
     return help;
@@ -84,7 +84,6 @@ uint8_t UCLPropertyBase::getLPartValueBytesNum() const
 bool UCLPropertyBase::setTotalLength()
 {
     uint64_t totalLength = TPAER_BYTESNUM + LPARTHEAD_BYTESNUM + getQuickMatcherBytesNum() + getVPartBytesNum();
-    cout<<"totalLength="<<totalLength<<endl;
     assert((totalLength + LPARTVALUE_BYTES_MAX)<=UINT32_MAX);
     if((totalLength + LPARTVALUE_BYTES_MIN) <= UINT8_MAX)
     {
@@ -134,5 +133,6 @@ uint8_t UCLPropertyBase::getQuickMatcherBytesNum() const {
 }
 
 void UCLPropertyBase::setQuickMatcherBytesNum(uint8_t quickMatcherBytesNum) {
+    assert(quickMatcherBytesNum==2);  //quickMatcher字节数固定为２
     UCLPropertyBase::quickMatcherBytesNum = quickMatcherBytesNum;
 }

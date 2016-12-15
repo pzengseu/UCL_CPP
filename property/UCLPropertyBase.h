@@ -29,13 +29,12 @@ public:
         tPart = 0;
         lPart = 0;
         vPart = "";
-        quickMatcherBytesNum = 0;
+        quickMatcherBytesNum = 0;  //该数据成员专为UCLPropertyHead类设计,为了更好的setTotalLength,getTotalLength
     }
+    virtual ~UCLPropertyBase() {}
 
     uint8_t getQuickMatcherBytesNum() const;
     void setQuickMatcherBytesNum(uint8_t quickMatcherBytesNum);
-
-    virtual ~UCLPropertyBase() {}
 
     //type
     virtual bool setTPart(uint8_t t);
@@ -46,8 +45,8 @@ public:
     virtual uint8_t getCategory() const;
 
     //help, second type 4b
-    virtual bool setHelp(uint8_t help=0);
-    virtual uint8_t getHelp() const;
+    virtual bool setHelper(uint8_t help=0);
+    virtual uint8_t getHelper() const;
 
     //lPart
     virtual bool setLPart(const uint64_t lPart);
