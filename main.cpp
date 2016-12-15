@@ -11,6 +11,8 @@ void testUCLPropertyHead();
 void testSNPSPhysicalElements();
 
 int main() {
+    testUCLPropertyBase();
+    testUCLPropertyHead();
     testSNPSPhysicalElements();
     return 0;
 }
@@ -35,6 +37,7 @@ void testUCLPropertyHead()
     property.setCategory(0xe);
     property.setHelp(0x5);
 //    propertyBase.setLPartHead(0xff);
+    property.setQuickMatcherBytesNum(2);
     property.setQuickMatcher(0x23fa);
     property.setVPart("world");
     property.setTotalLength();
@@ -43,6 +46,7 @@ void testUCLPropertyHead()
     cout<<setbase(16)<<(int)property.getHelp()<<";"<<(int)property.getTPart()<<endl;
     cout<<setbase(16)<<(int)property.getLPart()<<endl;
     cout<<setbase(16)<<property.getVPart()<<endl;
+    cout<<(int)property.getLPartBytesNum();
 }
 
 void testSNPSPhysicalElements() {
@@ -50,6 +54,7 @@ void testSNPSPhysicalElements() {
     property.setCategory(0x1);
     property.setHelp(0x5);
 //    propertyBase.setLPartHead(0xff);
+    property.setQuickMatcherBytesNum(1);
     property.setQuickMatcher(0xfa);
     property.setVPart("world");
     property.setTotalLength();

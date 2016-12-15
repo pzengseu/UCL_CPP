@@ -13,19 +13,28 @@ using namespace std;
 const uint8_t TPAER_BYTESNUM = 1;
 const uint8_t LPARTHEAD_BYTESNUM = 1;
 
+const uint8_t LPARTVALUE_BYTES_MIN = 1;
+const uint8_t LPARTVALUE_BYTES_MAX = 4;
+
 class UCLPropertyBase{
 protected:
     uint8_t tPart;
     uint64_t lPart;
     string vPart;
 
+    uint8_t quickMatcherBytesNum;
 public:
     UCLPropertyBase()
     {
         tPart = 0;
         lPart = 0;
         vPart = "";
+        quickMatcherBytesNum = 0;
     }
+
+    uint8_t getQuickMatcherBytesNum() const;
+    void setQuickMatcherBytesNum(uint8_t quickMatcherBytesNum);
+
     virtual ~UCLPropertyBase() {}
 
     //type
@@ -45,7 +54,7 @@ public:
     virtual uint64_t getLPart() const;
 
     //return the number of lPart(bytes)
-    virtual uint8_t getLPartBytesNum(int quickMatcherBytes=0) const;
+    virtual uint8_t getLPartBytesNum() const;
 
     //lPartHead
     virtual bool setLPartHead(uint8_t lPartHead);
@@ -56,7 +65,7 @@ public:
     virtual uint8_t getLPartValueBytesNum() const ;
 
     //totalLength, the value of lPartValue
-    virtual bool setTotalLength(int quickMatcherBytes=0);
+    virtual bool setTotalLength();
     virtual uint32_t getTotalLength() const ;
 
     //vPart

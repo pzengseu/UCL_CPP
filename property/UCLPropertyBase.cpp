@@ -53,9 +53,9 @@ uint64_t UCLPropertyBase::getLPart() const
     return lPart;
 }
 
-uint8_t UCLPropertyBase::getLPartBytesNum(int quickMatcherBytes) const
+uint8_t UCLPropertyBase::getLPartBytesNum() const
 {
-    return LPARTHEAD_BYTESNUM + getLPartValueBytesNum() + quickMatcherBytes;
+    return LPARTHEAD_BYTESNUM + getLPartValueBytesNum() + getQuickMatcherBytesNum();
 }
 
 bool UCLPropertyBase::setLPartHead(uint8_t lPartHead)
@@ -81,37 +81,37 @@ uint8_t UCLPropertyBase::getLPartValueBytesNum() const
     return ((lPart>>6) & 0x3) + 1;
 }
 
-bool UCLPropertyBase::setTotalLength(int quickMatcherBytes)
+bool UCLPropertyBase::setTotalLength()
 {
-    uint64_t totalLength = TPAER_BYTESNUM + 7 + getVPartBytesNum();
+    uint64_t totalLength = TPAER_BYTESNUM + LPARTHEAD_BYTESNUM + getQuickMatcherBytesNum() + getVPartBytesNum();
     cout<<"totalLength="<<totalLength<<endl;
-    assert(totalLength<=UINT32_MAX);
-    if(totalLength <= UINT8_MAX)
+    assert((totalLength + LPARTVALUE_BYTES_MAX)<=UINT32_MAX);
+    if((totalLength + LPARTVALUE_BYTES_MIN) <= UINT8_MAX)
     {
         setLPartValueBytesNum(1);
-        lPart = (lPart & 0xffffffffffff00ff) | (totalLength<<8);
+        lPart = (lPart & 0xffffffffffff00ff) | ((totalLength + LPARTVALUE_BYTES_MIN)<<8);
     }
-    else if (totalLength > UINT8_MAX && totalLength <= UINT16_MAX)
+    else if ((totalLength + LPARTVALUE_BYTES_MIN) > UINT8_MAX && (totalLength + 2*LPARTVALUE_BYTES_MIN) <= UINT16_MAX)
     {
         setLPartValueBytesNum(2);
-        lPart = (lPart & 0xffffffffff0000ff) | (totalLength<<8);
+        lPart = (lPart & 0xffffffffff0000ff) | ((totalLength + 2*LPARTVALUE_BYTES_MIN)<<8);
     }
-    else if (totalLength > UINT16_MAX && totalLength <= 0xffffff)
+    else if ((totalLength + 2*LPARTVALUE_BYTES_MIN) > UINT16_MAX && (totalLength + 3*LPARTVALUE_BYTES_MIN) <= 0xffffff)
     {
         setLPartValueBytesNum(3);
-        lPart = (lPart & 0xffffffff000000ff) | (totalLength<<8);
+        lPart = (lPart & 0xffffffff000000ff) | ((totalLength + 3*LPARTVALUE_BYTES_MIN)<<8);
     }
-    else if (totalLength > 0xffffff && totalLength <= UINT32_MAX)
+    else if ((totalLength + 3*LPARTVALUE_BYTES_MIN) > 0xffffff && (totalLength + LPARTVALUE_BYTES_MAX) <= UINT32_MAX)
     {
         setLPartValueBytesNum(4);
-        lPart = (lPart & 0xffffff00000000ff) | (totalLength<<8);
+        lPart = (lPart & 0xffffff00000000ff) | ((totalLength + LPARTVALUE_BYTES_MAX)<<8);
     }
     return true;
 }
 
 uint32_t UCLPropertyBase::getTotalLength() const
 {
-    return 8 + getVPartBytesNum();
+    return TPAER_BYTESNUM + getLPartBytesNum() + getVPartBytesNum();
 }
 
 //vPart
@@ -127,4 +127,12 @@ bool UCLPropertyBase::setVPart(const string &vPart) {
 uint32_t UCLPropertyBase::getVPartBytesNum() const
 {
     return vPart.size();
+}
+
+uint8_t UCLPropertyBase::getQuickMatcherBytesNum() const {
+    return quickMatcherBytesNum;
+}
+
+void UCLPropertyBase::setQuickMatcherBytesNum(uint8_t quickMatcherBytesNum) {
+    UCLPropertyBase::quickMatcherBytesNum = quickMatcherBytesNum;
 }
