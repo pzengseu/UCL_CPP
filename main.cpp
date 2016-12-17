@@ -3,22 +3,29 @@
 #include "property/UCLPropertyBase.h"
 #include "property/UCLPropertyHead.h"
 #include "property/SNPS.h"
+#include <list>
 using namespace std;
 
-void testUCLPropertyBase();
+UCLPropertyBase testUCLPropertyBase();
 void testUCLPropertyHead();
 
 void testSNPSPhysicalElements();
 
 int main() {
+    string name1[] = {"a", "b", "c", "d"};
+    list<string> s1(name1, name1+4);
     testUCLPropertyBase();
     cout << "－－－－－－\n";
     testUCLPropertyHead();
     cout << "－－－－－－\n";
     testSNPSPhysicalElements();
+    cout << "----------\n";
+
+//    UCLPropertyBase base = testUCLPropertyBase();
+
     return 0;
 }
-void testUCLPropertyBase()
+UCLPropertyBase testUCLPropertyBase()
 {
     UCLPropertyBase propertyBase;
     propertyBase.setCategory(0xe);
@@ -31,6 +38,8 @@ void testUCLPropertyBase()
     cout << setbase(16) << (int)propertyBase.getHelper() << ";\nTPart: " << (int)propertyBase.getTPart() << endl;
     cout << setbase(16) << "LPart: " << (int)propertyBase.getLPart() << endl; //700
     cout << setbase(16) << propertyBase.getVPart() << endl;
+
+    return propertyBase;
 }
 
 void testUCLPropertyHead()
@@ -53,7 +62,6 @@ void testUCLPropertyHead()
 
 void testSNPSPhysicalElements() {
     SNPSPhysicalElements property;
-    property.setCategory(0x1);
     property.setHelper(0x5);
 //    propertyBase.setLPartHead(0xff);
     property.setLPartQuickMatcher(0x2a);

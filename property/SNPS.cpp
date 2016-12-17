@@ -6,6 +6,11 @@
 #include "SNPS.h"
 
 //PhysicalElements
+SNPSPhysicalElements::SNPSPhysicalElements()
+{
+    setCategory(0x1);
+}
+
 bool SNPSPhysicalElements::setCategory(uint8_t category)
 {
     assert(category==0x01);
@@ -41,6 +46,11 @@ uint16_t SNPSPhysicalElements::getLPartQuickMatcher() const
 }
 
 //Nominated Receiver
+SNPSNominatedReceiver::SNPSNominatedReceiver()
+{
+    setCategory(0x2);
+}
+
 bool SNPSNominatedReceiver::setCategory(uint8_t category)
 {
     assert(category==0x2);

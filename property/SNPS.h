@@ -12,6 +12,9 @@
 //PhysicalElements
 class SNPSPhysicalElements:public UCLPropertyBase{
 public:
+    //构造函数里设置固定类别
+    SNPSPhysicalElements();
+
     //the category of physicalElements
     bool setCategory(uint8_t category=0x1);
 
@@ -27,6 +30,8 @@ public:
 //Nominated Receiver
 class SNPSNominatedReceiver:public UCLPropertyBase{
 public:
+    SNPSNominatedReceiver();
+
     //the category of Nominated Receiver
     bool setCategory(uint8_t category=0x2);
 };

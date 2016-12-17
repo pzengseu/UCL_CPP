@@ -6,6 +6,7 @@
 #define UCL_CPP_UCLPROPERTYSET_H
 
 #include <vector>
+#include <map>
 #include <cstdint>
 #include "UCLPropertyBase.h"
 #include "UCLPropertyHead.h"
@@ -14,13 +15,13 @@ using namespace std;
 class UCLPropertySet{
 private:
     UCLPropertyHead propertyHead;
-    vector<UCLPropertyBase &> properties;
+    map<int, UCLPropertyBase &>properties;
 public:
-    UCLPropertyHead getPropertyHead() const;
+    UCLPropertyHead &getPropertyHead() const;
     bool setPropertyHead(UCLPropertyHead propertyHead);
 
-    vector<UCLPropertyBase &> getProperties() const;
-    bool setProperties(vector<UCLPropertyBase &> properties);
+    map<int, UCLPropertyBase &> &getProperties() const;
+    bool setProperties(map<int, UCLPropertyBase &> properties);
 
     UCLPropertySet() {}
     virtual ~UCLPropertySet() {}
