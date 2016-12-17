@@ -12,12 +12,16 @@
 
 class CDPSAuthor:public UCLPropertyBase{
 public:
+	CDPSAuthor();
+
 	//the category of keywords
 	bool setCategory(uint8_t category=0x1);
 };
 
 class CDPSKeyWords:public UCLPropertyBase{
 public:
+	CDPSKeyWords();
+
 	//the category of keywords
 	bool setCategory(uint8_t category=0x2);
 

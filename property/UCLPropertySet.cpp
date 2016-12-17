@@ -8,17 +8,27 @@ bool UCLPropertySet::setPropertyHead(UCLPropertyHead propertyHead)
     this->propertyHead = propertyHead;
 }
 
-UCLPropertyHead& UCLPropertySet::getPropertyHead() const
+const UCLPropertyHead& UCLPropertySet::getPropertyHead() const
 {
     return propertyHead;
 }
 
-bool UCLPropertySet::setProperties(map<int, UCLPropertyBase &> properties)
-{
-    this->properties = properties;
+const map<int, UCLPropertyBase *> &UCLPropertySet::getProperties() const {
+    return properties;
 }
 
-map<int, UCLPropertyBase &> & UCLPropertySet::getProperties() const
+void UCLPropertySet::setProperties(const map<int, UCLPropertyBase *> &properties) {
+    UCLPropertySet::properties = properties;
+}
+
+void UCLPropertySet::setHeadCategory(uint16_t category)
 {
-    return properties;
+    propertyHead.setCategory(category);
+}
+
+void UCLPropertySet::setMustToDo()
+{
+//    propertyHead.setQuickMatcher(generateQuickMatcher());
+//    setHeadValue();
+    propertyHead.setTotalLength();
 }

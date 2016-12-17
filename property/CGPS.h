@@ -11,6 +11,8 @@
 class CGPSProvenance:public UCLPropertyBase
 {
 public:
+    CGPSProvenance();
+
     //the category of provenance
     bool setCategory(uint8_t category=0x3);
 

@@ -3,6 +3,7 @@
 #include "property/UCLPropertyBase.h"
 #include "property/UCLPropertyHead.h"
 #include "property/SNPS.h"
+#include "UCL.h"
 #include <list>
 using namespace std;
 
@@ -22,7 +23,11 @@ int main() {
     cout << "----------\n";
 
 //    UCLPropertyBase base = testUCLPropertyBase();
-
+    UCL ucl;
+    ucl.generateSNPSSet();
+    map<int, UCLPropertySet> s = ucl.getPropertySets();
+    s[0].getPropertyHead().setCategory(0x5);
+    cout << setbase(10) << s[0].getPropertyHead().getLPart();
     return 0;
 }
 UCLPropertyBase testUCLPropertyBase()

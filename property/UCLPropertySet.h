@@ -15,15 +15,32 @@ using namespace std;
 class UCLPropertySet{
 private:
     UCLPropertyHead propertyHead;
-    map<int, UCLPropertyBase &>properties;
+    map<int, UCLPropertyBase *>properties;
 public:
-    UCLPropertyHead &getPropertyHead() const;
+    UCLPropertySet()
+    {
+        propertyHead = UCLPropertyHead();
+        propertyHead.setQuickMatcherBytesNum(2);
+        setMustToDo();
+    }
+    virtual ~UCLPropertySet() {}
+
+    const UCLPropertyHead &getPropertyHead() const;
     bool setPropertyHead(UCLPropertyHead propertyHead);
 
-    map<int, UCLPropertyBase &> &getProperties() const;
-    bool setProperties(map<int, UCLPropertyBase &> properties);
+    void setProperties(const map<int, UCLPropertyBase *> &properties);
+    const map<int, UCLPropertyBase *> &getProperties() const;
 
-    UCLPropertySet() {}
-    virtual ~UCLPropertySet() {}
+    //设置properthHead类别
+    void setHeadCategory(uint16_t category);
+
+    //根据properties生成propertyHead的快速匹配
+    uint16_t generateQuickMatcher();
+
+    //设置properthHead属性净荷字段
+    void setHeadValue();
+
+    //初始化集合或设置properties必须调用的函数
+    void setMustToDo();
 };
 #endif //UCL_CPP_UCLPROPERTYSET_H
