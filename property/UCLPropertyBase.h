@@ -34,7 +34,7 @@ public:
     virtual ~UCLPropertyBase() {}
 
     uint8_t getQuickMatcherBytesNum() const;
-    void setQuickMatcherBytesNum(uint8_t quickMatcherBytesNum);
+    void setQuickMatcherBytesNum(uint8_t quickMatcherBytesNum=2);
 
     //type
     virtual bool setTPart(uint8_t t);
@@ -72,5 +72,9 @@ public:
     virtual bool setVPart(const string &vPart);
 
     virtual uint32_t getVPartBytesNum() const ;
+
+    //打包解包单个属性
+    string pack();
+    void unpack(string property);
 };
 #endif //UCL_CPP_UCLPROPERTYBASE_H

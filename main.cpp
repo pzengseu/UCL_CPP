@@ -13,21 +13,45 @@ void testUCLPropertyHead();
 void testSNPSPhysicalElements();
 
 int main() {
-    string name1[] = {"a", "b", "c", "d"};
-    list<string> s1(name1, name1+4);
-    testUCLPropertyBase();
-    cout << "－－－－－－\n";
-    testUCLPropertyHead();
-    cout << "－－－－－－\n";
-    testSNPSPhysicalElements();
-    cout << "----------\n";
+//    testUCLPropertyBase();
+//    cout << "－－－－－－\n";
+//    testUCLPropertyHead();
+//    cout << "－－－－－－\n";
+//    testSNPSPhysicalElements();
+//    cout << "----------\n";
 
 //    UCLPropertyBase base = testUCLPropertyBase();
-    UCL ucl;
-    ucl.generateSNPSSet();
-    map<int, UCLPropertySet> s = ucl.getPropertySets();
-    s[0].getPropertyHead().setCategory(0x5);
-    cout << setbase(10) << s[0].getPropertyHead().getLPart();
+//    UCL ucl;
+//    ucl.generateSNPSSet();
+//    map<int, UCLPropertySet> s = ucl.getPropertySets();
+//    s[0].setHeadCategory(0x05);
+//    cout << setbase(10) << s[0].getPropertyHead().getLPart();
+    UCLPropertyHead property;
+    property.setCategory(0x1);
+    property.setHelper(0xa);
+    property.setLPartHead(0x21);
+    property.setQuickMatcherBytesNum();
+    property.setQuickMatcher(0x23ab);
+    cout << setbase(16) << (int)property.getQuickMatcher() << endl;
+    property.setVPart(u8"abc");
+    property.setTotalLength();
+
+    cout << setbase(16) << (int)property.getCategory() << ";";
+    cout << setbase(16) << (int)property.getHelper() << ";\nTPart: " << (int)property.getTPart() << endl;
+    cout << setbase(16) << "LPart: " << (int)property.getLPart() << endl;
+    cout << setbase(16) << property.getVPart() << endl;
+    cout << "pack----------\n";
+    string pack = property.pack();
+    for(int i=0; i <= pack.size(); i++)
+        cout << setbase(16) << (short)pack[i] << endl;
+
+    UCLPropertyHead property2;
+    property2.unpack(pack);
+    cout << setbase(16) << (int)property2.getCategory() << ";";
+    cout << setbase(16) << (int)property2.getHelper() << ";\nTPart: " << (int)property2.getTPart() << endl;
+    cout << setbase(16) << "LPart: " << (int)property2.getLPart() << endl;
+    cout << setbase(16) << property2.getVPart() << endl;
+
     return 0;
 }
 UCLPropertyBase testUCLPropertyBase()

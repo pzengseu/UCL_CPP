@@ -136,3 +136,54 @@ void UCLPropertyBase::setQuickMatcherBytesNum(uint8_t quickMatcherBytesNum) {
     assert(quickMatcherBytesNum==2);  //quickMatcher字节数固定为２
     UCLPropertyBase::quickMatcherBytesNum = quickMatcherBytesNum;
 }
+
+string UCLPropertyBase::pack()
+{
+    string property;
+    property.push_back(tPart);
+
+    for(int i=0; i < getLPartBytesNum(); i++)
+    {
+        property.push_back((char)(lPart>>(i*8)));
+    }
+    property += vPart;
+
+    return property;
+}
+
+//属性类型不同解包方式不同, 此处是最基本的属性元素解包方法, 若有不同需要重写该方法
+void UCLPropertyBase::unpack(string property) 
+{
+    //tPart
+    tPart = property[0];
+    
+    //lPart
+    lPart = (lPart & 0xffffffffffffff00) | property[1];
+    int  lPartValueBytesNum = getLPartValueBytesNum();
+    uint16_t quickMatcher = 0;
+    quickMatcher = (quickMatcher & 0xff00) | property[TPAER_BYTESNUM + LPARTHEAD_BYTESNUM + lPartValueBytesNum];
+    quickMatcher = (quickMatcher & 0x00ff) | ((uint16_t)property[TPAER_BYTESNUM + LPARTHEAD_BYTESNUM + lPartValueBytesNum + 1]<<8);
+
+    switch (lPartValueBytesNum-1)
+    {
+        case 0:
+            lPart = (lPart & 0xffffffffffff00ff) | (property.size() << 8);
+            lPart = (lPart & 0xffffffff0000ffff) | (quickMatcher << 16);
+            break;
+        case 1:
+            lPart = (lPart & 0xffffffffff0000ff) | (property.size() << 8);
+            lPart = (lPart & 0xffffff0000ffffff) | (quickMatcher << 24);
+            break;
+        case 2:
+            lPart = (lPart & 0xffffffff000000ff) | (property.size() << 8);
+            lPart = (lPart & 0xffff0000ffffffff) | (quickMatcher << 32);
+            break;
+        case 3:
+            lPart = (lPart & 0xffffff00000000ff) | (property.size() << 8);
+            lPart = (lPart & 0xff0000ffffffffff) | (quickMatcher << 40);
+            break;
+    }
+
+    //vPart
+    vPart = property.substr(TPAER_BYTESNUM + LPARTHEAD_BYTESNUM + lPartValueBytesNum + getQuickMatcherBytesNum());
+}
