@@ -11,7 +11,10 @@
 //the head of UCLProperty
 class UCLPropertyHead:public  UCLPropertyBase{
 public:
-    UCLPropertyHead() {}
+    UCLPropertyHead()
+    {
+        setQuickMatcherBytesNum(2);
+    }
     virtual ~UCLPropertyHead() {}
 
     //number of UCLPropertySet
