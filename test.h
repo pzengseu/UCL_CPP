@@ -8,7 +8,6 @@
 #include <iomanip>
 #include <iostream>
 #include "property/UCLPropertyHead.h"
-#include "property/SNPS.h"
 #include "property/UCLPropertySet.h"
 #include "UCL.h"
 #include "property/GenerateProperty.h"
@@ -195,21 +194,5 @@ void testUCLPropertyHead()
     cout << setbase(16) << "LPart: " << (int)property.getLPart() << endl; //23fa0924
     cout << setbase(16) << property.getVPart() << endl;
     cout<<(int)property.getSize()<<endl;
-}
-
-void testSNPSPhysicalElements() {
-    SNPSPhysicalElements property;
-    property.setHelper(0x5);
-//    propertyBase.setLPartHead(0xff);
-    property.setLPartQuickMatcher(0x2a);
-    property.setVPart("physical elements");
-    property.setTotalLength();
-
-    cout << setbase(16) << (int)property.getCategory() << ";";
-    cout << setbase(16) << (int)property.getHelper() << ";\nTPart: " << (int)property.getTPart() << endl;
-    cout << setbase(16) << "LPart: " << (int)property.getLPart() << endl; //142a
-    cout << setbase(16) << property.getVPart() << endl;
-    cout << (int)property.getSize() << endl;
-    cout << (int)property.getLPartBytesNum() << endl;
 }
 #endif //UCL_CPP_TEST_H
