@@ -15,20 +15,20 @@ using namespace std;
 class UCLPropertySet{
 private:
     UCLPropertyHead propertyHead;
-    map<int, UCLPropertyBase *>properties;
+    map<int, UCLPropertyBase>properties;
 public:
     UCLPropertySet()
     {
         propertyHead = UCLPropertyHead();
-        setSet();
+        propertyHead.setTotalLength();
     }
     virtual ~UCLPropertySet() {}
 
     const UCLPropertyHead &getPropertyHead() const;
     bool setPropertyHead(UCLPropertyHead propertyHead);
 
-    void setProperties(const map<int, UCLPropertyBase *> &properties);
-    const map<int, UCLPropertyBase *> &getProperties() const;
+    const map<int, UCLPropertyBase> &getProperties() const;
+    void setProperties(const map<int, UCLPropertyBase> &properties);
 
     //设置properthHead类别
     void setHeadCategory(uint8_t category);
@@ -38,7 +38,7 @@ public:
     uint8_t getHeadHelper();
 
     //设置属性 删除属性
-    bool setProperty(UCLPropertyBase *property);
+    bool setProperty(UCLPropertyBase property);
     bool delProperty(uint8_t category);
 
     //根据properties生成propertyHead的快速匹配
@@ -46,11 +46,11 @@ public:
     //根据properties生成propertyHead的vPart
     string generateHeadVPart();
 
-    //初始化集合或设置properties后必须调用的函数
+    //设置properties后必须调用的函数
     void setSet();
 
     //属性集合打包解包
     string pack();
-    void unpack(string properties);
+    void unpack(string propertySet);
 };
 #endif //UCL_CPP_UCLPROPERTYSET_H

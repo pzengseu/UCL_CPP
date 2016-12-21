@@ -92,14 +92,54 @@ void UCL::setUCL()
 string UCL::getValue(int setPos, int propertyPos)
 {
     assert(propertySets.find(setPos)!=propertySets.end());
-    map<int, UCLPropertyBase *> properties = propertySets[setPos].getProperties();
+    map<int, UCLPropertyBase > properties = propertySets[setPos].getProperties();
     assert(properties.find(propertyPos)!=properties.end());
-    return properties[propertyPos]->getVPart();
+    return properties[propertyPos].getVPart();
 }
 
-string UCL::pack()
+string UCL::packPropertySets()
 {
     return uclPropertyHead.pack();
 }
 
-void UCL::unpack(string properties) {}
+void UCL::unpackPropertySets(string properties)
+{
+    uclPropertyHead.unpack(properties);
+    bitset<16> bqm(uclPropertyHead.getQuickMatcher());
+    string headVPart = uclPropertyHead.getVPart();
+    uint32_t tmp = 0;
+    for(int i=0; i < bqm.size(); i++)
+    {
+        if(bqm.test(i))
+        {
+            //计算属性集合头部属性长度值字段字节数
+            int lValueBytes = (int)(headVPart[1+tmp] >> 6) + 1;
+            //取出长度值字段
+            string lValue = headVPart.substr(2+tmp, lValueBytes);
+            uint32_t lValueNum = 0;
+            for(int j=0; j < lValue.size(); j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        lValueNum = (0xffffff00 & lValueNum) | lValue[j];
+                        break;
+                    case 1:
+                        lValueNum = (0xffff00ff & lValueNum) | (lValue[j]<<8);
+                        break;
+                    case 2:
+                        lValueNum = (0xff00ffff & lValueNum) | (lValue[j]<<16);
+                        break;
+                    case 3:
+                        lValueNum = (0xff00ffff & lValueNum) | (lValue[j]<<24);
+                        break;
+                }
+            }
+            string propertySet = headVPart.substr(tmp, lValueNum);
+            UCLPropertySet proSet;
+            proSet.unpack(propertySet);
+            propertySets[i] = proSet;
+            tmp += lValueNum;
+        }
+    }
+}

@@ -14,11 +14,11 @@ const UCLPropertyHead& UCLPropertySet::getPropertyHead() const
     return propertyHead;
 }
 
-const map<int, UCLPropertyBase *> &UCLPropertySet::getProperties() const {
+const map<int, UCLPropertyBase> &UCLPropertySet::getProperties() const {
     return properties;
 }
 
-void UCLPropertySet::setProperties(const map<int, UCLPropertyBase *> &properties) {
+void UCLPropertySet::setProperties(const map<int, UCLPropertyBase> &properties) {
     UCLPropertySet::properties = properties;
 }
 
@@ -42,9 +42,9 @@ uint8_t UCLPropertySet::getHeadHelper()
     return propertyHead.getHelper();
 }
 
-bool UCLPropertySet::setProperty(UCLPropertyBase *property)
+bool UCLPropertySet::setProperty(UCLPropertyBase property)
 {
-    properties[property->getCategory()] = property;
+    properties[property.getCategory()] = property;
 }
 
 bool UCLPropertySet::delProperty(uint8_t category)
@@ -55,7 +55,7 @@ bool UCLPropertySet::delProperty(uint8_t category)
 uint16_t UCLPropertySet::generateQuickMatcher()
 {
     bitset<16> qmb;
-    map<int, UCLPropertyBase *>::iterator iter = properties.begin();
+    map<int, UCLPropertyBase >::iterator iter = properties.begin();
     for(; iter != properties.end(); iter++)
     {
         qmb.set(iter->first);
@@ -74,7 +74,7 @@ string UCLPropertySet::generateHeadVPart()
     {
         if(qmb.test(i))
         {
-            value += properties[i]->pack();
+            value += properties[i].pack();
         }
     }
 
@@ -93,4 +93,44 @@ string UCLPropertySet::pack()
     return propertyHead.pack();
 }
 
-void UCLPropertySet::unpack(string properties) {}
+void UCLPropertySet::unpack(string propertySet)
+{
+    propertyHead.unpack(propertySet);
+    bitset<16> bqm(propertyHead.getQuickMatcher());
+    string headVPart = propertyHead.getVPart();
+    uint32_t tmp = 0;
+    for(int i=0; i < bqm.size(); i++)
+    {
+        if(bqm.test(i))
+        {
+            //计算属性元素长度值字段字节数
+            int lValueBytes = (int)(headVPart[1+tmp] >> 6) + 1;
+            //取出长度值字段
+            string lValue = headVPart.substr(2+tmp, lValueBytes);
+            uint32_t lValueNum = 0;
+            for(int j=0; j < lValue.size(); j++)
+            {
+                switch (j)
+                {
+                    case 0:
+                        lValueNum = (0xffffff00 & lValueNum) | lValue[j];
+                        break;
+                    case 1:
+                        lValueNum = (0xffff00ff & lValueNum) | (lValue[j]<<8);
+                        break;
+                    case 2:
+                        lValueNum = (0xff00ffff & lValueNum) | (lValue[j]<<16);
+                        break;
+                    case 3:
+                        lValueNum = (0xff00ffff & lValueNum) | (lValue[j]<<24);
+                        break;
+                }
+            }
+            string property = headVPart.substr(tmp, lValueNum);
+            UCLPropertyBase pro;
+            pro.unpack(property);
+            properties[i] = pro;
+            tmp += lValueNum;
+        }
+    }
+}

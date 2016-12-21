@@ -24,7 +24,7 @@ public:
     {
         uclPropertyHead = UCLPropertyHead();
         uclPropertyHead.setCategory(0x2);  //英文
-        setUCL();
+        uclPropertyHead.setTotalLength();
     }
     virtual ~ UCL() {}
 
@@ -52,14 +52,14 @@ public:
     //根据propertySets生成uclPropertyHead的vPart
     string generateHeadVPart();
 
-    //初始化集合或设置propertySets后必须调用的函数
+    //设置propertySets后必须调用的函数
     void setUCL();
 
     //获取第setPos集合的第propertyPos属性的vPart
     string getValue(int setPos, int propertyPos);
 
     //属性集合打包解包
-    string pack();
-    void unpack(string properties);
+    string packPropertySets();
+    void unpackPropertySets(string properties);
 };
 #endif //UCL_UCL_H

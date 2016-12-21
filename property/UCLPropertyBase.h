@@ -57,7 +57,9 @@ public:
 
     //lPartHead
     virtual bool setLPartHead(uint8_t lPartHead);
+    virtual bool setLPartHead(uint8_t start, uint8_t end, uint8_t head);
     virtual uint8_t getLPartHead() const ;
+    virtual uint8_t getLPartHead(uint8_t start, uint8_t end);
 
     //the bytes of lPartValue
     virtual bool setLPartValueBytesNum(uint8_t bytesNum);

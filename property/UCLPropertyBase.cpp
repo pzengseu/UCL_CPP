@@ -3,6 +3,8 @@
 //
 #include "UCLPropertyBase.h"
 #include <cassert>
+#include <bitset>
+#include <cmath>
 
 //tPart
 bool UCLPropertyBase::setTPart(uint8_t t)
@@ -64,9 +66,35 @@ bool UCLPropertyBase::setLPartHead(uint8_t lPartHead)
     return true;
 }
 
+bool UCLPropertyBase::setLPartHead(uint8_t start, uint8_t end, uint8_t head)
+{
+    assert(start>=0 && start <= 7 && end>=0 && end<=7 && start < end);
+    assert(head < pow(2.0, end-start+1));
+    bitset<64> bLH(lPart);
+    for(int i = start; i <= end; i++)
+    {
+        bLH.reset(i);
+    }
+    lPart = bLH.to_ulong();
+    head <<= start;
+    lPart = lPart | head;
+}
+
 uint8_t UCLPropertyBase::getLPartHead() const
 {
     return lPart & 0xff;
+}
+
+uint8_t UCLPropertyBase::getLPartHead(uint8_t start, uint8_t end)
+{
+    assert(start>=0 && start <= 7 && end>=0 && end<=7 && start < end);
+    uint8_t lH = (uint8_t)(lPart >> start);
+    bitset<8> bLH(lH);
+    for(int i=(end-start+1); i < 8; i++)
+    {
+        bLH.reset(i);
+    }
+    return (uint8_t)bLH.to_ulong();
 }
 
 bool UCLPropertyBase::setLPartValueBytesNum(uint8_t bytesNum)
@@ -144,7 +172,7 @@ string UCLPropertyBase::pack()
 
     for(int i=0; i < getLPartBytesNum(); i++)
     {
-        property.push_back((char)(lPart>>(i*8)));
+        property.push_back((uint8_t)(lPart>>(i*8)));
     }
     property += vPart;
 

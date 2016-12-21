@@ -9,41 +9,128 @@
 #include <iostream>
 #include "property/UCLPropertyHead.h"
 #include "property/SNPS.h"
+#include "property/UCLPropertySet.h"
+#include "UCL.h"
+#include "property/GenerateProperty.h"
 
 using namespace std;
-
 void printPackString(string pack);
 
-void printPackString(string pack)
+void testUCL()
 {
-    for(int i=0; i <= pack.size(); i++)
-        cout << setbase(16) << (short)pack[i] << endl;
-    cout << "------------\n";
-}
+    UCL ucl;
 
-void testUCLPack()
+    UCLPropertySet cdps = GenerateProperty::generateCDPS("SEU");
+    printPackString(cdps.pack());
+
+    CGPSRequired cr;
+    cr.provenance = "seu";
+    cr.proDes = 1;
+    cr.security = u8"贼高";
+    cr.secHelper = 0;
+    cr.chain = "seu;thing";
+    cr.chainCount = 2;
+    cr.sigUCL = "default";
+    cr.sigU[0] = 2;
+    cr.sigU[1] = 1;
+    UCLPropertySet cgps = GenerateProperty::generateCGPS(cr);
+    printPackString(cgps.pack());
+
+    ucl.setPropertySet(cdps);
+    ucl.setPropertySet(cgps);
+    ucl.setUCL();
+    string pack = ucl.packPropertySets();
+    printPackString(pack);
+
+    UCL ucl2;
+    ucl2.unpackPropertySets(pack);
+    printPackString(ucl2.packPropertySets());
+}
+UCLPropertySet testSetUnpack()
 {
-    SNPSPhysicalElements pe;
-    pe.setVPart(u8"我;爱;你");
-    pe.setLPartQuickMatcher(0x7);
-    pe.setTotalLength();
+    UCLPropertyBase pe = GenerateProperty::generateSNPSPE(0xe, "我;爱;你");
     printPackString(pe.pack());
+
+    UCLPropertyBase nr = GenerateProperty::generateSNPSNR("abc");
+    printPackString(nr.pack());
 
     UCLPropertySet set0;
     set0.setHeadCategory(0x0);
-    set0.setProperty(&pe);
+    set0.setProperty(pe);
+    set0.setProperty(nr);
     set0.setSet();
     printPackString(set0.pack());
 
+    UCLPropertySet set1;
+    set1.unpack(set0.pack());
+    printPackString(set1.pack());
+    return set1;
+}
+
+void printPackString(string pack)
+{
+    for(int i=0; i <= pack.size(); i++) {
+        cout << hex << (uint16_t)pack[i] << " : ";
+    }
+    cout << "\n------------\n";
+}
+
+UCL testUCLPack()
+{
+    //SNPS
+    UCLPropertyBase pe = GenerateProperty::generateSNPSPE(0xe, "我;爱;你");
+    printPackString(pe.pack());
+
+    UCLPropertyBase nr = GenerateProperty::generateSNPSNR("abc");
+    printPackString(nr.pack());
+
+    UCLPropertySet set0;
+    set0.setHeadCategory(0x0);
+    set0.setProperty(pe);
+    set0.setProperty(nr);
+    set0.setSet();
+    printPackString(set0.pack());
+
+    //CDPS
+    UCLPropertyBase title = GenerateProperty::generateCDPSTitle("abc");
+    printPackString(title.pack());
+
+    UCLPropertyBase keywords = GenerateProperty::generateCDPSKeywords(3, "a;b;c");
+    printPackString(keywords.pack());
+
+    UCLPropertySet set1;
+    set1.setHeadCategory(0x1);
+    set1.setProperty(title);
+    set1.setProperty(keywords);
+    set1.setSet();
+    printPackString(set1.pack());
+
+    //CGPS
+    UCLPropertyBase provenance = GenerateProperty::generateCGPSProvenance(0x2, "SEU");
+    printPackString(provenance.pack());
+
+    UCLPropertyBase contentId = GenerateProperty::generateCGPSContentid("/home/zp");
+    printPackString(contentId.pack());
+
+    UCLPropertySet set2;
+    set2.setHeadCategory(15);
+    set2.setProperty(provenance);
+    set2.setProperty(contentId);
+    set2.setSet();
+    printPackString(set2.pack());
+
     UCL ucl;
     ucl.setPropertySet(set0);
+    ucl.setPropertySet(set1);
+    ucl.setPropertySet(set2);
     ucl.setUCL();
-    printPackString(ucl.pack());
+    printPackString(ucl.packPropertySets());
 
-    cout << ucl.getValue(0, 2) << endl;
-    map<int, UCLPropertySet> s = ucl.getPropertySets();
-    s[0].setHeadCategory(0x05);
-    cout << setbase(10) << s[0].getPropertyHead().getLPart();
+//    cout << ucl.getValue(0, 1) << endl;
+//    map<int, UCLPropertySet> s = ucl.getPropertySets();
+//    s[0].setHeadCategory(0x05);
+//    cout << setbase(10) << s[0].getPropertyHead().getLPart();
+    return ucl;
 }
 
 void testPropertyPack()

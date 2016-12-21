@@ -7,14 +7,16 @@
 
 bool UCLPropertyHead::setSize(uint8_t size)
 {
-    assert(size<16);
+    //属性元素个数size-1为属性包的具体值
+    assert(size<=16 && size > 0);
+    size -= 1;
     lPart = (lPart & 0xffffffffffffffc3) | (size<<2);
     return true;
 }
 
 uint8_t UCLPropertyHead::getSize() const
 {
-    return (lPart>>2) & 0xf;
+    return ((lPart>>2) & 0xf) + 1;
 }
 
 bool UCLPropertyHead::setQuickMatcher(uint16_t quickMatcher)
