@@ -8,6 +8,7 @@
 #include "UCLPropertyBase.h"
 #include "UCLPropertySet.h"
 
+//生成CGPS集合必选元素所需变量
 struct CGPSRequired
 {
     string provenance;
@@ -20,6 +21,7 @@ struct CGPSRequired
     uint8_t sigU[2];
 };
 
+//根据每个属性的不同,生成相应属性
 class GenerateProperty
 {
 public:
