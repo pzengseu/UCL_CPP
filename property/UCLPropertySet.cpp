@@ -2,6 +2,7 @@
 // Created by zp on 12/17/16.
 //
 #include <bitset>
+#include <cassert>
 #include "UCLPropertySet.h"
 
 bool UCLPropertySet::setPropertyHead(UCLPropertyHead propertyHead)
@@ -45,11 +46,25 @@ uint8_t UCLPropertySet::getHeadHelper()
 bool UCLPropertySet::setProperty(UCLPropertyBase property)
 {
     properties[property.getCategory()] = property;
+    setSet();
 }
 
 bool UCLPropertySet::delProperty(uint8_t category)
 {
     properties.erase(category);
+}
+
+void UCLPropertySet::setPropertyVPart(int pos, string value)
+{
+    assert(properties.find(pos)!=properties.end());
+    properties[pos].setVPart(value);
+    setSet();
+}
+
+string UCLPropertySet::getPropertyVPart(int pos)
+{
+    assert(properties.find(pos)!=properties.end());
+    return properties[pos].getVPart();
 }
 
 uint16_t UCLPropertySet::generateQuickMatcher()
@@ -85,7 +100,7 @@ void UCLPropertySet::setSet()
 {
     propertyHead.setQuickMatcher(generateQuickMatcher());
     propertyHead.setVPart(generateHeadVPart());
-    propertyHead.setTotalLength();
+//    propertyHead.setTotalLength();
 }
 
 string UCLPropertySet::pack()
@@ -132,5 +147,15 @@ void UCLPropertySet::unpack(string propertySet)
             properties[i] = pro;
             tmp += lValueNum;
         }
+    }
+}
+
+void UCLPropertySet::showPropertySet()
+{
+    cout << "属性集合类别: " << (int)propertyHead.getSize() << endl;
+    map<int, UCLPropertyBase>::iterator property = properties.begin();
+    for(; property!=properties.end(); property++)
+    {
+        cout << "属性元素类别及元素值: " << (int)property->second.getCategory() << "   " << property->second.getVPart() << endl;
     }
 }

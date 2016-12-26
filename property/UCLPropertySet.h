@@ -41,16 +41,23 @@ public:
     bool setProperty(UCLPropertyBase property);
     bool delProperty(uint8_t category);
 
+    //设置属性值
+    string getPropertyVPart(int pos);
+    void setPropertyVPart(int pos, string value);
+
     //根据properties生成propertyHead的快速匹配
     uint16_t generateQuickMatcher();
     //根据properties生成propertyHead的vPart
     string generateHeadVPart();
 
-    //设置properties后必须调用的函数
+    //properties有变必须调用该函数
     void setSet();
 
     //属性集合打包解包
     string pack();
     void unpack(string propertySet);
+
+    //显示属性集合
+    void showPropertySet();
 };
 #endif //UCL_CPP_UCLPROPERTYSET_H
