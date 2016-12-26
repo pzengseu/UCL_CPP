@@ -79,8 +79,8 @@ public:
     void unpackPropertySets(string properties);
 
     //UCL　Package打包解包
-//    string pack();
-//    void unpack(string ucl);
+    string pack();
+    void unpack(string ucl);
 
     //打印UCL各部分
     void showUCL();
