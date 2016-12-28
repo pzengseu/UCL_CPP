@@ -40,6 +40,26 @@ void UCLCode::codeDisplay(const UCLCode &code) const
     cout << setw(28) << "Check Code:" << code.getCheckCode() << endl;
 }
 
+void UCLCode::showCode() const
+{
+    cout << setw(28) << "Version:" << getVersion() << "\n";
+    cout << setw(28) << "Type of Media:" << getTypeOfMedia() << "\n";
+    cout << setw(28) << "Precedence:" << getPrecedence() << "\n";
+    cout << setw(28) << "Flag:" << getFlag() << "\n";
+    cout << setw(28) << "Parse Rule:" << getParseRule() << "\n";
+    cout << setw(28) << "Source of Content:" << getSourOfCont() << "\n";
+    cout << setw(28) << "Category:" << getCategory() << "\n";
+    cout << setw(28) << "Subcategory:" << getSubCategory() << "\n";
+    cout << setw(28) << "Topic:" << getTopic() << "\n";
+    cout << setw(28) << "Type of Content:" << getTypeOfContent() << "\n";
+    cout << setw(28) << "Copyright and Length:" << getCopyAndLeng() << "\n";
+    cout << setw(28) << "Security Energy Level Code:" << getSecuEnerLeveCode() << "\n";
+    cout << setw(28) << "Time Stamp:" << getTimeStamp() << "\n";
+    cout << setw(28) << "Serial Number:" << getSerialNumber() << "\n";
+    cout << setw(28) << "Reserved Bytes:" << getReservedBytes() << "\n";
+    cout << setw(28) << "Check Code:" << getCheckCode() << endl;
+}
+
 //根据给定的起始字节、起始位和长度获取uclCode的值
 //According to the given byte, start bit and length get the value of uclCode
 uint64_t UCLCode::getBits(const uint8_t startByte, const uint8_t startBit, const uint8_t bitLength) const
@@ -80,7 +100,8 @@ bool UCLCode::setBits(const uint8_t startByte, const uint8_t startBit, const uin
     uint64_t value = 0;
     uint64_t maskCode = 0;
 
-    maskCode = ~ (~maskCode << bitLength); //高位被置0,低位为全1的掩码 如：version:07(8进制)
+    ++modifiedNums;//记录code改变次数
+    maskCode = ~ (~maskCode << bitLength); //高位被置0,低位为全1的掩码 如：version:0000 0111
     value = bitStream & maskCode; //屏蔽高位,防止污染其他域
     byteNum = (bitLength / 8) + ((bitLength % 8) ? 1 : 0);
     if (startBit && (bitLength - (8 - startBit)) % 8 )//首尾均未字节对齐
@@ -89,14 +110,48 @@ bool UCLCode::setBits(const uint8_t startByte, const uint8_t startBit, const uin
     }
     index =startByte + (byteNum - 1);
     value <<= (8 * byteNum -bitLength - startBit);//末端字节对齐
+    maskCode = ~(maskCode << (8 * byteNum -bitLength - startBit));//末端字节对齐，需要设置的bit位为0，其余位为1，如：vrsion:1111 1000
     while (byteNum--)
     {
-        temp = value & 255;
-        uclCode[index--] |= temp;
-        if (byteNum)
-        {
-            value >>= 8;
-        }
+        temp = maskCode & 255;//每次取低8位
+        uclCode[index] &= temp;//先将待设置的位复位（置0）
+        temp = value & 255;//每次取低8位
+        uclCode[index--] |= temp;//设置相应位，下标递减
+        maskCode >>= 8;
+        value >>= 8;
+    }
+    return true;
+}
+
+/*
+ * code部分打包、解包
+ */
+string UCLCode::pack()
+{
+    if (modifiedNums)//打包之前首先检查是否生成最新的校验码
+    {
+        setCheckCode();
+    }
+    /*
+    char ch[CODE_BYTES] = {'\0'};
+    for (int i =0; i < CODE_BYTES; ++i)
+    {
+        ch[i] = uclCode[i];
+    }
+    string s(ch,CODE_BYTES);
+    */
+    string s((char *)uclCode, CODE_BYTES);//使用无符号数组初始化字符串
+    return s;
+}
+bool UCLCode::unpack(string strCode)
+{
+    if (strCode.size() != CODE_BYTES)
+    {
+        return false;
+    }
+    for (int i =0; i < CODE_BYTES; ++i)
+    {
+        uclCode[i] = static_cast<uint8_t >(strCode[i]);
     }
     return true;
 }
@@ -104,17 +159,6 @@ bool UCLCode::setBits(const uint8_t startByte, const uint8_t startBit, const uin
 //version
 uint64_t UCLCode::getVersion() const
 {
-    /*
-    std::bitset<VERSION_BIT_LENGTH> bitvec(0);  //全0的bitset bitvec:000
-    bitvec.set();   //置位，bitset全1 bitvec:111
-    uint64_t version = bitvec.to_ullong();  //高位被置0,低位为全1的屏蔽码 version:07(8进制)
-    */
-   /*
-    uint64_t version;
-    version = ~ (~0 << VERSION_BIT_LENGTH); //高位被置0,低位为全1的屏蔽码 version:07(8进制)
-
-    return version &= getBits(VERSION_START_BYTE, VERSION_START_BIT, VERSION_BIT_LENGTH);
-    */
     return getBits(VERSION_START_BYTE, VERSION_START_BIT, VERSION_BIT_LENGTH);
 }
 
@@ -283,7 +327,30 @@ uint64_t UCLCode::getCheckCode() const
     return getBits(CHECKCODE_START_BYTE, CHECKCODE_START_BIT, CHECKCODE_BIT_LENGTH);
 }
 
-bool UCLCode::setCheckCode(const uint64_t checkCode)
+bool UCLCode::setCheckCode()
 {
-    return setBits(CHECKCODE_START_BYTE, CHECKCODE_START_BIT, CHECKCODE_BIT_LENGTH, checkCode);
+    uint16_t checkCode = CRC16(uclCode, CODE_BYTES - (CHECKCODE_BIT_LENGTH / 8));
+    bool setResult = setBits(CHECKCODE_START_BYTE, CHECKCODE_START_BIT, CHECKCODE_BIT_LENGTH, checkCode);
+    if (setResult)
+    {
+        modifiedNums = 0;//设置校验码成功后则将修改次数置0
+        return true;
+    }else
+    {
+        return false;
+    }
+}
+
+uint16_t UCLCode::CRC16(uint8_t * pchMsg, uint16_t wDataLen)
+{
+    uint16_t wCRC = 0xFFFF;
+    uint16_t i;
+    uint8_t chChar;
+    for (i = 0; i < wDataLen; i++)
+    {
+        chChar = *pchMsg++;
+        wCRC = wCRCTalbeAbs[(chChar ^ wCRC) & 15] ^ (wCRC >> 4);
+        wCRC = wCRCTalbeAbs[((chChar >> 4) ^ wCRC) & 15] ^ (wCRC >> 4);
+    }
+    return wCRC;
 }

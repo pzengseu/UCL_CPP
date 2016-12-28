@@ -2,64 +2,34 @@
 #include <bitset>
 #include <stdio.h>
 #include <stdlib.h>
+#include <iomanip>
 #include "header_file/UCLCode.h"
 
 using  namespace std;
 
-int reloa(int a, string s)
-//重载
-{
-    cout <<"a:" << a <<" s:" << s  << endl;
-}
-void reloa(string s, int a)
-{
-    cout <<"s:" << s <<" a:" << a << endl;
-}
+const string sline(100,'*');
 
-
-unsigned setbits(unsigned x, int p, int n, unsigned y)
+//以16进制形式输出Code
+void showCodeHex(string s)
 {
-    return (x & ((~0 << (p + 1)) | (~(~0 << (p + 1 - n))))) | ((y & ~(~0 << n)) << (p + 1 - n));
-}
-
-int test_set(void)
-{
-    unsigned i;
-    unsigned j;
-    unsigned k;
-    int p;
-    int n;
-
-    for(i = 0; i < 3000; i += 511)
+    cout << "UCLCode:\n";
+    for (auto c : s)
     {
-        for(j = 0; j < 100; j += 37)
-        {
-            for(p = 0; p < 16; p++)
-            {
-                for(n = 1; n <= p + 1; n++)
-                {
-                    k = setbits(i, p, n, j);
-                    printf("setbits(%u, %d, %d, %u) = %u\n", i, p, n, j, k);
-                }
-            }
-        }
+        cout << setw(2) << setfill('0') << hex <<((uint16_t)c & 255) << ":";
     }
-    return 0;
+    cout << setfill(' ') << dec << endl;
 }
-
 /*code部分get set方法测试*/
-void test_version()
-{
-    UCLCode code_test;
-    // code_test.setUclCode();
-    code_test.setVersion(0xbbfb);
-
-    cout << "version:" << code_test.getVersion() << endl;
-}
 void test_code()
 {
     UCLCode code_test;
-    code_test.setVersion(7);
+
+    cout << "new a UCLCode:\n";
+
+    code_test.codeDisplay(code_test);
+    cout << sline << '\n';
+
+    code_test.setVersion(1);
     code_test.setTypeOfMedia(9);
     code_test.setPrecedence(15);
     code_test.setFlag(13);
@@ -73,44 +43,39 @@ void test_code()
     code_test.setSecuEnerLeveCode(251);
     code_test.setTimeStamp(0x3ffffffffffff);
     code_test.setSerialNumber(0x3fffff);
-    code_test.setCheckCode(10101);
+    code_test.setReservedBytes(0xffffffffff);
 
-    code_test.codeDisplay(code_test);
+    code_test.setVersion(3);//对于已经设置过的域重复设置
+    //code_test.setVersion(1);
+
+    //code_test.setCheckCode();//最后设置校验码
+
+    string s = code_test.pack(); //打包测试,自动生成校验码
+
+    showCodeHex(s);
+    cout << sline << '\n';
+    code_test.showCode();
+
 }
-void test_error()
+
+//解包测试
+void test_unpack()
 {
     UCLCode code_test;
-    code_test.setSerialNumber(0xffffff);
-    code_test.setTopic(0xffffffff);
-    code_test.setTimeStamp(0x3ffffffffffff);
-    cout << "top:" << code_test.getTopic() << " ";
-    cout << "ts:" << code_test.getTimeStamp() << " ";
+    string s(32,'a');
+    cout << "unpack test:\n";
+    cout << sline << '\n';
+    cout << "string:" << s <<'\n';
 
-    cout << "sn:" << code_test.getSerialNumber() << " ";
-    cout << "rb:" << code_test.getReservedBytes() << " ";
-    cout << "cc:" << code_test.getCheckCode() << " ";
+    code_test.unpack(s);
+    string s2 = code_test.pack();
+    cout << sline << '\n';
+    showCodeHex(s2);
+    code_test.showCode();
 }
 int main() {
-    /*
-    reloa(1, "222");
-    reloa("333", 2);
-    std::cout << "Hello, World!" << std::endl;
-    std::cout << "hh" << -5 % 8 <<"aa" <<std::endl;
-    uint64_t a = 033;
-    uint32_t b = 077777777;
-    uint32_t c = (a | b);
-    bitset<65> bits(c);
-    cout << "cc" << c << "dd" << endl;
-    cout << "bits" <<bits << endl;
-    cout << "count" <<  .count() <<endl;
-    //test_set();
-    a=0;
-    bitset<65> setb (setbits(a,63,8,0377 ));
-    cout << "setb:" << setb;
-    */
-    //test_version();
 
     test_code();
-    //test_error();
+    test_unpack();
     return 0;
 }

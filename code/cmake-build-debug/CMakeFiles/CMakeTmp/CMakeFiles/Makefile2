@@ -29,6 +29,9 @@ SUFFIXES =
 .SUFFIXES: .hpux_make_needs_suffix_list
 
 
+# Produce verbose output by default.
+VERBOSE = 1
+
 # Suppress display of executed commands.
 $(VERBOSE).SILENT:
 
@@ -53,45 +56,45 @@ RM = "D:\Program Files (x86)\JetBrains\CLion 2016.3\bin\cmake\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = E:\UCL\cn.edu.seu.fnrc
+CMAKE_SOURCE_DIR = E:\UCL\UCL_github\UCL_CPP\code\cmake-build-debug\CMakeFiles\CMakeTmp
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = E:\UCL\cn.edu.seu.fnrc\cmake-build-debug
+CMAKE_BINARY_DIR = E:\UCL\UCL_github\UCL_CPP\code\cmake-build-debug\CMakeFiles\CMakeTmp
 
 #=============================================================================
-# Target rules for target CMakeFiles/UCL_V0_1.dir
+# Target rules for target CMakeFiles/cmTC_93eaf.dir
 
 # All Build rule for target.
-CMakeFiles/UCL_V0_1.dir/all:
-	$(MAKE) -f CMakeFiles\UCL_V0_1.dir\build.make CMakeFiles/UCL_V0_1.dir/depend
-	$(MAKE) -f CMakeFiles\UCL_V0_1.dir\build.make CMakeFiles/UCL_V0_1.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=E:\UCL\cn.edu.seu.fnrc\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4 "Built target UCL_V0_1"
-.PHONY : CMakeFiles/UCL_V0_1.dir/all
+CMakeFiles/cmTC_93eaf.dir/all:
+	$(MAKE) -f CMakeFiles\cmTC_93eaf.dir\build.make CMakeFiles/cmTC_93eaf.dir/depend
+	$(MAKE) -f CMakeFiles\cmTC_93eaf.dir\build.make CMakeFiles/cmTC_93eaf.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=E:\UCL\UCL_github\UCL_CPP\code\cmake-build-debug\CMakeFiles\CMakeTmp\CMakeFiles --progress-num=1,2 "Built target cmTC_93eaf"
+.PHONY : CMakeFiles/cmTC_93eaf.dir/all
 
 # Include target in all.
-all: CMakeFiles/UCL_V0_1.dir/all
+all: CMakeFiles/cmTC_93eaf.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/UCL_V0_1.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start E:\UCL\cn.edu.seu.fnrc\cmake-build-debug\CMakeFiles 4
-	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/UCL_V0_1.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start E:\UCL\cn.edu.seu.fnrc\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/UCL_V0_1.dir/rule
+CMakeFiles/cmTC_93eaf.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start E:\UCL\UCL_github\UCL_CPP\code\cmake-build-debug\CMakeFiles\CMakeTmp\CMakeFiles 2
+	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/cmTC_93eaf.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start E:\UCL\UCL_github\UCL_CPP\code\cmake-build-debug\CMakeFiles\CMakeTmp\CMakeFiles 0
+.PHONY : CMakeFiles/cmTC_93eaf.dir/rule
 
 # Convenience name for target.
-UCL_V0_1: CMakeFiles/UCL_V0_1.dir/rule
+cmTC_93eaf: CMakeFiles/cmTC_93eaf.dir/rule
 
-.PHONY : UCL_V0_1
-
-# clean rule for target.
-CMakeFiles/UCL_V0_1.dir/clean:
-	$(MAKE) -f CMakeFiles\UCL_V0_1.dir\build.make CMakeFiles/UCL_V0_1.dir/clean
-.PHONY : CMakeFiles/UCL_V0_1.dir/clean
+.PHONY : cmTC_93eaf
 
 # clean rule for target.
-clean: CMakeFiles/UCL_V0_1.dir/clean
+CMakeFiles/cmTC_93eaf.dir/clean:
+	$(MAKE) -f CMakeFiles\cmTC_93eaf.dir\build.make CMakeFiles/cmTC_93eaf.dir/clean
+.PHONY : CMakeFiles/cmTC_93eaf.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/cmTC_93eaf.dir/clean
 
 .PHONY : clean
 
