@@ -110,6 +110,7 @@ int main() {
     */
     //test_version();
     cout << "test github" <<endl;
+    cout << "local to remote" <<endl;
     test_code();
     //test_error();
     return 0;
