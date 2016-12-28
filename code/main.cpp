@@ -109,7 +109,7 @@ int main() {
     cout << "setb:" << setb;
     */
     //test_version();
-
+    cout << "test github" <<endl;
     test_code();
     //test_error();
     return 0;
