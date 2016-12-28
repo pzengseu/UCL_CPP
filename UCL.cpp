@@ -153,18 +153,18 @@ void UCL::unpackPropertySets(string properties)
     }
 }
 
-//string UCL::pack()
-//{
-//    return uclCode.pack() + uclCodeExtension.pack() + packPropertySets();
-//}
-//
-//void UCL::unpack(string ucl)
-//{
-//    //UCLCode
-//    string sUCLCode = ucl.substr(0, 32);
-//    uclCode.unpack(sUCLCode);
-//
-//    //UCLCodeExt
+string UCL::pack()
+{
+    return uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
+}
+
+void UCL::unpack(string ucl)
+{
+    //UCLCode
+    string sUCLCode = ucl.substr(0, 32);
+    uclCode.unpack(sUCLCode);
+
+    //UCLCodeExt
 //    int uclCodeExt = 0;
 //    if((uclCode.getFlag() & 0x1))
 //    {
@@ -172,17 +172,17 @@ void UCL::unpackPropertySets(string properties)
 //    };
 //    string sUCLCodeExt = ucl.substr(32, uclCodeExt * 16);
 //    uclCodeExtension.unpack(sUCLCodeExt);
-//
-//    //UCLProperty
-//    unpackPropertySets(ucl.substr(32 + uclCodeExt * 16));
-//}
-//
+
+    //UCLProperty
+    unpackPropertySets(ucl.substr(32));
+}
+
 void UCL::showUCL()
 {
-//    uclCode.codeDisplay();
+    uclCode.showCode();
 //    uclCodeExtension.showCodeExt();
 
-    cout << "属性集合个数:" << (int)uclPropertyHead.getSize() << endl;
+    cout << "The size of propertySet:" << (int)uclPropertyHead.getSize() << endl;
     map<int, UCLPropertySet>::iterator proSet = propertySets.begin();
     for(; proSet!=propertySets.end(); proSet++)
     {
