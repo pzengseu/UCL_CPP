@@ -152,10 +152,10 @@ void UCLPropertySet::unpack(string propertySet)
 
 void UCLPropertySet::showPropertySet()
 {
-    cout << "属性集合类别: " << (int)propertyHead.getSize() << endl;
+    cout << "The category of propertySet: " << (int)propertyHead.getSize() << endl;
     map<int, UCLPropertyBase>::iterator property = properties.begin();
     for(; property!=properties.end(); property++)
     {
-        cout << "属性元素类别及元素值: " << (int)property->second.getCategory() << "   " << property->second.getVPart() << endl;
+        cout << "The category of value of property: " << (int)property->second.getCategory() << "   " << property->second.getVPart() << endl;
     }
 }

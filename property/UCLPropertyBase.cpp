@@ -180,7 +180,6 @@ string UCLPropertyBase::pack()
     return property;
 }
 
-//属性类型不同解包方式不同, 此处是最基本的属性元素解包方法, 若有不同需要重写该方法
 void UCLPropertyBase::unpack(string property) 
 {
     //tPart

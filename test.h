@@ -74,7 +74,7 @@ UCLPropertySet testSetUnpack()
 void printPackString(string pack)
 {
     for(int i=0; i <= pack.size(); i++) {
-        cout << hex << (uint16_t)pack[i] << " : ";
+        cout << hex << ((uint16_t)pack[i] & 0xff) << " : ";
     }
     cout << "\n------------\n";
 }
