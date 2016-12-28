@@ -40,10 +40,15 @@ void testUCL()
     ucl.setUCL();
     string pack = ucl.packPropertySets();
     printPackString(pack);
+    ucl.showUCL();
 
     UCL ucl2;
     ucl2.unpackPropertySets(pack);
     printPackString(ucl2.packPropertySets());
+    ucl2.showUCL();
+    ucl2.setValue(1, 1, "China SEU");
+    printPackString(ucl2.packPropertySets());
+    ucl2.showUCL();
 }
 UCLPropertySet testSetUnpack()
 {

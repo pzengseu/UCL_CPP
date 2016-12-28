@@ -148,6 +148,7 @@ const string &UCLPropertyBase::getVPart() const {
 
 bool UCLPropertyBase::setVPart(const string &vPart) {
     UCLPropertyBase::vPart = vPart;
+    setTotalLength();
     return true;
 }
 
