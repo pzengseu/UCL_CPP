@@ -17,7 +17,27 @@ void printPackString(string pack);
 
 void testUCL()
 {
+    UCLCode code_test;
+
+    code_test.setVersion(1);
+    code_test.setTypeOfMedia(9);
+    code_test.setPrecedence(15);
+    code_test.setFlag(13);
+    code_test.setParseRule(0xfff1);//ff1有效
+    code_test.setSourOfCont(0xfffffff1);//ffffff1有效
+    code_test.setCategory(255);
+    code_test.setSubCategory(257);//0x01有效
+    code_test.setTopic(0xffffff1);
+    code_test.setTypeOfContent(254);
+    code_test.setCopyAndLeng(252);
+    code_test.setSecuEnerLeveCode(251);
+    code_test.setTimeStamp(0x3ffffffffffff);
+    code_test.setSerialNumber(0x3fffff);
+    code_test.setReservedBytes(0xffffffffff);
+    code_test.setVersion(3);//对于已经设置过的域重复设置
+
     UCL ucl;
+    ucl.setUclCode(code_test);
 
     UCLPropertySet cdps = GenerateProperty::generateCDPS("SEU");
     printPackString(cdps.pack());
@@ -43,9 +63,8 @@ void testUCL()
     ucl.showUCL();
 
     UCL ucl2;
-    ucl2.unpackPropertySets(pack);
+    ucl2.unpack(ucl.pack());
     printPackString(ucl2.packPropertySets());
-    ucl2.showUCL();
     ucl2.setValue(1, 1, "China SEU");
     printPackString(ucl2.packPropertySets());
     ucl2.showUCL();
