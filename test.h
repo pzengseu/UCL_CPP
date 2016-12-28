@@ -57,16 +57,15 @@ void testUCL()
 
     ucl.setPropertySet(cdps);
     ucl.setPropertySet(cgps);
-    ucl.setUCL();
-    string pack = ucl.packPropertySets();
-    printPackString(pack);
+    printPackString(ucl.packPropertySets());
+    printPackString(ucl.pack());
     ucl.showUCL();
 
     UCL ucl2;
     ucl2.unpack(ucl.pack());
-    printPackString(ucl2.packPropertySets());
     ucl2.setValue(1, 1, "China SEU");
     printPackString(ucl2.packPropertySets());
+    printPackString(ucl2.pack());
     ucl2.showUCL();
 }
 UCLPropertySet testSetUnpack()
