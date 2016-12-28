@@ -40,6 +40,7 @@ void testUCL()
     ucl.setUclCode(code_test);
 
     UCLPropertySet cdps = GenerateProperty::generateCDPS("SEU");
+    cout << "CDPS: \n";
     printPackString(cdps.pack());
 
     CGPSRequired cr;
@@ -53,18 +54,23 @@ void testUCL()
     cr.sigU[0] = 2;
     cr.sigU[1] = 1;
     UCLPropertySet cgps = GenerateProperty::generateCGPS(cr);
+    cout << "CGPS: \n";
     printPackString(cgps.pack());
 
     ucl.setPropertySet(cdps);
     ucl.setPropertySet(cgps);
+    cout << "propertySet: \n";
     printPackString(ucl.packPropertySets());
+    cout << "UCLPackage: \n";
     printPackString(ucl.pack());
     ucl.showUCL();
 
     UCL ucl2;
     ucl2.unpack(ucl.pack());
     ucl2.setValue(1, 1, "China SEU");
+    cout << "After unpack----------\npropertySet: \n";
     printPackString(ucl2.packPropertySets());
+    cout << "UCLPackage: \n";
     printPackString(ucl2.pack());
     ucl2.showUCL();
 }
