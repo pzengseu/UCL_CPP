@@ -156,6 +156,6 @@ void UCLPropertySet::showPropertySet()
     map<int, UCLPropertyBase>::iterator property = properties.begin();
     for(; property!=properties.end(); property++)
     {
-        cout << "The category of value of property: " << (int)property->second.getCategory() << "   " << property->second.getVPart() << endl;
+        cout << "The category and value of property: " << (int)property->second.getCategory() << "   " << property->second.getVPart() << endl;
     }
 }

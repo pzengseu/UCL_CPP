@@ -153,18 +153,18 @@ void UCL::unpackPropertySets(string properties)
     }
 }
 
-//string UCL::pack()
-//{
-//    return uclCode.pack() + uclCodeExtension.pack() + packPropertySets();
-//}
-//
-//void UCL::unpack(string ucl)
-//{
-//    //UCLCode
-//    string sUCLCode = ucl.substr(0, 32);
-//    uclCode.unpack(sUCLCode);
-//
-//    //UCLCodeExt
+string UCL::pack()
+{
+    return uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
+}
+
+void UCL::unpack(string ucl)
+{
+    //UCLCode
+    string sUCLCode = ucl.substr(0, 32);
+    uclCode.unpack(sUCLCode);
+
+    //UCLCodeExt
 //    int uclCodeExt = 0;
 //    if((uclCode.getFlag() & 0x1))
 //    {
@@ -172,14 +172,14 @@ void UCL::unpackPropertySets(string properties)
 //    };
 //    string sUCLCodeExt = ucl.substr(32, uclCodeExt * 16);
 //    uclCodeExtension.unpack(sUCLCodeExt);
-//
-//    //UCLProperty
-//    unpackPropertySets(ucl.substr(32 + uclCodeExt * 16));
-//}
-//
+
+    //UCLProperty
+    unpackPropertySets(ucl.substr(32));
+}
+
 void UCL::showUCL()
 {
-//    uclCode.codeDisplay();
+    uclCode.showCode();
 //    uclCodeExtension.showCodeExt();
 
     cout << "The size of propertySet:" << (int)uclPropertyHead.getSize() << endl;
