@@ -182,7 +182,7 @@ void UCL::showUCL()
 //    uclCode.codeDisplay();
 //    uclCodeExtension.showCodeExt();
 
-    cout << "属性集合个数:" << (int)uclPropertyHead.getSize() << endl;
+    cout << "The size of propertySet:" << (int)uclPropertyHead.getSize() << endl;
     map<int, UCLPropertySet>::iterator proSet = propertySets.begin();
     for(; proSet!=propertySets.end(); proSet++)
     {
