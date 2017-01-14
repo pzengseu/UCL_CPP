@@ -190,7 +190,7 @@ void UCLPropertyBase::unpack(string property)
     int  lPartValueBytesNum = getLPartValueBytesNum();
     uint16_t quickMatcher = 0;
     quickMatcher = (quickMatcher & 0xff00) | property[TPAER_BYTESNUM + LPARTHEAD_BYTESNUM + lPartValueBytesNum];
-    quickMatcher = (quickMatcher & 0x00ff) | ((uint16_t)property[TPAER_BYTESNUM + LPARTHEAD_BYTESNUM + lPartValueBytesNum + 1]<<8);
+    quickMatcher = (quickMatcher & 0x00ff) | ((uint16_t)property[TPAER_BYTESNUM +  LPARTHEAD_BYTESNUM + lPartValueBytesNum + 1]<<8);
 
     switch (lPartValueBytesNum-1)
     {

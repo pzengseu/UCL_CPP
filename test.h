@@ -11,6 +11,8 @@
 #include "property/UCLPropertySet.h"
 #include "UCL.h"
 #include "property/GenerateProperty.h"
+#include <sstream>
+#include "MD5_test.cpp"
 
 using namespace std;
 void printPackString(string pack);
@@ -68,9 +70,14 @@ UCLPropertySet testSetUnpack()
 
 void printPackString(string pack)
 {
+    ostringstream ostr;
     for(int i=0; i <= pack.size(); i++) {
-        cout << hex << (uint16_t)pack[i] << " : ";
+        ostr<<hex << (uint16_t)pack[i] << "-";
+        //cout << hex << (uint16_t)pack[i] << " : ";
     }
+    string s=ostr.str();
+    cout<<"UCL:"<<s<<endl;
+    cout<<"MD5:"<<getMD5(s);
     cout << "\n------------\n";
 }
 
