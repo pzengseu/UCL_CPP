@@ -8,18 +8,18 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="F:/UCL_CPP/UCL_CPP/code/cmake-build-debug"/>
+				<Option working_dir="G:/UCL/UCL_CPP/code/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="UCL_V0_1">
-				<Option output="F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/UCL_V0_1.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="F:/UCL_CPP/UCL_CPP/code/cmake-build-debug"/>
+				<Option output="G:/UCL/UCL_CPP/code/cmake-build-debug/UCL_V0_1.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="G:/UCL/UCL_CPP/code/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -33,15 +33,15 @@
 					<Add directory="d:\mingw\mingw\bin\../lib/gcc/mingw32/4.8.1/include/c++/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 UCL_V0_1"/>
-					<CompileFile command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 UCL_V0_1"/>
+					<CompileFile command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="UCL_V0_1/fast">
-				<Option output="F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/UCL_V0_1.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="F:/UCL_CPP/UCL_CPP/code/cmake-build-debug"/>
+				<Option output="G:/UCL/UCL_CPP/code/cmake-build-debug/UCL_V0_1.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="G:/UCL/UCL_CPP/code/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -55,52 +55,52 @@
 					<Add directory="d:\mingw\mingw\bin\../lib/gcc/mingw32/4.8.1/include/c++/backward"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 UCL_V0_1/fast"/>
-					<CompileFile command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 UCL_V0_1/fast"/>
+					<CompileFile command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="F:/UCL_CPP/UCL_CPP/code/cmake-build-debug"/>
+				<Option working_dir="G:/UCL/UCL_CPP/code/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="F:/UCL_CPP/UCL_CPP/code/cmake-build-debug"/>
+				<Option working_dir="G:/UCL/UCL_CPP/code/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;F:/UCL_CPP/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="D:/MinGW/MinGW/bin/mingw32-make.exe -f &quot;G:/UCL/UCL_CPP/code/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="F:/UCL_CPP/UCL_CPP/code/UCLCode.cpp">
+		<Unit filename="G:/UCL/UCL_CPP/code/UCLCode.cpp">
 			<Option target="UCL_V0_1"/>
 		</Unit>
-		<Unit filename="F:/UCL_CPP/UCL_CPP/code/UCLCodeExtension.cpp">
+		<Unit filename="G:/UCL/UCL_CPP/code/UCLCodeExtension.cpp">
 			<Option target="UCL_V0_1"/>
 		</Unit>
-		<Unit filename="F:/UCL_CPP/UCL_CPP/code/header_file/UCLCode.h">
+		<Unit filename="G:/UCL/UCL_CPP/code/header_file/UCLCode.h">
 			<Option target="UCL_V0_1"/>
 		</Unit>
-		<Unit filename="F:/UCL_CPP/UCL_CPP/code/header_file/UCLCodeExtension.h">
+		<Unit filename="G:/UCL/UCL_CPP/code/header_file/UCLCodeExtension.h">
 			<Option target="UCL_V0_1"/>
 		</Unit>
-		<Unit filename="F:/UCL_CPP/UCL_CPP/code/header_file/UCLFormatV2.h">
+		<Unit filename="G:/UCL/UCL_CPP/code/header_file/UCLFormatV2.h">
 			<Option target="UCL_V0_1"/>
 		</Unit>
-		<Unit filename="F:/UCL_CPP/UCL_CPP/code/main.cpp">
+		<Unit filename="G:/UCL/UCL_CPP/code/main.cpp">
 			<Option target="UCL_V0_1"/>
 		</Unit>
-		<Unit filename="F:/UCL_CPP/UCL_CPP/code/CMakeLists.txt">
+		<Unit filename="G:/UCL/UCL_CPP/code/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

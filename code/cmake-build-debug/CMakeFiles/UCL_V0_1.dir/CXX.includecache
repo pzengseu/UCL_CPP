@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-F:/UCL_CPP/UCL_CPP/code/./header_file/UCLCode.h
+G:/UCL/UCL_CPP/code/./header_file/UCLCode.h
 iostream
 -
 stdint.h
@@ -16,9 +16,9 @@ stdlib.h
 string
 -
 UCLFormatV2.h
-F:/UCL_CPP/UCL_CPP/code/./header_file/UCLFormatV2.h
+G:/UCL/UCL_CPP/code/./header_file/UCLFormatV2.h
 
-F:/UCL_CPP/UCL_CPP/code/./header_file/UCLCodeExtension.h
+G:/UCL/UCL_CPP/code/./header_file/UCLCodeExtension.h
 stdint-gcc.h
 -
 string
@@ -26,21 +26,21 @@ string
 vector
 -
 
-F:/UCL_CPP/UCL_CPP/code/./header_file/UCLFormatV2.h
+G:/UCL/UCL_CPP/code/./header_file/UCLFormatV2.h
 
-F:/UCL_CPP/UCL_CPP/code/UCLCode.cpp
+G:/UCL/UCL_CPP/code/UCLCode.cpp
 ./header_file/UCLCode.h
-F:/UCL_CPP/UCL_CPP/code/./header_file/UCLCode.h
+G:/UCL/UCL_CPP/code/./header_file/UCLCode.h
 ./header_file/UCLFormatV2.h
-F:/UCL_CPP/UCL_CPP/code/./header_file/UCLFormatV2.h
+G:/UCL/UCL_CPP/code/./header_file/UCLFormatV2.h
 iomanip
 -
 
-F:/UCL_CPP/UCL_CPP/code/UCLCodeExtension.cpp
+G:/UCL/UCL_CPP/code/UCLCodeExtension.cpp
 ./header_file/UCLCodeExtension.h
-F:/UCL_CPP/UCL_CPP/code/./header_file/UCLCodeExtension.h
+G:/UCL/UCL_CPP/code/./header_file/UCLCodeExtension.h
 
-F:/UCL_CPP/UCL_CPP/code/header_file/UCLCode.h
+G:/UCL/UCL_CPP/code/header_file/UCLCode.h
 iostream
 -
 stdint.h
@@ -50,11 +50,11 @@ stdlib.h
 string
 -
 UCLFormatV2.h
-F:/UCL_CPP/UCL_CPP/code/header_file/UCLFormatV2.h
+G:/UCL/UCL_CPP/code/header_file/UCLFormatV2.h
 
-F:/UCL_CPP/UCL_CPP/code/header_file/UCLFormatV2.h
+G:/UCL/UCL_CPP/code/header_file/UCLFormatV2.h
 
-F:/UCL_CPP/UCL_CPP/code/main.cpp
+G:/UCL/UCL_CPP/code/main.cpp
 iostream
 -
 bitset
@@ -66,5 +66,5 @@ stdlib.h
 iomanip
 -
 header_file/UCLCode.h
-F:/UCL_CPP/UCL_CPP/code/header_file/UCLCode.h
+G:/UCL/UCL_CPP/code/header_file/UCLCode.h
 

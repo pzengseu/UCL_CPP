@@ -24,6 +24,8 @@ void test_code()
 {
     UCLCode code_test;
 
+    cout << "git test" << endl;
+
     cout << "new a UCLCode:\n";
 
     code_test.codeDisplay(code_test);
