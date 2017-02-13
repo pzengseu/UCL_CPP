@@ -81,7 +81,8 @@ public:
     //UCL　Package打包解包
     string pack();
     void unpack(string ucl);
-
+    //检验UCL包数字签名
+    bool checkUCL();
     //打印UCL各部分
     void showUCL();
 };

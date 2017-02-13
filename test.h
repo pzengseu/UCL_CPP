@@ -12,7 +12,6 @@
 #include "UCL.h"
 #include "property/GenerateProperty.h"
 #include <sstream>
-#include "MD5_test.cpp"
 
 using namespace std;
 void printPackString(string pack);
@@ -52,7 +51,7 @@ void testUCL()
     cr.secHelper = 0;
     cr.chain = "seu;thing";
     cr.chainCount = 2;
-    cr.sigUCL = "default";
+    cr.sigUCL = "";
     cr.sigU[0] = 2;
     cr.sigU[1] = 1;
     UCLPropertySet cgps = GenerateProperty::generateCGPS(cr);
@@ -99,15 +98,15 @@ UCLPropertySet testSetUnpack()
 
 void printPackString(string pack)
 {
-    ostringstream ostr;
+//    ostringstream ostr;
     for(int i=0; i <= pack.size(); i++) {
-        ostr<<hex << (uint16_t)pack[i] << "-";
-        //cout << hex << (uint16_t)pack[i] << " : ";
+//        ostr<<hex << (uint16_t)pack[i] << "-";
+        cout << hex << ((uint16_t)pack[i] & 0xff) << "-";
 
     }
-    string s=ostr.str();
-    cout<<"UCL:"<<s<<endl;
-    cout<<"MD5:"<<getMD5(s);
+//    string s=ostr.str();
+//    cout<<"UCL:"<<s<<endl;
+//    cout<<"MD5:"<<getMD5(s);
     cout << "\n------------\n";
 }
 

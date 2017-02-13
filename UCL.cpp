@@ -7,6 +7,10 @@
 #include <cassert>
 #include "property/UCLPropertyHead.h"
 #include "UCL.h"
+#include "tools/md5.h"
+
+string switchHelper(int helper, string temp);
+string generateSigUCLP(int helper, int alg, string temp);
 
 const UCLPropertyHead &UCL::getUclPropertyHead() const {
     return uclPropertyHead;
@@ -155,6 +159,18 @@ void UCL::unpackPropertySets(string properties)
 
 string UCL::pack()
 {
+    setValue(15, 15, "");
+
+    string temp = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
+    map<int, UCLPropertyBase> ps = propertySets[15].getProperties();
+    UCLPropertyBase sigUCLP = ps[15];
+
+    int helper = sigUCLP.getHelper();
+    int alg = sigUCLP.getLPartHead(2, 5);
+    string uclSigTemp = generateSigUCLP(helper, alg, temp);
+
+    setValue(15, 15, uclSigTemp);
+
     return uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
 }
 
@@ -175,6 +191,68 @@ void UCL::unpack(string ucl)
 
     //UCLProperty
     unpackPropertySets(ucl.substr(32));
+
+    assert(checkUCL());
+}
+bool UCL::checkUCL()
+{
+    map<int, UCLPropertyBase> ps = propertySets[15].getProperties();
+    UCLPropertyBase sigUCLP = ps[15];
+
+    string uclSig = getValue(15, 15);
+    setValue(15, 15, "");
+    string temp = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
+
+    int helper = sigUCLP.getHelper();
+    int alg = sigUCLP.getLPartHead(2, 5);
+    string uclSigTemp = generateSigUCLP(helper, alg, temp);
+
+    if(uclSigTemp==uclSig) { return true; }
+    else { return false; }
+}
+
+string generateSigUCLP(int helper, int alg, string temp)
+{
+    string uclSigTemp;
+    switch(alg)
+    {
+        case 1: //CRC32
+            break;
+        case 2: //MD5
+            uclSigTemp = MD5(temp).toString();
+            break;
+        case 3: //SHA-256
+            break;
+        case 4:
+            break;
+        default: break;
+    }
+    uclSigTemp = switchHelper(helper, uclSigTemp);
+
+    return uclSigTemp;
+}
+
+string switchHelper(int helper, string s)
+{
+    switch(helper)
+    {
+        case 0:
+            break;
+        case 1:
+            //RSA
+            break;
+        case 2:
+            //ECDSA
+            break;
+        case 3:
+            //DSA
+            break;
+        case 4:
+            //ECC
+            break;
+        default: break;
+    }
+    return s;
 }
 
 void UCL::showUCL()

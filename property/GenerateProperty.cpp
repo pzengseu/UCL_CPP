@@ -78,10 +78,10 @@ UCLPropertyBase GenerateProperty::generateCDPSAuthor(uint8_t persons, uint8_t co
 
 UCLPropertyBase GenerateProperty::generateCDPSEntity(uint8_t count, string vPart, uint8_t helper)
 {
-    assert(count <= 16 && count > 0);
+    assert(count > 0);
 
     UCLPropertyBase entity;
-    entity.setLPartHead(2, 5, count-1);
+    entity.setLPartHead(3, 5, count-1);
     setProperty(entity, 5, helper, vPart);
 
     return entity;
@@ -111,7 +111,24 @@ UCLPropertyBase GenerateProperty::generateCDPSFileDescription(string vPart, uint
     return file;
 }
 
+UCLPropertyBase GenerateProperty::generateCDPSRelatedUCL(uint8_t count, string vPart, uint8_t helper)
+{
+    assert(count <= 8 && count >=1);
 
+    UCLPropertyBase relatedUCL;
+    relatedUCL.setLPartHead(3, 5, count - 1);
+    setProperty(relatedUCL, 14, helper, vPart);
+
+    return relatedUCL;
+}
+
+UCLPropertyBase GenerateProperty::generateCDPSContentObject(string vPart, uint8_t helper)
+{
+    UCLPropertyBase contentObject;
+    setProperty(contentObject, 15, helper, vPart);
+
+    return contentObject;
+}
 
 //CGPS
 UCLPropertyBase GenerateProperty::generateCGPSProvenance(uint8_t des, string vPart, uint8_t helper)
@@ -150,7 +167,7 @@ UCLPropertyBase GenerateProperty::generateCGPSSignatureContent(uint8_t alg, stri
     assert(alg < 5);
 
     UCLPropertyBase signature;
-    signature.setLPartHead(3, 5, alg);
+    signature.setLPartHead(2, 5, alg);
     setProperty(signature, 12, helper, vPart);
 
     return signature;
@@ -183,7 +200,7 @@ UCLPropertyBase GenerateProperty::generateCGPSSignatureUCL(uint8_t alg, string v
     assert(alg < 5);
 
     UCLPropertyBase signature;
-    signature.setLPartHead(3, 5, alg);
+    signature.setLPartHead(2, 5, alg);
     setProperty(signature, 15, helper, vPart);
 
     return signature;

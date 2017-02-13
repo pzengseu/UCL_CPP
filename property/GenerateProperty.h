@@ -62,6 +62,12 @@ public:
     //file description
     static UCLPropertyBase generateCDPSFileDescription(string vPart, uint8_t helper=0);
 
+    //Related UCL
+    static UCLPropertyBase generateCDPSRelatedUCL(uint8_t count, string vPart, uint8_t helper=0);
+
+    //Content Object
+    static UCLPropertyBase generateCDPSContentObject(string vPart, uint8_t helper=0);
+
     /*
      * CGPS, provenance, content id, propagation path, signature of content, security energy level information,
      *       chain of responibility, signature of UCL Package
