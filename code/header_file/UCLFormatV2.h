@@ -1,0 +1,98 @@
+//
+// Created by hp-6380 on 2016/12/5.
+//
+
+#ifndef UCL_V0_1_UCLFORMATV2_H
+#define UCL_V0_1_UCLFORMATV2_H
+
+#define CODE_BYTES 32 //UCLcode 字节数
+
+/*
+ * 按照如下格式定义UCLcode域
+ * 域的开始字节（从0开始）
+ * 域的开始bit位（从0开始）
+ * 域的bit位长度
+ */
+
+//version格式定义
+#define VERSION_START_BYTE 0
+#define VERSION_START_BIT 0
+#define VERSION_BIT_LENGTH 3
+
+//Type of Media
+#define TYPEOFMEDIA_START_BYTE 0
+#define TYPEOFMEDIA_START_BIT 3
+#define TYPEOFMEDIA_BIT_LENGTH 5
+
+//precedence
+#define PRECEDENCE_START_BYTE 1
+#define PRECEDENCE_START_BIT 0
+#define PRECEDENCE_BIT_LENGTH 4
+
+//flag
+#define FLAG_START_BYTE 1
+#define FLAG_START_BIT 4
+#define FLAG_BIT_LENGTH 4
+
+//parse rule
+#define PARSERULE_START_BYTE 2
+#define PARSERULE_START_BIT 0
+#define PARSERULE_BIT_LENGTH 12
+
+//source of content
+#define SOUROFCONT_START_BYTE 3
+#define SOUROFCONT_START_BIT 4
+#define SOUROFCONT_BIT_LENGTH 28
+
+//category
+#define CATEGORY_START_BYTE 7
+#define CATEGORY_START_BIT 0
+#define CATEGORY_BIT_LENGTH 8
+
+//subcategory
+#define SUBCATEGORY_START_BYTE 8
+#define SUBCATEGORY_START_BIT 0
+#define SUBCATEGORY_BIT_LENGTH 8
+
+//topic
+#define TOPIC_START_BYTE 9
+#define TOPIC_START_BIT 0
+#define TOPIC_BIT_LENGTH 32
+
+//type of content
+#define TYPEOFCONTENT_START_BYTE 13
+#define TYPEOFCONTENT_START_BIT 0
+#define TYPEOFCONTENT_BIT_LENGTH 8
+
+//copyright and length
+#define COPYANDLENG_START_BYTE 14
+#define COPYANDLENG_START_BIT 0
+#define COPYANDLENG_BIT_LENGTH 8
+
+//security energy level code
+#define SECUENERLEVECODE_START_BYTE 15
+#define SECUENERLEVECODE_START_BIT 0
+#define SECUENERLEVECODE_BIT_LENGTH 8
+
+//time stamp
+#define TIMESTAMP_START_BYTE 16
+#define TIMESTAMP_START_BIT 0
+#define TIMESTAMP_BIT_LENGTH 50
+
+//serial number
+#define SERIALNUMBER_START_BYTE 22
+#define SERIALNUMBER_START_BIT 2
+#define SERIALNUMBER_BIT_LENGTH 22
+
+//reserved bytes
+#define RESERVEDBYTES_START_BYTE 25
+#define RESERVEDBYTES_START_BIT 0
+#define RESERVEDBYTES_BIT_LENGTH 40
+
+//check code
+#define CHECKCODE_START_BYTE 30
+#define CHECKCODE_START_BIT 0
+#define CHECKCODE_BIT_LENGTH 16
+
+
+#endif //UCL_V0_1_UCLFORMATV2_H

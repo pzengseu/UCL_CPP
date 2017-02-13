@@ -19,9 +19,30 @@ void printPackString(string pack);
 
 void testUCL()
 {
+    UCLCode code_test;
+
+    code_test.setVersion(1);
+    code_test.setTypeOfMedia(9);
+    code_test.setPrecedence(15);
+    code_test.setFlag(13);
+    code_test.setParseRule(0xfff1);//ff1有效
+    code_test.setSourOfCont(0xfffffff1);//ffffff1有效
+    code_test.setCategory(255);
+    code_test.setSubCategory(257);//0x01有效
+    code_test.setTopic(0xffffff1);
+    code_test.setTypeOfContent(254);
+    code_test.setCopyAndLeng(252);
+    code_test.setSecuEnerLeveCode(251);
+    code_test.setTimeStamp(0x3ffffffffffff);
+    code_test.setSerialNumber(0x3fffff);
+    code_test.setReservedBytes(0xffffffffff);
+    code_test.setVersion(3);//对于已经设置过的域重复设置
+
     UCL ucl;
+    ucl.setUclCode(code_test);
 
     UCLPropertySet cdps = GenerateProperty::generateCDPS("SEU");
+    cout << "CDPS: \n";
     printPackString(cdps.pack());
 
     CGPSRequired cr;
@@ -35,17 +56,25 @@ void testUCL()
     cr.sigU[0] = 2;
     cr.sigU[1] = 1;
     UCLPropertySet cgps = GenerateProperty::generateCGPS(cr);
+    cout << "CGPS: \n";
     printPackString(cgps.pack());
 
     ucl.setPropertySet(cdps);
     ucl.setPropertySet(cgps);
-    ucl.setUCL();
-    string pack = ucl.packPropertySets();
-    printPackString(pack);
+    cout << "propertySet: \n";
+    printPackString(ucl.packPropertySets());
+    cout << "UCLPackage: \n";
+    printPackString(ucl.pack());
+    ucl.showUCL();
 
     UCL ucl2;
-    ucl2.unpackPropertySets(pack);
+    ucl2.unpack(ucl.pack());
+    ucl2.setValue(1, 1, "China SEU");
+    cout << "After unpack----------\npropertySet: \n";
     printPackString(ucl2.packPropertySets());
+    cout << "UCLPackage: \n";
+    printPackString(ucl2.pack());
+    ucl2.showUCL();
 }
 UCLPropertySet testSetUnpack()
 {
@@ -74,6 +103,7 @@ void printPackString(string pack)
     for(int i=0; i <= pack.size(); i++) {
         ostr<<hex << (uint16_t)pack[i] << "-";
         //cout << hex << (uint16_t)pack[i] << " : ";
+
     }
     string s=ostr.str();
     cout<<"UCL:"<<s<<endl;

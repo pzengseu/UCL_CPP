@@ -1,0 +1,43 @@
+The system is: Windows - 6.1.7601 - AMD64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: D:/MinGW/bin/gcc.exe 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
+
+The C compiler identification is GNU, found in "E:/UCL/UCL_github/UCL_CPP/code/cmake-build-debug/CMakeFiles/3.6.2/CompilerIdC/a.exe"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: D:/MinGW/bin/g++.exe 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
+
+The CXX compiler identification is GNU, found in "E:/UCL/UCL_github/UCL_CPP/code/cmake-build-debug/CMakeFiles/3.6.2/CompilerIdCXX/a.exe"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: E:/UCL/UCL_github/UCL_CPP/code/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command:"D:/MinGW/bin/mingw32-make.exe" "cmTC_12404/fast"
+D:/MinGW/bin/mingw32-make.exe -f CMakeFiles\cmTC_12404.dir\build.make CMakeFiles/cmTC_12404.dir/build
+mingw32-make.exe[1]: Entering directory 'E:/UCL/UCL_github/UCL_CPP/code/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_12404.dir/testCCompiler.c.obj
+D:\MinGW\bin\gcc.exe     -o CMakeFiles\cmTC_12404.dir\testCCompiler.c.obj   -c E:\UCL\UCL_github\UCL_CPP\code\cmake-build-debug\CMakeFiles\CMakeTmp\testCCompiler.c
+Linking C executable cmTC_12404.exe
+"D:\Program Files (x86)\JetBrains\CLion 2016.3\bin\cmake\bin\cmake.exe" -E cmake_link_script CMakeFiles\cmTC_12404.dir\link.txt --verbose=1
+"D:\Program Files (x86)\JetBrains\CLion 2016.3\bin\cmake\bin\cmake.exe" -E remove -f CMakeFiles\cmTC_12404.dir/objects.a
+D:\MinGW\bin\ar.exe cr CMakeFiles\cmTC_12404.dir/objects.a @CMakeFiles\cmTC_12404.dir\objects1.rsp
+D:\MinGW\bin\gcc.exe       -Wl,--whole-archive CMakeFiles\cmTC_12404.dir/objects.a -Wl,--no-whole-archive  -o cmTC_12404.exe -Wl,--out-implib,libcmTC_12404.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\cmTC_12404.dir\linklibs.rsp
+mingw32-make.exe[1]: Leaving directory 'E:/UCL/UCL_github/UCL_CPP/code/cmake-build-debug/CMakeFiles/CMakeTmp'
+
+

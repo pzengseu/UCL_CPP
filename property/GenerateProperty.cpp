@@ -13,7 +13,7 @@ void GenerateProperty::setProperty(UCLPropertyBase &property, uint8_t category, 
     property.setCategory(category);
     property.setHelper(helper);
     property.setVPart(vPart);
-    property.setTotalLength();
+//    property.setTotalLength();
 }
 
 //SNPS
@@ -193,7 +193,7 @@ UCLPropertyBase GenerateProperty::generateCGPSSignatureUCL(uint8_t alg, string v
 UCLPropertySet GenerateProperty::generateCDPS(string title)
 {
     UCLPropertySet cdps;
-    cdps.setHeadCategory(0);
+    cdps.setHeadCategory(1);
 
     UCLPropertyBase titlePro = generateCDPSTitle(title);
     cdps.setProperty(titlePro);

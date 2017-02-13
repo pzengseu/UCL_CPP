@@ -27,6 +27,7 @@ void UCL::setPropertySets(const map<int, UCLPropertySet> &propertySets) {
 bool UCL::setPropertySet(UCLPropertySet &propertySet)
 {
     propertySets[propertySet.getHeadCategory()] = propertySet;
+    setUCL();
 }
 
 bool UCL::delPropertySet(uint8_t category)
@@ -86,15 +87,23 @@ void UCL::setUCL()
 {
     uclPropertyHead.setQuickMatcher(generateQuickMatcher());
     uclPropertyHead.setVPart(generateHeadVPart());
-    uclPropertyHead.setTotalLength();
+//    uclPropertyHead.setTotalLength();
 }
 
 string UCL::getValue(int setPos, int propertyPos)
 {
     assert(propertySets.find(setPos)!=propertySets.end());
-    map<int, UCLPropertyBase > properties = propertySets[setPos].getProperties();
-    assert(properties.find(propertyPos)!=properties.end());
-    return properties[propertyPos].getVPart();
+    return propertySets[setPos].getPropertyVPart(propertyPos);
+//    map<int, UCLPropertyBase> properties = propertySets[setPos].getProperties();
+//    assert(properties.find(propertyPos)!=properties.end());
+//    return properties[propertyPos].getVPart();
+}
+
+void UCL::setValue(int setPos, int propertyPos, string value)
+{
+    assert(propertySets.find(setPos)!=propertySets.end());
+    propertySets[setPos].setPropertyVPart(propertyPos, value);
+    setUCL();
 }
 
 string UCL::packPropertySets()
@@ -142,4 +151,60 @@ void UCL::unpackPropertySets(string properties)
             tmp += lValueNum;
         }
     }
+}
+
+string UCL::pack()
+{
+    return uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
+}
+
+void UCL::unpack(string ucl)
+{
+    //UCLCode
+    string sUCLCode = ucl.substr(0, 32);
+    uclCode.unpack(sUCLCode);
+
+    //UCLCodeExt
+//    int uclCodeExt = 0;
+//    if((uclCode.getFlag() & 0x1))
+//    {
+//        uclCodeExt = ucl[32] & 0xf;
+//    };
+//    string sUCLCodeExt = ucl.substr(32, uclCodeExt * 16);
+//    uclCodeExtension.unpack(sUCLCodeExt);
+
+    //UCLProperty
+    unpackPropertySets(ucl.substr(32));
+}
+
+void UCL::showUCL()
+{
+    uclCode.showCode();
+//    uclCodeExtension.showCodeExt();
+
+    cout << "The size of propertySet:" << (int)uclPropertyHead.getSize() << endl;
+    map<int, UCLPropertySet>::iterator proSet = propertySets.begin();
+    for(; proSet!=propertySets.end(); proSet++)
+    {
+        proSet->second.showPropertySet();
+    }
+}
+
+/*
+ * UCLCode and extension
+ */
+const UCLCode &UCL::getUclCode() const {
+    return uclCode;
+}
+
+void UCL::setUclCode(const UCLCode &uclCode) {
+    UCL::uclCode = uclCode;
+}
+
+const UCLCodeExtension &UCL::getUclCodeExtention() const {
+    return uclCodeExtension;
+}
+
+void UCL::setUclCodeExtention(const UCLCodeExtension &uclCodeExtention) {
+    UCL::uclCodeExtension = uclCodeExtention;
 }
