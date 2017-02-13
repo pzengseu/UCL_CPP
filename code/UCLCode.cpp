@@ -143,6 +143,8 @@ string UCLCode::pack()
     string s((char *)uclCode, CODE_BYTES);//使用无符号数组初始化字符串
     return s;
 }
+
+//可考虑增加校验字段验证
 bool UCLCode::unpack(string strCode)
 {
     if (strCode.size() != CODE_BYTES)
@@ -340,17 +342,20 @@ bool UCLCode::setCheckCode()
         return false;
     }
 }
-
-uint16_t UCLCode::CRC16(uint8_t * pchMsg, uint16_t wDataLen)
+/*
+ * 计算CRC16校验码
+ * message是需要生成校验码的code部分的数组指针
+ * length是code长度减去2字节
+ */
+uint16_t UCLCode::CRC16(uint8_t * message, uint16_t length) const
 {
-    uint16_t wCRC = 0xFFFF;
-    uint16_t i;
-    uint8_t chChar;
-    for (i = 0; i < wDataLen; i++)
+    uint16_t result = 0xFFFF;
+    uint8_t temp;
+    for (uint16_t i = 0; i < length; i++)
     {
-        chChar = *pchMsg++;
-        wCRC = wCRCTalbeAbs[(chChar ^ wCRC) & 15] ^ (wCRC >> 4);
-        wCRC = wCRCTalbeAbs[((chChar >> 4) ^ wCRC) & 15] ^ (wCRC >> 4);
+        temp = *message++;
+        result = crcTable[(temp ^ result) & 15] ^ (result >> 4);
+        result = crcTable[((temp >> 4) ^ result) & 15] ^ (result >> 4);
     }
-    return wCRC;
+    return result;
 }
