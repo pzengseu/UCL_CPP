@@ -8,6 +8,8 @@
 #include "property/UCLPropertyHead.h"
 #include "UCL.h"
 #include "tools/md5.h"
+#include "tools/UCLCRC32.h"
+#include "tools/UCLSHA_256.h"
 
 string switchHelper(int helper, string temp);
 string generateSigUCLP(int helper, int alg, string temp);
@@ -234,14 +236,19 @@ bool UCL::checkUCL()
 string generateSigUCLP(int helper, int alg, string temp)
 {
     string uclSigTemp;
+    UCLCRC32 crc;
+    UCLSHA_256 sha;
+
     switch(alg)
     {
         case 1: //CRC32
+            uclSigTemp = crc.generateCrc32(temp);
             break;
         case 2: //MD5
             uclSigTemp = MD5(temp).toString();
             break;
         case 3: //SHA-256
+            uclSigTemp = sha.sha_256(temp);
             break;
         case 4:
             break;
@@ -277,7 +284,7 @@ string switchHelper(int helper, string s)
 
 void UCL::showUCL()
 {
-    uclCode.showCode();
+//    uclCode.showCode();
 //    uclCodeExtension.showCodeExt();
 
     cout << "The size of propertySet:" << (int)uclPropertyHead.getSize() << endl;

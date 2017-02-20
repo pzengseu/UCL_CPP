@@ -48,14 +48,15 @@ void testUCL()
     printPackString(snps.pack());
 
     UCLPropertySet cdps = GenerateProperty::generateCDPS("SEU");
-    UCLPropertyBase title = GenerateProperty::generateCDPSTitle("习近平：解决突出问题 推动六中全会精神落实处");
+    UCLPropertyBase title = GenerateProperty::generateCDPSTitle("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa习近平：解决突出问题 推动六中全会精神落实处");
     UCLPropertyBase keywords = GenerateProperty::generateCDPSKeywords(3, "习近平;六中全会;中央党校");
     UCLPropertyBase author = GenerateProperty::generateCDPSAuthor(1, 1, "新华社:隗俊");
-    UCLPropertyBase entity = GenerateProperty::generateCDPSEntity(1, "习近平");
+    UCLPropertyBase entity = GenerateProperty::generateCDPSEntity(1, "xjp");
     cdps.setProperty(title);
     cdps.setProperty(keywords);
     cdps.setProperty(author);
     cdps.setProperty(entity);
+//    cout << hex << cdps.generateQuickMatcher()<< "  " << cdps.getPropertyHead().getTotalLength() << endl;
 
     cout << "CDPS: \n";
     printPackString(cdps.pack());
@@ -68,8 +69,8 @@ void testUCL()
     cr.chain = "seu;thing";
     cr.chainCount = 2;
     cr.sigUCL = "";
-    cr.sigU[0] = 2;
-    cr.sigU[1] = 1;
+    cr.sigU[0] = 3;
+    cr.sigU[1] = 0;
     UCLPropertySet cgps = GenerateProperty::generateCGPS(cr);
     cout << "CGPS: \n";
     printPackString(cgps.pack());
@@ -77,6 +78,7 @@ void testUCL()
     ucl.setPropertySet(snps);
     ucl.setPropertySet(cdps);
     ucl.setPropertySet(cgps);
+//    cout << hex << ucl.generateQuickMatcher()<< "  " << ucl.getUclPropertyHead().getTotalLength();
     cout << "propertySet: \n";
     printPackString(ucl.packPropertySets());
     cout << "UCLPackage: \n";
@@ -86,11 +88,6 @@ void testUCL()
     UCL ucl2;
     string ucl1 = ucl.pack();
     ucl2.unpack(ucl1);
-    ucl2.setValue(1, 1, "China SEU");
-    ucl2.delProperty(1, 1);
-    ucl2.setProperty(1, title);
-    cout << "After unpack----------";
-//    printPackString(ucl2.packPropertySets());
     cout << "UCLPackage: \n";
     printPackString(ucl2.pack());
     ucl2.showUCL();

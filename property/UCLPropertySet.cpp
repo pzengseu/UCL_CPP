@@ -70,7 +70,7 @@ void UCLPropertySet::setPropertyVPart(int pos, string value)
 
 string UCLPropertySet::getPropertyVPart(int pos)
 {
-    assert(properties.find(pos)!=properties.end());
+//    assert(properties.find(pos)!=properties.end());
     return properties[pos].getVPart();
 }
 
