@@ -52,6 +52,13 @@ bool UCLPropertySet::setProperty(UCLPropertyBase property)
 bool UCLPropertySet::delProperty(uint8_t category)
 {
     properties.erase(category);
+    setSet();
+}
+
+UCLPropertyBase UCLPropertySet::getProperty(uint8_t category)
+{
+    assert(properties.find(category) != properties.end());
+    return properties[category];
 }
 
 void UCLPropertySet::setPropertyVPart(int pos, string value)
@@ -128,16 +135,16 @@ void UCLPropertySet::unpack(string propertySet)
                 switch (j)
                 {
                     case 0:
-                        lValueNum = (0xffffff00 & lValueNum) | lValue[j];
+                        lValueNum = (0xffffff00 & lValueNum) | (lValue[j] & 0xff);
                         break;
                     case 1:
-                        lValueNum = (0xffff00ff & lValueNum) | (lValue[j]<<8);
+                        lValueNum = (0xffff00ff & lValueNum) | ((lValue[j] & 0xff)<<8);
                         break;
                     case 2:
-                        lValueNum = (0xff00ffff & lValueNum) | (lValue[j]<<16);
+                        lValueNum = (0xff00ffff & lValueNum) | ((lValue[j] & 0xff)<<16);
                         break;
                     case 3:
-                        lValueNum = (0xff00ffff & lValueNum) | (lValue[j]<<24);
+                        lValueNum = (0xff00ffff & lValueNum) | ((lValue[j] & 0xff)<<24);
                         break;
                 }
             }
@@ -152,7 +159,7 @@ void UCLPropertySet::unpack(string propertySet)
 
 void UCLPropertySet::showPropertySet()
 {
-    cout << "The category of propertySet: " << (int)propertyHead.getSize() << endl;
+    cout << "The category of propertySet: " << (int)propertyHead.getCategory() << endl;
     map<int, UCLPropertyBase>::iterator property = properties.begin();
     for(; property!=properties.end(); property++)
     {

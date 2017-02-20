@@ -94,6 +94,25 @@ void UCL::setUCL()
 //    uclPropertyHead.setTotalLength();
 }
 
+bool UCL::setProperty(int setPos, UCLPropertyBase &property)
+{
+    propertySets[setPos].setProperty(property);
+    setUCL();
+}
+
+bool UCL::delProperty(int setPos, int propertyPos)
+{
+    assert(propertySets.find(setPos) != propertySets.end());
+    propertySets[setPos].delProperty(propertyPos);
+    setUCL();
+}
+
+UCLPropertyBase UCL::getProperty(int setPos, int propertyPos)
+{
+    assert(propertySets.find(setPos) != propertySets.end());
+    return propertySets[setPos].getProperty(propertyPos);
+}
+
 string UCL::getValue(int setPos, int propertyPos)
 {
     assert(propertySets.find(setPos)!=propertySets.end());
@@ -130,21 +149,22 @@ void UCL::unpackPropertySets(string properties)
             //取出长度值字段
             string lValue = headVPart.substr(2+tmp, lValueBytes);
             uint32_t lValueNum = 0;
+
             for(int j=0; j < lValue.size(); j++)
             {
                 switch (j)
                 {
                     case 0:
-                        lValueNum = (0xffffff00 & lValueNum) | lValue[j];
+                        lValueNum = (0xffffff00 & lValueNum) | (lValue[j] & 0xff);
                         break;
                     case 1:
-                        lValueNum = (0xffff00ff & lValueNum) | (lValue[j]<<8);
+                        lValueNum = (0xffff00ff & lValueNum) | ((lValue[j] & 0xff)<<8);
                         break;
                     case 2:
-                        lValueNum = (0xff00ffff & lValueNum) | (lValue[j]<<16);
+                        lValueNum = (0xff00ffff & lValueNum) | ((lValue[j] & 0xff)<<16);
                         break;
                     case 3:
-                        lValueNum = (0xff00ffff & lValueNum) | (lValue[j]<<24);
+                        lValueNum = (0xff00ffff & lValueNum) | ((lValue[j] & 0xff)<<24);
                         break;
                 }
             }
