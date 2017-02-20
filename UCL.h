@@ -54,6 +54,11 @@ public:
     bool setPropertySet(UCLPropertySet &propertySet);
     bool delPropertySet(uint8_t category);
 
+    //设置 删除属性
+    bool setProperty(int setPos, UCLPropertyBase &property);
+    bool delProperty(int setPos, int propertyPos);
+    UCLPropertyBase getProperty(int setPos, int propertyPos);
+
     //获取第setPos集合的第propertyPos属性的vPart
     string getValue(int setPos, int propertyPos);
     //设置第setPos集合的第propertyPos属性的vPart

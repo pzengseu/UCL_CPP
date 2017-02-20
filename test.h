@@ -12,12 +12,14 @@
 #include "UCL.h"
 #include "property/GenerateProperty.h"
 #include <sstream>
+#include "property/GenerateProperty.h"
 
 using namespace std;
 void printPackString(string pack);
 
 void testUCL()
 {
+    UCL ucl;
     UCLCode code_test;
 
     code_test.setVersion(1);
@@ -37,17 +39,31 @@ void testUCL()
     code_test.setReservedBytes(0xffffffffff);
     code_test.setVersion(3);//对于已经设置过的域重复设置
 
-    UCL ucl;
     ucl.setUclCode(code_test);
 
+    UCLPropertySet snps;
+    UCLPropertyBase nr = GenerateProperty::generateSNPSNR("WuHan");
+    snps.setProperty(nr);
+    cout << "SNPS: \n";
+    printPackString(snps.pack());
+
     UCLPropertySet cdps = GenerateProperty::generateCDPS("SEU");
+    UCLPropertyBase title = GenerateProperty::generateCDPSTitle("习近平：解决突出问题 推动六中全会精神落实处");
+    UCLPropertyBase keywords = GenerateProperty::generateCDPSKeywords(3, "习近平;六中全会;中央党校");
+    UCLPropertyBase author = GenerateProperty::generateCDPSAuthor(1, 1, "新华社:隗俊");
+    UCLPropertyBase entity = GenerateProperty::generateCDPSEntity(1, "习近平");
+    cdps.setProperty(title);
+    cdps.setProperty(keywords);
+    cdps.setProperty(author);
+    cdps.setProperty(entity);
+
     cout << "CDPS: \n";
     printPackString(cdps.pack());
 
     CGPSRequired cr;
-    cr.provenance = "seu";
+    cr.provenance = "www.sina.com";
     cr.proDes = 1;
-    cr.security = u8"贼高";
+    cr.security = "高";
     cr.secHelper = 0;
     cr.chain = "seu;thing";
     cr.chainCount = 2;
@@ -58,6 +74,7 @@ void testUCL()
     cout << "CGPS: \n";
     printPackString(cgps.pack());
 
+    ucl.setPropertySet(snps);
     ucl.setPropertySet(cdps);
     ucl.setPropertySet(cgps);
     cout << "propertySet: \n";
@@ -67,14 +84,18 @@ void testUCL()
     ucl.showUCL();
 
     UCL ucl2;
-    ucl2.unpack(ucl.pack());
+    string ucl1 = ucl.pack();
+    ucl2.unpack(ucl1);
     ucl2.setValue(1, 1, "China SEU");
-    cout << "After unpack----------\npropertySet: \n";
-    printPackString(ucl2.packPropertySets());
+    ucl2.delProperty(1, 1);
+    ucl2.setProperty(1, title);
+    cout << "After unpack----------";
+//    printPackString(ucl2.packPropertySets());
     cout << "UCLPackage: \n";
     printPackString(ucl2.pack());
     ucl2.showUCL();
 }
+
 UCLPropertySet testSetUnpack()
 {
     UCLPropertyBase pe = GenerateProperty::generateSNPSPE(0xe, "我;爱;你");
