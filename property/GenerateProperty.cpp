@@ -69,8 +69,8 @@ UCLPropertyBase GenerateProperty::generateCDPSAuthor(uint8_t persons, uint8_t co
     companies = companies>7?7:companies;
 
     UCLPropertyBase author;
-    author.setLPartHead(0, 2, persons - 1);
-    author.setLPartHead(3, 5, companies - 1);
+    author.setLPartHead(0, 2, persons);
+    author.setLPartHead(3, 5, companies);
 
     setProperty(author, 4, helper, vPart);
     return author;

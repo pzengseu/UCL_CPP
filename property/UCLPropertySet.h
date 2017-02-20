@@ -40,7 +40,6 @@ public:
     //设置属性 删除属性
     bool setProperty(UCLPropertyBase property);
     bool delProperty(uint8_t category);
-    UCLPropertyBase getProperty(uint8_t category);
 
     //设置属性值
     string getPropertyVPart(int pos);
