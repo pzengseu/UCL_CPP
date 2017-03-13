@@ -91,4 +91,7 @@ public:
     //打印UCL各部分
     void showUCL();
 };
+
+string switchHelper(int helper, string temp);
+string generateSigUCLP(int helper, int alg, string temp);
 #endif //UCL_UCL_H

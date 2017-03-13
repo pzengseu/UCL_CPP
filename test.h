@@ -6,6 +6,7 @@
 #define UCL_CPP_TEST_H
 
 #include <iomanip>
+#include <fstream>
 #include <iostream>
 #include "property/UCLPropertyHead.h"
 #include "property/UCLPropertySet.h"
@@ -16,6 +17,71 @@
 
 using namespace std;
 void printPackString(string pack);
+
+void testEasy()
+{
+    UCL ucl;
+    UCLCode code_test;
+
+    code_test.setVersion(1);
+    code_test.setTypeOfMedia(9);
+    code_test.setPrecedence(15);
+    code_test.setFlag(13);
+    code_test.setParseRule(0xfff1);//ff1有效
+    code_test.setSourOfCont(0xfffffff1);//ffffff1有效
+    code_test.setCategory(255);
+    code_test.setSubCategory(257);//0x01有效
+    code_test.setTopic(0xffffff1);
+    code_test.setTypeOfContent(254);
+    code_test.setCopyAndLeng(252);
+    code_test.setSecuEnerLeveCode(251);
+    code_test.setTimeStamp(0x3ffffffffffff);
+    code_test.setSerialNumber(0x3fffff);
+    code_test.setReservedBytes(0xffffffffff);
+    code_test.setVersion(3);//对于已经设置过的域重复设置
+
+    ucl.setUclCode(code_test);
+
+    UCLPropertySet snps;
+    snps.setHeadCategory(0);
+    UCLPropertyBase nr = GenerateProperty::generateSNPSNR("WuHan");
+    snps.setProperty(nr);
+    cout << "SNPS: \n";
+    printPackString(snps.pack());
+
+    UCLPropertySet cdps;
+    cdps.setHeadCategory(1);
+    UCLPropertyBase title = GenerateProperty::generateCDPSTitle("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa习近平：解决突出问题 推动六中全会精神落实处");
+    cdps.setProperty(title);
+//    cout << hex << cdps.generateQuickMatcher()<< "  " << cdps.getPropertyHead().getTotalLength() << endl;
+    cout << "CDPS: \n";
+    printPackString(cdps.pack());
+
+    UCLPropertySet cgps;
+    cgps.setHeadCategory(15);
+    UCLPropertyBase sigUCL = GenerateProperty::generateCGPSSignatureUCL(3, "", 0);
+    cgps.setProperty(sigUCL);
+    cout << "CGPS: \n";
+    printPackString(cgps.pack());
+
+    ucl.setPropertySet(snps);
+    ucl.setPropertySet(cdps);
+    ucl.setPropertySet(cgps);
+//    cout << hex << ucl.generateQuickMatcher()<< "  " << ucl.getUclPropertyHead().getTotalLength();
+    cout << "propertySet: \n";
+    printPackString(ucl.packPropertySets());
+    cout << "UCLPackage: \n";
+    printPackString(ucl.pack());
+    ucl.showUCL();
+
+    string ucl1 = ucl.pack();
+
+    UCL ucl2;
+    ucl2.unpack(ucl1);
+    cout << "UCLPackage: \n";
+    printPackString(ucl2.pack());
+    ucl2.showUCL();
+}
 
 void testUCL()
 {
@@ -42,6 +108,7 @@ void testUCL()
     ucl.setUclCode(code_test);
 
     UCLPropertySet snps;
+    snps.setHeadCategory(0);
     UCLPropertyBase nr = GenerateProperty::generateSNPSNR("WuHan");
     snps.setProperty(nr);
     cout << "SNPS: \n";
@@ -85,9 +152,19 @@ void testUCL()
     printPackString(ucl.pack());
     ucl.showUCL();
 
-    UCL ucl2;
     string ucl1 = ucl.pack();
-    ucl2.unpack(ucl1);
+    //将ucl1写入文件
+    fstream fout;
+    fout.open("E:\\UCL_CPP\\hello.txt", ios::out);
+    fout << ucl1;
+    fout.close();
+    //读取文件
+    fstream fin("E:\\UCL_CPP\\hello.txt", ios::in);
+    istreambuf_iterator<char>beg(fin), end;
+    string uclS2(beg, end);
+
+    UCL ucl2;
+    ucl2.unpack(uclS2);
     cout << "UCLPackage: \n";
     printPackString(ucl2.pack());
     ucl2.showUCL();

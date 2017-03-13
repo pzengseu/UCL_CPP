@@ -11,9 +11,6 @@
 #include "tools/UCLCRC32.h"
 #include "tools/UCLSHA_256.h"
 
-string switchHelper(int helper, string temp);
-string generateSigUCLP(int helper, int alg, string temp);
-
 const UCLPropertyHead &UCL::getUclPropertyHead() const {
     return uclPropertyHead;
 }
