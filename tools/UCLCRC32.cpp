@@ -13,13 +13,14 @@ void UCLCRC32::make_table()
             table[i] = (table[i]>>1)^((table[i]&1)?POLYNOMIAL:0) ;
 }
 
-string UCLCRC32::generateCrc32(string buff)
+string crc32(const string &buff)
 {
     uint32_t crc = 0;
-    if (!have_table) make_table() ;
+    UCLCRC32 uclcrc32 = UCLCRC32();
+    if (!uclcrc32.have_table) uclcrc32.make_table() ;
     crc = ~crc;
     for (int i = 0; i < buff.length(); i++)
-        crc = (crc >> 8) ^ table[(crc ^ buff[i]) & 0xff];
+        crc = (crc >> 8) ^ uclcrc32.table[(crc ^ buff[i]) & 0xff];
     char crc32[8];
     sprintf(crc32,"%08x",~crc);
     return crc32;

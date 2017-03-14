@@ -18,7 +18,7 @@ uint32_t UCLSHA_256::rRot(uint32_t val, int pos){
     pos %= 32;
     return ( val >> pos ) | ( val << (32 - pos) );
 }
-string UCLSHA_256::sha_256(string str){
+string sha256(const string &str){
     char digest[65];
     // 提取字符跟预处理
     uint32_t orilen = str.length(); // 以byte计算长度
@@ -52,24 +52,25 @@ string UCLSHA_256::sha_256(string str){
     H[6] = 0x1f83d9ab;
     H[7] = 0x5be0cd19;
 
+    UCLSHA_256 uclsha256 = UCLSHA_256();
     for (uint32_t i = 0; i < chunks_count*16; i += 16) {
         uint32_t *puint = &filldata[i];
         for (uint32_t j = 0; j < 16; ++j) {
             w[j] = puint[j];
         }
         for (uint32_t j = 16; j < 64; ++j) {
-            s[0] = ( rRot(w[j - 15], 7) ) ^ ( rRot(w[j - 15], 18) ) ^ ( w[j - 15]>>3 );
-            s[1] = ( rRot(w[j - 2], 17) ) ^ ( rRot(w[j - 2], 19) ) ^ ( w[j - 2]>>10 );
+            s[0] = ( uclsha256.rRot(w[j - 15], 7) ) ^ ( uclsha256.rRot(w[j - 15], 18) ) ^ ( w[j - 15]>>3 );
+            s[1] = ( uclsha256.rRot(w[j - 2], 17) ) ^ ( uclsha256.rRot(w[j - 2], 19) ) ^ ( w[j - 2]>>10 );
             w[j] = w[j - 16] + s[0] + w[j - 7] + s[1];
         }
         a = H[0], b = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
 
         for (uint32_t j = 0; j < 64; ++j) {
             uint32_t maj, t[3], ch;
-            s[0] = ( rRot(a,2) ) ^ (rRot(a,13)) ^ (rRot(a,22));
+            s[0] = ( uclsha256.rRot(a,2) ) ^ (uclsha256.rRot(a,13)) ^ (uclsha256.rRot(a,22));
             maj = (a & b) ^ (a & c) ^ (b & c);
             t[2] = s[0] + maj;
-            s[1] = rRot(e, 6) ^ rRot(e, 11) ^ rRot(e, 25);
+            s[1] = uclsha256.rRot(e, 6) ^ uclsha256.rRot(e, 11) ^ uclsha256.rRot(e, 25);
             ch = (e & f) ^ ((~e) & g);
             t[1] = h + s[1] + ch + k[j] + w[j];
             h = g, g = f, f = e, e = d + t[1], d = c, c = b, b = a, a = t[1] + t[2];

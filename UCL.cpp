@@ -10,6 +10,7 @@
 #include "tools/md5.h"
 #include "tools/UCLCRC32.h"
 #include "tools/UCLSHA_256.h"
+#include "tools/UCLSHA_512.h"
 
 const UCLPropertyHead &UCL::getUclPropertyHead() const {
     return uclPropertyHead;
@@ -233,21 +234,20 @@ bool UCL::checkUCL()
 string generateSigUCLP(int helper, int alg, string temp)
 {
     string uclSigTemp;
-    UCLCRC32 crc;
-    UCLSHA_256 sha;
 
     switch(alg)
     {
         case 1: //CRC32
-            uclSigTemp = crc.generateCrc32(temp);
+            uclSigTemp = crc32(temp);
             break;
         case 2: //MD5
             uclSigTemp = MD5(temp).toString();
             break;
         case 3: //SHA-256
-            uclSigTemp = sha.sha_256(temp);
+            uclSigTemp = sha256(temp);
             break;
-        case 4:
+        case 4: //SHA-512
+            uclSigTemp = sha512(temp);
             break;
         default: break;
     }
