@@ -1,7 +1,5 @@
 #include <iostream>
 #include "test.h"
-#include "tools/UCLCRC32.h"
-#include "tools/UCLSHA_256.h"
 
 using namespace std;
 
