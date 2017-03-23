@@ -51,7 +51,7 @@ void testEasy()
 
     UCLPropertySet cdps;
     cdps.setHeadCategory(1);
-    UCLPropertyBase title = GenerateProperty::generateCDPSTitle("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa习近平：解决突出问题 推动六中全会精神落实处");
+    UCLPropertyBase title = GenerateProperty::generateCDPSTitle("习近平：解决突出问题 推动六中全会精神落实处");
     cdps.setProperty(title);
 //    cout << hex << cdps.generateQuickMatcher()<< "  " << cdps.getPropertyHead().getTotalLength() << endl;
     cout << "CDPS: \n";
@@ -115,7 +115,7 @@ void testUCL()
     printPackString(snps.pack());
 
     UCLPropertySet cdps = GenerateProperty::generateCDPS("SEU");
-    UCLPropertyBase title = GenerateProperty::generateCDPSTitle("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa习近平：解决突出问题 推动六中全会精神落实处");
+    UCLPropertyBase title = GenerateProperty::generateCDPSTitle("习近平：解决突出问题 推动六中全会精神落实处");
     UCLPropertyBase keywords = GenerateProperty::generateCDPSKeywords(3, "习近平;六中全会;中央党校");
     UCLPropertyBase author = GenerateProperty::generateCDPSAuthor(1, 1, "新华社:隗俊");
     UCLPropertyBase entity = GenerateProperty::generateCDPSEntity(1, "xjp");
@@ -196,7 +196,7 @@ void printPackString(string pack)
 //    ostringstream ostr;
     for(int i=0; i <= pack.size(); i++) {
 //        ostr<<hex << (uint16_t)pack[i] << "-";
-        cout << hex << ((uint16_t)pack[i] & 0xff) << "-";
+        cout << setw(2) << setfill('0') << hex << ((uint16_t)pack[i] & 0xff) << "-";
 
     }
 //    string s=ostr.str();
