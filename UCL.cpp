@@ -231,7 +231,7 @@ bool UCL::checkUCL()
     else { return false; }
 }
 
-string generateSigUCLP(int helper, int alg, string temp)
+string UCL::generateSigUCLP(int helper, int alg, string temp)
 {
     string uclSigTemp;
 
@@ -256,7 +256,7 @@ string generateSigUCLP(int helper, int alg, string temp)
     return uclSigTemp;
 }
 
-string switchHelper(int helper, string s)
+string UCL::switchHelper(int helper, string s)
 {
     switch(helper)
     {

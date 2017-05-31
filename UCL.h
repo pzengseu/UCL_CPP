@@ -90,6 +90,9 @@ public:
     bool checkUCL();
     //打印UCL各部分
     void showUCL();
+
+    static string generateSigUCLP(int helper, int alg, string temp);
+    static string switchHelper(int helper, string s);
 };
 
 string switchHelper(int helper, string temp);
