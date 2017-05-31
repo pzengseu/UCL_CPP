@@ -104,6 +104,7 @@ void testEasy()
     printPackString(ucl.packPropertySets());
     cout << "UCLPackage: \n";
     printPackString(ucl.pack());
+    ucl.getUclCode().showCode();
     ucl.showUCL();
 
     string ucl1 = ucl.pack();
@@ -112,6 +113,7 @@ void testEasy()
     ucl2.unpack(ucl1);
     cout << "UCLPackage: \n";
     printPackString(ucl2.pack());
+    ucl2.getUclCode().showCode();
     ucl2.showUCL();
 }
 
