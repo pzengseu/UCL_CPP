@@ -1,9 +1,12 @@
+//
+// Created by Oneway on 2017/6/1.
+//
+#include "testUCLCode.h"
 #include <iostream>
 #include <bitset>
-#include <stdio.h>
-#include <stdlib.h>
+
 #include <iomanip>
-#include "header_file/UCLCode.h"
+#include "code/header_file/UCLCode.h"
 
 using  namespace std;
 
@@ -78,9 +81,11 @@ void test_unpack()
     showCodeHex(s2);
     code_test.showCode();
 }
+/*
 int main() {
 
     test_code();
     test_unpack();
     return 0;
 }
+*/

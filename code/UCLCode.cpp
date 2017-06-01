@@ -1,5 +1,6 @@
 //
-// Created by hp-6380 on 2016/12/5.
+// Created by Oneway on 2016/12/5.
+// Modified by Oneway on 2017/6/1.
 //
 
 #include "./header_file/UCLCode.h"
@@ -22,42 +23,46 @@ void UCLCode::codeDisplay(const UCLCode &code) const
         std::cout << i << ":" << setw(8) << setfill('0') << itoa(code.uclCode[i], ch, 2) << std::endl;
     }
     */
-    cout << setw(28) << "Version:" << code.getVersion() << "\n";
-    cout << setw(28) << "Type of Media:" << code.getTypeOfMedia() << "\n";
-    cout << setw(28) << "Precedence:" << code.getPrecedence() << "\n";
-    cout << setw(28) << "Flag:" << code.getFlag() << "\n";
-    cout << setw(28) << "Parse Rule:" << code.getParseRule() << "\n";
-    cout << setw(28) << "Source of Content:" << code.getSourOfCont() << "\n";
-    cout << setw(28) << "Category:" << code.getCategory() << "\n";
-    cout << setw(28) << "Subcategory:" << code.getSubCategory() << "\n";
-    cout << setw(28) << "Topic:" << code.getTopic() << "\n";
-    cout << setw(28) << "Type of Content:" << code.getTypeOfContent() << "\n";
-    cout << setw(28) << "Copyright and Length:" << code.getCopyAndLeng() << "\n";
-    cout << setw(28) << "Security Energy Level Code:" << code.getSecuEnerLeveCode() << "\n";
-    cout << setw(28) << "Time Stamp:" << code.getTimeStamp() << "\n";
-    cout << setw(28) << "Serial Number:" << code.getSerialNumber() << "\n";
-    cout << setw(28) << "Reserved Bytes:" << code.getReservedBytes() << "\n";
-    cout << setw(28) << "Check Code:" << code.getCheckCode() << endl;
+    int width = 32;
+    cout << setfill(' ') << setw(width) << "Version:" << code.getVersion() << "\n";
+    cout << setfill(' ') << setw(width) << "Type of Media:" << code.getTypeOfMedia() << "\n";
+    cout << setfill(' ') << setw(width) << "Prio and Poli:" << code.getPrioAndPoli() << "\n";
+    cout << setfill(' ') << setw(width) << "Flag:" << code.getFlag() << "\n";
+    cout << setfill(' ') << setw(width) << "Parse Rule:" << code.getParseRule() << "\n";
+    cout << setfill(' ') << setw(width) << "Source of Content:" << code.getSourOfCont() << "\n";
+    cout << setfill(' ') << setw(width) << "Category:" << code.getCategory() << "\n";
+    cout << setfill(' ') << setw(width) << "Subcategory:" << code.getSubCategory() << "\n";
+    cout << setfill(' ') << setw(width) << "Topic:" << code.getTopic() << "\n";
+    cout << setfill(' ') << setw(width) << "Copyright and Type of Cont:" << code.getCopyAndTypeOfCont() << "\n";
+    cout << setfill(' ') << setw(width) << "Security Energy Level Code:" << code.getSecuEnerLeveCode() << "\n";
+    cout << setfill(' ') << setw(width) << "Language:" << code.getLanguage() << "\n";
+    cout << setfill(' ') << setw(width) << "Size of Content:" << code.getSizeOfContent() << "\n";
+    cout << setfill(' ') << setw(width) << "Time Stamp:" << code.getTimeStamp() << "\n";
+    cout << setfill(' ') << setw(width) << "Serial Number:" << code.getSerialNumber() << "\n";
+    cout << setfill(' ') << setw(width) << "Multiplex Bytes:" << code.getMultiplexBytes() << "\n";
+    cout << setfill(' ') << setw(width) << "Code Check:" << code.getCodeCheck() << endl;
 }
 
 void UCLCode::showCode() const
 {
-    cout << setw(28) << "Version:" << getVersion() << "\n";
-    cout << setw(28) << "Type of Media:" << getTypeOfMedia() << "\n";
-    cout << setw(28) << "Precedence:" << getPrecedence() << "\n";
-    cout << setw(28) << "Flag:" << getFlag() << "\n";
-    cout << setw(28) << "Parse Rule:" << getParseRule() << "\n";
-    cout << setw(28) << "Source of Content:" << getSourOfCont() << "\n";
-    cout << setw(28) << "Category:" << getCategory() << "\n";
-    cout << setw(28) << "Subcategory:" << getSubCategory() << "\n";
-    cout << setw(28) << "Topic:" << getTopic() << "\n";
-    cout << setw(28) << "Type of Content:" << getTypeOfContent() << "\n";
-    cout << setw(28) << "Copyright and Length:" << getCopyAndLeng() << "\n";
-    cout << setw(28) << "Security Energy Level Code:" << getSecuEnerLeveCode() << "\n";
-    cout << setw(28) << "Time Stamp:" << getTimeStamp() << "\n";
-    cout << setw(28) << "Serial Number:" << getSerialNumber() << "\n";
-    cout << setw(28) << "Reserved Bytes:" << getReservedBytes() << "\n";
-    cout << setw(28) << "Check Code:" << getCheckCode() << endl;
+    int width = 32;
+    cout << setfill(' ') << setw(width) << "Version:" << getVersion() << "\n";
+    cout << setfill(' ') << setw(width) << "Type of Media:" << getTypeOfMedia() << "\n";
+    cout << setfill(' ') << setw(width) << "Prio and Poli:" << getPrioAndPoli() << "\n";
+    cout << setfill(' ') << setw(width) << "Flag:" << getFlag() << "\n";
+    cout << setfill(' ') << setw(width) << "Parse Rule:" << getParseRule() << "\n";
+    cout << setfill(' ') << setw(width) << "Source of Content:" << getSourOfCont() << "\n";
+    cout << setfill(' ') << setw(width) << "Category:" << getCategory() << "\n";
+    cout << setfill(' ') << setw(width) << "Subcategory:" << getSubCategory() << "\n";
+    cout << setfill(' ') << setw(width) << "Topic:" << getTopic() << "\n";
+    cout << setfill(' ') << setw(width) << "Copyright and Type of Cont:" << getCopyAndTypeOfCont() << "\n";
+    cout << setfill(' ') << setw(width) << "Security Energy Level Code:" << getSecuEnerLeveCode() << "\n";
+    cout << setfill(' ') << setw(width) << "Language:" << getLanguage() << "\n";
+    cout << setfill(' ') << setw(width) << "Size of Content:" << getSizeOfContent() << "\n";
+    cout << setfill(' ') << setw(width) << "Time Stamp:" << getTimeStamp() << "\n";
+    cout << setfill(' ') << setw(width) << "Serial Number:" << getSerialNumber() << "\n";
+    cout << setfill(' ') << setw(width) << "Multiplex Bytes:" << getMultiplexBytes() << "\n";
+    cout << setfill(' ') << setw(width) << "Code Check:" << getCodeCheck() << endl;
 }
 
 //根据给定的起始字节、起始位和长度获取uclCode的值
@@ -130,7 +135,7 @@ string UCLCode::pack()
 {
     if (modifiedNums)//打包之前首先检查是否生成最新的校验码
     {
-        setCheckCode();
+        setCodeCheck();
     }
     /*
     char ch[CODE_BYTES] = {'\0'};
@@ -180,15 +185,15 @@ bool UCLCode::setTypeOfMedia(const uint64_t typeOfMedia)
     return setBits(TYPEOFMEDIA_START_BYTE, TYPEOFMEDIA_START_BIT, TYPEOFMEDIA_BIT_LENGTH, typeOfMedia);
 }
 
-//precedence
-uint64_t UCLCode::getPrecedence() const
+//priority and policy
+uint64_t UCLCode::getPrioAndPoli() const
 {
-    return getBits(PRECEDENCE_START_BYTE, PRECEDENCE_START_BIT, PRECEDENCE_BIT_LENGTH);
+    return getBits(PRIOANDPOLI_START_BYTE, PRIOANDPOLI_START_BIT, PRIOANDPOLI_BIT_LENGTH);
 }
 
-bool UCLCode::setPrecedence(const uint64_t precedence)
+bool UCLCode::setPrioAndPoli(const uint64_t prioAndPoli)
 {
-    return setBits(PRECEDENCE_START_BYTE, PRECEDENCE_START_BIT, PRECEDENCE_BIT_LENGTH, precedence);
+    return setBits(PRIOANDPOLI_START_BYTE, PRIOANDPOLI_START_BIT, PRIOANDPOLI_BIT_LENGTH, prioAndPoli);
 }
 
 //flag
@@ -257,26 +262,15 @@ bool UCLCode::setTopic(const uint64_t topic)
     return setBits(TOPIC_START_BYTE, TOPIC_START_BIT, TOPIC_BIT_LENGTH, topic);
 }
 
-//type of content
-uint64_t UCLCode::getTypeOfContent() const
+//copyright and type of content
+uint64_t UCLCode::getCopyAndTypeOfCont() const
 {
-    return getBits(TYPEOFCONTENT_START_BYTE, TYPEOFCONTENT_START_BIT, TYPEOFCONTENT_BIT_LENGTH);
+    return getBits(COPYANDTYPEOFCONT_START_BYTE, COPYANDTYPEOFCONT_START_BIT, COPYANDTYPEOFCONT_BIT_LENGTH);
 }
 
-bool UCLCode::setTypeOfContent(const uint64_t typeOfContent)
+bool UCLCode::setCopyAndTypeOfCont(const uint64_t copyAndTypeOfCont)
 {
-    return setBits(TYPEOFCONTENT_START_BYTE, TYPEOFCONTENT_START_BIT, TYPEOFCONTENT_BIT_LENGTH, typeOfContent);
-}
-
-//copyright and length
-uint64_t UCLCode::getCopyAndLeng() const
-{
-    return getBits(COPYANDLENG_START_BYTE, COPYANDLENG_START_BIT, COPYANDLENG_BIT_LENGTH);
-}
-
-bool UCLCode::setCopyAndLeng(const uint64_t copyAndLeng)
-{
-    return setBits(COPYANDLENG_START_BYTE, COPYANDLENG_START_BIT, COPYANDLENG_BIT_LENGTH, copyAndLeng);
+    return setBits(COPYANDTYPEOFCONT_START_BYTE, COPYANDTYPEOFCONT_START_BIT, COPYANDTYPEOFCONT_BIT_LENGTH, copyAndTypeOfCont);
 }
 
 //security energy level code
@@ -288,6 +282,27 @@ uint64_t UCLCode::getSecuEnerLeveCode() const
 bool UCLCode::setSecuEnerLeveCode(const uint64_t secuEnerLeveCode)
 {
     return setBits(SECUENERLEVECODE_START_BYTE, SECUENERLEVECODE_START_BIT, SECUENERLEVECODE_BIT_LENGTH, secuEnerLeveCode);
+}
+
+//language
+uint64_t UCLCode::getLanguage() const
+{
+    return getBits(LANGUAGE_START_BYTE, LANGUAGE_START_BIT, LANGUAGE_BIT_LENGTH);
+}
+
+bool UCLCode::setLanguage(const uint64_t language)
+{
+    return setBits(LANGUAGE_START_BYTE, LANGUAGE_START_BIT,LANGUAGE_BIT_LENGTH, language);
+}
+
+//size of content
+uint64_t UCLCode::getSizeOfContent() const
+{
+    return getBits(SIZEOFCONTENT_START_BYTE, SIZEOFCONTENT_START_BIT, SIZEOFCONTENT_BIT_LENGTH);
+}
+bool UCLCode::setSizeOfContent(const uint64_t sizeOfContent)
+{
+    return setBits(SIZEOFCONTENT_START_BYTE, SIZEOFCONTENT_START_BIT, SIZEOFCONTENT_BIT_LENGTH, sizeOfContent);
 }
 
 //time stamp
@@ -304,35 +319,78 @@ bool UCLCode::setTimeStamp(const uint64_t timeStamp)
 //serial number
 uint64_t UCLCode::getSerialNumber() const
 {
-    return getBits(SERIALNUMBER_START_BYTE, SERIALNUMBER_START_BIT, SERIALNUMBER_BIT_LENGTH);
+    uint64_t lengthField = getBits(SERIALNUMBER_START_BYTE, SERIALNUMBER_START_BIT, 2);//前两位标识域的长度
+    uint64_t  lengOfSeriNumb = (lengthField <= 0x01) ? 8 : (lengthField << 3);//00-8b, 01-8b, 10-16b, 11-24b
+    if(lengOfSeriNumb > SERIALNUMBER_MAX_LENGTH)
+    {
+        lengOfSeriNumb = SERIALNUMBER_DEFAULT_LENGTH;
+    }
+    return getBits(SERIALNUMBER_START_BYTE, SERIALNUMBER_START_BIT, lengOfSeriNumb);
 }
 
 bool UCLCode::setSerialNumber(const uint64_t serialNumber)
 {
-    return setBits(SERIALNUMBER_START_BYTE, SERIALNUMBER_START_BIT, SERIALNUMBER_BIT_LENGTH, serialNumber);
+    uint8_t lengOfSeriNumb = SERIALNUMBER_DEFAULT_LENGTH;
+    if(serialNumber & 0x800000)
+    {
+        lengOfSeriNumb = 24;
+    }
+    else if(serialNumber & 0x8000)
+    {
+        lengOfSeriNumb = 16;
+    }
+    return setBits(SERIALNUMBER_START_BYTE, SERIALNUMBER_START_BIT, lengOfSeriNumb, serialNumber);
 }
 
-//reserved bytes
-uint64_t UCLCode::getReservedBytes() const
+//multiplex bytes
+uint64_t UCLCode::getMultiplexBytes() const
 {
-    return getBits(RESERVEDBYTES_START_BYTE, RESERVEDBYTES_START_BIT, RESERVEDBYTES_BIT_LENGTH);
+    //首先获取serial number的长度
+    uint64_t lengthField = getBits(SERIALNUMBER_START_BYTE, SERIALNUMBER_START_BIT, 2);//前两位标识域的长度
+    uint64_t lengOfSeriNumb = (lengthField <= 0x01) ? 8 : (lengthField << 3);//00-1B, 01-1B, 10-2B, 11-3B
+    if(lengthField > SERIALNUMBER_MAX_LENGTH)
+    {
+        lengOfSeriNumb = 8;
+    }
+
+    uint8_t startByte = SERIALNUMBER_START_BYTE + lengOfSeriNumb / 8;
+    uint8_t bitLength = (MULTIPLEX_END_BYTE - startByte) << 3;
+    if(bitLength > MULTIPLEXBYTES_MAX_LENGTH)
+    {
+        bitLength = 32;
+    }
+    return getBits(startByte, MULTIPLEXBYTES_START_BIT, bitLength);
 }
 
-bool UCLCode::setReservedBytes(const uint64_t reservedBytes)
+bool UCLCode::setMultiplexBytes(const uint64_t multiplexBytes)
 {
-    return setBits(RESERVEDBYTES_START_BYTE, RESERVEDBYTES_START_BIT, RESERVEDBYTES_BIT_LENGTH, reservedBytes);
+    //首先获取serial number的长度
+    uint64_t lengthField = getBits(SERIALNUMBER_START_BYTE, SERIALNUMBER_START_BIT, 2);//前两位标识域的长度
+    uint64_t lengOfSeriNumb = (lengthField <= 0x01) ? 8 : (lengthField << 3);//00-1B, 01-1B, 10-2B, 11-3B
+    if(lengthField > SERIALNUMBER_MAX_LENGTH)
+    {
+        lengOfSeriNumb = 8;
+    }
+
+    uint8_t startByte = SERIALNUMBER_START_BYTE + lengOfSeriNumb / 8;
+    uint8_t bitLength = (MULTIPLEX_END_BYTE - startByte) << 3;
+    if(bitLength > MULTIPLEXBYTES_MAX_LENGTH)
+    {
+        bitLength = 32;
+    }
+    return setBits(startByte, MULTIPLEXBYTES_START_BIT, bitLength, multiplexBytes);
 }
 
-//check code
-uint64_t UCLCode::getCheckCode() const
+//code check
+uint64_t UCLCode::getCodeCheck() const
 {
-    return getBits(CHECKCODE_START_BYTE, CHECKCODE_START_BIT, CHECKCODE_BIT_LENGTH);
+    return getBits(CODECHECK_START_BYTE, CODECHECK_START_BIT, CODECHECK_BIT_LENGTH);
 }
 
-bool UCLCode::setCheckCode()
+bool UCLCode::setCodeCheck()
 {
-    uint16_t checkCode = CRC16(uclCode, CODE_BYTES - (CHECKCODE_BIT_LENGTH / 8));
-    bool setResult = setBits(CHECKCODE_START_BYTE, CHECKCODE_START_BIT, CHECKCODE_BIT_LENGTH, checkCode);
+    uint16_t checkCode = CRC16(uclCode, CODE_BYTES - (CODECHECK_BIT_LENGTH / 8));
+    bool setResult = setBits(CODECHECK_START_BYTE, CODECHECK_START_BIT, CODECHECK_BIT_LENGTH, checkCode);
     if (setResult)
     {
         modifiedNums = 0;//设置校验码成功后则将修改次数置0

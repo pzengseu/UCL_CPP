@@ -8,9 +8,25 @@ UCL ucl；
 ```
 UCLCode uclCode;
 ```
-然后使用UCLCode中的setXXX方法设置UCLCode中各个域的值。
+然后使用UCLCode中的setXXX方法设置UCLCode中各个域的值（code check会根据需要自动生成）。
 ```
-ucl.setUclCode(uclCode); //设置uclCode部分
+	//所有参数均为uint64_t
+    ucl.setVersion(1);
+    ucl.setTypeOfMedia(9);
+    ucl.setPrioAndPoli(15);
+    ucl.setFlag(13);
+    ucl.setParseRule(0xfff1);//ff1有效
+    ucl.setSourOfCont(0xfffffff1);//ffffff1有效
+    ucl.setCategory(255);
+    ucl.setSubCategory(257);//0x01有效
+    ucl.setTopic(0xffffff1);
+    ucl.setCopyAndTypeOfCont(254);
+    ucl.setSecuEnerLeveCode(251);
+    ucl.setLanguage(253);
+    ucl.setSizeOfContent(31);
+    ucl.setTimeStamp(0x3fffffffff9f9);
+    ucl.setSerialNumber(0x4f);
+    ucl.setMultiplexBytes(0x1f3f5f7f9f48);
 ```
 
 3. 自定义属性
