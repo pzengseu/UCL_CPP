@@ -54,9 +54,9 @@ public:
     uint64_t getTypeOfMedia() const;
     bool setTypeOfMedia(const uint64_t typeOfMedia);
 
-    //precedence
-    uint64_t getPrecedence() const;
-    bool setPrecedence(const uint64_t precedence);
+    //priority and policy
+    uint64_t getPrioAndPoli() const;
+    bool setPrioAndPoli(const uint64_t prioAndPoli);
 
     //flag
     uint64_t getFlag() const;
@@ -82,17 +82,21 @@ public:
     uint64_t getTopic() const;
     bool setTopic(const uint64_t topic);
 
-    //type of content
-    uint64_t getTypeOfContent() const;
-    bool setTypeOfContent(const uint64_t typeOfContent);
-
-    //copyright and length
-    uint64_t getCopyAndLeng() const;
-    bool setCopyAndLeng(const uint64_t copyAndLeng);
+    //copyright and type of content
+    uint64_t getCopyAndTypeOfCont() const;
+    bool setCopyAndTypeOfCont(const uint64_t copyAndTypeOfCont);
 
     //security energy level code
     uint64_t getSecuEnerLeveCode() const;
     bool setSecuEnerLeveCode(const uint64_t secuEnerLeveCode);
+
+    //language
+    uint64_t getLanguage() const;
+    bool setLanguage(const uint64_t language);
+
+    //size of content
+    uint64_t getSizeOfContent() const;
+    bool setSizeOfContent(const uint64_t sizeOfContent);
 
     //time stamp
     uint64_t getTimeStamp() const;
@@ -102,13 +106,13 @@ public:
     uint64_t getSerialNumber() const;
     bool setSerialNumber(const uint64_t serialNumber);
 
-    //reserved bytes
-    uint64_t getReservedBytes() const;
-    bool setReservedBytes(const uint64_t reservedBytes);
+    //multiplex bytes
+    uint64_t getMultiplexBytes() const;
+    bool setMultiplexBytes(const uint64_t multiplexBytes);
 
-    //check code
-    uint64_t getCheckCode() const;
-    bool setCheckCode();//打包的时候会生成校验码
+    //code check
+    uint64_t getCodeCheck() const;
+    bool setCodeCheck();//打包的时候会生成校验码
 
     uint16_t CRC16(uint8_t * message, uint16_t length) const;
 
