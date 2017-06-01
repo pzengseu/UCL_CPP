@@ -20,6 +20,7 @@ void printPackString(string pack);
 
 void testEasy()
 {
+    cout << "\n========== UCL test begin==========\n";
     UCL ucl;
     UCLCode code_test;
 
@@ -55,6 +56,7 @@ void testEasy()
 //    cout << "SNPS: \n";
 //    printPackString(snps.pack());
 
+    cout << "\n##############测试属性##############\n\n";
     UCLPropertySet cdps;
     cdps.setHeadCategory(1);
     UCLPropertyBase title = GenerateProperty::generateCDPSTitle("江苏今年起实施“12311”计划 培育百个农业特色镇");
@@ -80,7 +82,7 @@ void testEasy()
     cdps.setProperty(related);
     cdps.setProperty(content);
 //    cout << hex << cdps.generateQuickMatcher()<< "  " << cdps.getPropertyHead().getTotalLength() << endl;
-    cout << "CDPS: \n";
+    cout << "--------------CDPS-------------- \n";
     printPackString(cdps.pack());
 
     ucl.setPropertySet(cdps);
@@ -101,103 +103,40 @@ void testEasy()
     cgps.setProperty(chain);
     UCLPropertyBase sigUCL = GenerateProperty::generateCGPSSignatureUCL(3, 0);
     cgps.setProperty(sigUCL);
-    cout << "CGPS: \n";
+    cout << "--------------CGPS-------------- \n";
     printPackString(cgps.pack());
 
     ucl.setPropertySet(cgps);
 //    cout << hex << ucl.generateQuickMatcher()<< "  " << ucl.getUclPropertyHead().getTotalLength();
-    cout << "propertySet: \n";
+    cout << "--------------propertySet--------------\n";
     printPackString(ucl.packPropertySets());
-    cout << "UCLPackage: \n";
+
+    cout << "\n##############测试打包##############\n\n";
+    cout << "--------------UCLPackage-------------- \n";
     printPackString(ucl.pack());
+    cout << "--------------显示UCL各部分关键信息--------------\n";
     ucl.getUclCode().showCode();
     ucl.showUCL();
 
     string ucl1 = ucl.pack();
 
+    cout << "\n##############测试解包##############\n\n";
     UCL ucl2;
     ucl2.unpack(ucl1);
-    cout << "UCLPackage: \n";
+    cout << "--------------UCLPackage--------------\n";
     printPackString(ucl2.pack());
+    cout << "--------------解包后UCL各部分关键信息--------------\n";
     ucl2.getUclCode().showCode();
     ucl2.showUCL();
+
+    cout << "========== UCL test end==========\n";
 }
 
 void printPackString(string pack)
 {
-//    ostringstream ostr;
     for(int i=0; i <= pack.size(); i++) {
-//        ostr<<hex << (uint16_t)pack[i] << "-";
         cout << setw(2) << setfill('0') << hex << ((uint16_t)pack[i] & 0xff) << "-";
-
     }
-//    string s=ostr.str();
-//    cout<<"UCL:"<<s<<endl;
-//    cout<<"MD5:"<<getMD5(s);
-    cout << "\n------------\n";
-}
-
-void testPropertyPack()
-{
-    UCLPropertyHead property;
-    property.setCategory(0x1);
-    property.setHelper(0xa);
-    property.setLPartHead(0x21);
-    property.setQuickMatcherBytesNum();
-    property.setQuickMatcher(0x23ab);
-    cout << setbase(16) << (int)property.getQuickMatcher() << endl;
-    property.setVPart(u8"abc");
-    property.setTotalLength();
-
-    cout << setbase(16) << (int)property.getCategory() << ";";
-    cout << setbase(16) << (int)property.getHelper() << ";\nTPart: " << (int)property.getTPart() << endl;
-    cout << setbase(16) << "LPart: " << (int)property.getLPart() << endl;
-    cout << setbase(16) << property.getVPart() << endl;
-    cout << "pack----------\n";
-    string pack = property.pack();
-//    for(int i=0; i <= pack.size(); i++)
-//        cout << setbase(16) << (short)pack[i] << endl;
-
-    UCLPropertyHead property2;
-    property2.unpack(pack);
-    cout << setbase(16) << (int)property2.getCategory() << ";";
-    cout << setbase(16) << (int)property2.getHelper() << ";\nTPart: " << (int)property2.getTPart() << endl;
-    cout << setbase(16) << "LPart: " << (int)property2.getLPart() << endl;
-    cout << setbase(16) << property2.getVPart() << endl;
-}
-
-UCLPropertyBase testUCLPropertyBase()
-{
-    UCLPropertyBase propertyBase;
-    propertyBase.setCategory(0xe);
-    propertyBase.setHelper(0x5);
-//    propertyBase.setLPartHead(0xff);
-    propertyBase.setVPart("Base");
-    propertyBase.setTotalLength();
-
-    cout << setbase(16) << (int)propertyBase.getCategory() << ";";
-    cout << setbase(16) << (int)propertyBase.getHelper() << ";\nTPart: " << (int)propertyBase.getTPart() << endl;
-    cout << setbase(16) << "LPart: " << (int)propertyBase.getLPart() << endl; //700
-    cout << setbase(16) << propertyBase.getVPart() << endl;
-
-    return propertyBase;
-}
-
-void testUCLPropertyHead()
-{
-    UCLPropertyHead property;
-    property.setCategory(0xe);
-    property.setHelper(0x5);
-//    propertyBase.setLPartHead(0xff);
-    property.setQuickMatcherBytesNum(2);
-    property.setQuickMatcher(0x23fa);
-    property.setVPart("Head");
-    property.setTotalLength();
-
-    cout << setbase(16) << (int)property.getCategory() << ";";
-    cout << setbase(16) << (int)property.getHelper() << ";\nTPart: " << (int)property.getTPart() << endl;
-    cout << setbase(16) << "LPart: " << (int)property.getLPart() << endl; //23fa0924
-    cout << setbase(16) << property.getVPart() << endl;
-    cout<<(int)property.getSize()<<endl;
+    cout << "\n\n";
 }
 #endif //UCL_CPP_TEST_H

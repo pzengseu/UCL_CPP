@@ -10,23 +10,23 @@ UCLCode uclCode;
 ```
 然后使用UCLCode中的setXXX方法设置UCLCode中各个域的值（code check会根据需要自动生成）。
 ```
-	//所有参数均为uint64_t
-    ucl.setVersion(1);
-    ucl.setTypeOfMedia(9);
-    ucl.setPrioAndPoli(15);
-    ucl.setFlag(13);
-    ucl.setParseRule(0xfff1);//ff1有效
-    ucl.setSourOfCont(0xfffffff1);//ffffff1有效
-    ucl.setCategory(255);
-    ucl.setSubCategory(257);//0x01有效
-    ucl.setTopic(0xffffff1);
-    ucl.setCopyAndTypeOfCont(254);
-    ucl.setSecuEnerLeveCode(251);
-    ucl.setLanguage(253);
-    ucl.setSizeOfContent(31);
-    ucl.setTimeStamp(0x3fffffffff9f9);
-    ucl.setSerialNumber(0x4f);
-    ucl.setMultiplexBytes(0x1f3f5f7f9f48);
+//所有参数均为uint64_t
+ucl.setVersion(1);
+ucl.setTypeOfMedia(9);
+ucl.setPrioAndPoli(15);
+ucl.setFlag(13);
+ucl.setParseRule(0xfff1);//ff1有效
+ucl.setSourOfCont(0xfffffff1);//ffffff1有效
+ucl.setCategory(255);
+ucl.setSubCategory(257);//0x01有效
+ucl.setTopic(0xffffff1);
+ucl.setCopyAndTypeOfCont(254);
+ucl.setSecuEnerLeveCode(251);
+ucl.setLanguage(253);
+ucl.setSizeOfContent(31);
+ucl.setTimeStamp(0x3fffffffff9f9);
+ucl.setSerialNumber(0x4f);
+ucl.setMultiplexBytes(0x1f3f5f7f9f48);
 ```
 
 3. 自定义属性
@@ -103,36 +103,110 @@ ucl2.unpack(ucl1);
 - 打包ucl对象成string对象；
 - 将string对象解包成ucl对象，从而可以获取每个字段值。
 
-#### 参考test.h中testEasy()方法, 运行输出如下。
+#### main()函数运行输出如下。
 ```
-CDPS: 
+========== UCL Code test begin==========
+new a UCLCode:
+                        Version:0
+                  Type of Media:0
+                  Prio and Poli:0
+                           Flag:0
+                     Parse Rule:0
+              Source of Content:0
+                       Category:0
+                    Subcategory:0
+                          Topic:0
+     Copyright and Type of Cont:0
+     Security Energy Level Code:0
+                       Language:0
+                Size of Content:0
+                     Time Stamp:0
+                  Serial Number:0
+                Multiplex Bytes:0
+                     Code Check:0
+****************************************************************************************************
+UCLCode:
+69:0f:0d:ff:1f:ff:ff:f1:ff:01:0f:ff:ff:f1:fe:fb:fd:ff:ff:ff:ff:f9:f9:4f:1f:3f:5f:7f:9f:48:53:10:
+****************************************************************************************************
+                        Version:3
+                  Type of Media:9
+                  Prio and Poli:15
+                           Flag:13
+                     Parse Rule:4081
+              Source of Content:268435441
+                       Category:255
+                    Subcategory:1
+                          Topic:268435441
+     Copyright and Type of Cont:254
+     Security Energy Level Code:251
+                       Language:253
+                Size of Content:31
+                     Time Stamp:8796093020665
+                  Serial Number:79
+                Multiplex Bytes:34357045600072
+                     Code Check:21264
+unpack test:
+****************************************************************************************************
+string:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+****************************************************************************************************
+UCLCode:
+61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:61:
+                        Version:3
+                  Type of Media:1
+                  Prio and Poli:97
+                           Flag:97
+                     Parse Rule:1558
+              Source of Content:23159137
+                       Category:97
+                    Subcategory:97
+                          Topic:1633771873
+     Copyright and Type of Cont:97
+     Security Energy Level Code:97
+                       Language:97
+                Size of Content:12
+                     Time Stamp:1517757227361
+                  Serial Number:97
+                Multiplex Bytes:107070873493857
+                     Code Check:24929
+========== UCL Code test end  ==========
+
+========== UCL test begin==========
+
+##############测试属性##############
+
+--------------CDPS-------------- 
 01-68-fd-01-fe-c3-01-00-45-e6-b1-9f-e8-8b-8f-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e8-ae-a1-e5-88-92-20-e5-9f-b9-e8-82-b2-e7-99-be-e4-b8-aa-e5-86-9c-e4-b8-9a-e7-89-b9-e8-89-b2-e9-95-87-02-10-17-e6-b1-9f-e8-8b-8f-3b-e4-b9-a1-e6-9d-91-3b-e5-9b-bd-e5-ae-b6-03-00-9e-e7-9c-81-e5-86-9c-e5-a7-94-e6-97-a5-e5-89-8d-e5-9c-a8-e9-87-91-e5-9d-9b-e5-8f-ac-e5-bc-80-e5-85-a8-e7-9c-81-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e5-b7-a5-e4-bd-9c-e6-8e-a8-e8-bf-9b-e4-bc-9a-ef-bc-8c-e5-86-b3-e5-ae-9a-e4-bb-8e-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e7-9c-81-e7-ba-a7-e7-89-b9-e8-89-b2-e5-93-81-e7-89-8c-e5-9f-b9-e8-82-b2-e8-ae-a1-e5-88-92-04-12-2f-e9-82-b9-e5-bb-ba-e4-b8-b0-3a-e6-96-b0-e5-8d-8e-e6-97-a5-e6-8a-a5-5c-72-e5-be-ae-e5-8d-9a-3b-e5-8d-9a-e5-ae-a2-3a-e6-96-b0-e6-b5-aa-05-1f-33-e6-b1-9f-e8-8b-8f-e7-9c-81-e5-a7-94-5c-72-32-30-31-37-5c-72-e9-87-91-e5-9d-9b-5c-72-e5-9f-b9-e8-82-b2-e8-ae-a1-e5-88-92-5c-72-e7-be-8e-e4-b8-bd-06-08-10-e7-be-8e-e4-b8-bd-3b-e4-b9-a1-e6-9d-91-07-00-0f-e6-96-b0-e5-8d-8e-e6-97-a5-e6-8a-a5-08-00-0c-e7-9a-b1-e5-bb-ba-e4-b8-b0-09-00-0d-e6-96-87-e6-9c-ac-3b-31-30-4d-0e-10-11-75-63-6c-31-3b-75-63-6c-32-3b-75-63-6c-33-0f-00-52-e6-b1-9f-e8-8b-8f-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e8-ae-a1-e5-88-92-2c-20-e5-85-a8-e7-9c-81-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e5-b7-a5-e4-bd-9c-e6-8e-a8-e8-bf-9b-e4-bc-9a-00-
-------------
-CGPS: 
+
+--------------CGPS-------------- 
 0f-18-bf-38-f0-03-08-4c-68-74-74-70-3a-2f-2f-6a-69-61-6e-67-73-75-2e-73-69-6e-61-2e-63-6f-6d-2e-63-6e-2f-6e-65-77-73-2f-62-2f-32-30-31-37-2d-30-35-2d-33-31-2f-64-65-74-61-69-6c-2d-69-66-79-66-71-71-79-68-39-30-38-30-30-31-35-2e-73-68-74-6d-6c-04-00-07-73-69-6e-61-05-04-0d-62-61-69-64-75-3b-73-69-6e-61-0c-0c-43-37-36-66-39-62-39-31-62-65-37-30-30-65-30-64-31-38-61-30-63-63-35-63-65-38-65-61-36-64-65-39-36-65-38-65-37-34-34-66-38-36-62-63-39-31-39-31-37-30-34-65-35-37-31-61-30-31-63-37-66-65-35-62-65-0d-00-09-e9-87-8d-e8-a6-81-0e-04-0b-73-69-61-6e-3b-73-65-75-0f-0c-03-00-
-------------
-propertySet: 
+
+--------------propertySet--------------
 02-44-c2-02-02-80-01-68-fd-01-fe-c3-01-00-45-e6-b1-9f-e8-8b-8f-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e8-ae-a1-e5-88-92-20-e5-9f-b9-e8-82-b2-e7-99-be-e4-b8-aa-e5-86-9c-e4-b8-9a-e7-89-b9-e8-89-b2-e9-95-87-02-10-17-e6-b1-9f-e8-8b-8f-3b-e4-b9-a1-e6-9d-91-3b-e5-9b-bd-e5-ae-b6-03-00-9e-e7-9c-81-e5-86-9c-e5-a7-94-e6-97-a5-e5-89-8d-e5-9c-a8-e9-87-91-e5-9d-9b-e5-8f-ac-e5-bc-80-e5-85-a8-e7-9c-81-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e5-b7-a5-e4-bd-9c-e6-8e-a8-e8-bf-9b-e4-bc-9a-ef-bc-8c-e5-86-b3-e5-ae-9a-e4-bb-8e-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e7-9c-81-e7-ba-a7-e7-89-b9-e8-89-b2-e5-93-81-e7-89-8c-e5-9f-b9-e8-82-b2-e8-ae-a1-e5-88-92-04-12-2f-e9-82-b9-e5-bb-ba-e4-b8-b0-3a-e6-96-b0-e5-8d-8e-e6-97-a5-e6-8a-a5-5c-72-e5-be-ae-e5-8d-9a-3b-e5-8d-9a-e5-ae-a2-3a-e6-96-b0-e6-b5-aa-05-1f-33-e6-b1-9f-e8-8b-8f-e7-9c-81-e5-a7-94-5c-72-32-30-31-37-5c-72-e9-87-91-e5-9d-9b-5c-72-e5-9f-b9-e8-82-b2-e8-ae-a1-e5-88-92-5c-72-e7-be-8e-e4-b8-bd-06-08-10-e7-be-8e-e4-b8-bd-3b-e4-b9-a1-e6-9d-91-07-00-0f-e6-96-b0-e5-8d-8e-e6-97-a5-e6-8a-a5-08-00-0c-e7-9a-b1-e5-bb-ba-e4-b8-b0-09-00-0d-e6-96-87-e6-9c-ac-3b-31-30-4d-0e-10-11-75-63-6c-31-3b-75-63-6c-32-3b-75-63-6c-33-0f-00-52-e6-b1-9f-e8-8b-8f-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e8-ae-a1-e5-88-92-2c-20-e5-85-a8-e7-9c-81-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e5-b7-a5-e4-bd-9c-e6-8e-a8-e8-bf-9b-e4-bc-9a-0f-18-bf-38-f0-03-08-4c-68-74-74-70-3a-2f-2f-6a-69-61-6e-67-73-75-2e-73-69-6e-61-2e-63-6f-6d-2e-63-6e-2f-6e-65-77-73-2f-62-2f-32-30-31-37-2d-30-35-2d-33-31-2f-64-65-74-61-69-6c-2d-69-66-79-66-71-71-79-68-39-30-38-30-30-31-35-2e-73-68-74-6d-6c-04-00-07-73-69-6e-61-05-04-0d-62-61-69-64-75-3b-73-69-6e-61-0c-0c-43-37-36-66-39-62-39-31-62-65-37-30-30-65-30-64-31-38-61-30-63-63-35-63-65-38-65-61-36-64-65-39-36-65-38-65-37-34-34-66-38-36-62-63-39-31-39-31-37-30-34-65-35-37-31-61-30-31-63-37-66-65-35-62-65-0d-00-09-e9-87-8d-e8-a6-81-0e-04-0b-73-69-61-6e-3b-73-65-75-0f-0c-03-00-
-------------
-UCLPackage: 
-69-fd-ff-1f-ff-ff-f1-ff-01-0f-ff-ff-f1-fe-fc-fb-ff-ff-ff-ff-ff-ff-ff-ff-ff-ff-ff-ff-ff-ff-67-55-02-44-02-03-02-80-01-68-fd-01-fe-c3-01-00-45-e6-b1-9f-e8-8b-8f-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e8-ae-a1-e5-88-92-20-e5-9f-b9-e8-82-b2-e7-99-be-e4-b8-aa-e5-86-9c-e4-b8-9a-e7-89-b9-e8-89-b2-e9-95-87-02-10-17-e6-b1-9f-e8-8b-8f-3b-e4-b9-a1-e6-9d-91-3b-e5-9b-bd-e5-ae-b6-03-00-9e-e7-9c-81-e5-86-9c-e5-a7-94-e6-97-a5-e5-89-8d-e5-9c-a8-e9-87-91-e5-9d-9b-e5-8f-ac-e5-bc-80-e5-85-a8-e7-9c-81-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e5-b7-a5-e4-bd-9c-e6-8e-a8-e8-bf-9b-e4-bc-9a-ef-bc-8c-e5-86-b3-e5-ae-9a-e4-bb-8e-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e7-9c-81-e7-ba-a7-e7-89-b9-e8-89-b2-e5-93-81-e7-89-8c-e5-9f-b9-e8-82-b2-e8-ae-a1-e5-88-92-04-12-2f-e9-82-b9-e5-bb-ba-e4-b8-b0-3a-e6-96-b0-e5-8d-8e-e6-97-a5-e6-8a-a5-5c-72-e5-be-ae-e5-8d-9a-3b-e5-8d-9a-e5-ae-a2-3a-e6-96-b0-e6-b5-aa-05-1f-33-e6-b1-9f-e8-8b-8f-e7-9c-81-e5-a7-94-5c-72-32-30-31-37-5c-72-e9-87-91-e5-9d-9b-5c-72-e5-9f-b9-e8-82-b2-e8-ae-a1-e5-88-92-5c-72-e7-be-8e-e4-b8-bd-06-08-10-e7-be-8e-e4-b8-bd-3b-e4-b9-a1-e6-9d-91-07-00-0f-e6-96-b0-e5-8d-8e-e6-97-a5-e6-8a-a5-08-00-0c-e7-9a-b1-e5-bb-ba-e4-b8-b0-09-00-0d-e6-96-87-e6-9c-ac-3b-31-30-4d-0e-10-11-75-63-6c-31-3b-75-63-6c-32-3b-75-63-6c-33-0f-00-52-e6-b1-9f-e8-8b-8f-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e8-ae-a1-e5-88-92-2c-20-e5-85-a8-e7-9c-81-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e5-b7-a5-e4-bd-9c-e6-8e-a8-e8-bf-9b-e4-bc-9a-0f-18-ff-38-f0-03-08-4c-68-74-74-70-3a-2f-2f-6a-69-61-6e-67-73-75-2e-73-69-6e-61-2e-63-6f-6d-2e-63-6e-2f-6e-65-77-73-2f-62-2f-32-30-31-37-2d-30-35-2d-33-31-2f-64-65-74-61-69-6c-2d-69-66-79-66-71-71-79-68-39-30-38-30-30-31-35-2e-73-68-74-6d-6c-04-00-07-73-69-6e-61-05-04-0d-62-61-69-64-75-3b-73-69-6e-61-0c-0c-43-37-36-66-39-62-39-31-62-65-37-30-30-65-30-64-31-38-61-30-63-63-35-63-65-38-65-61-36-64-65-39-36-65-38-65-37-34-34-66-38-36-62-63-39-31-39-31-37-30-34-65-35-37-31-61-30-31-63-37-66-65-35-62-65-0d-00-09-e9-87-8d-e8-a6-81-0e-04-0b-73-69-61-6e-3b-73-65-75-0f-0c-43-61-63-39-32-63-32-66-38-30-65-66-66-35-36-34-64-30-64-35-66-62-66-63-33-64-37-37-61-37-31-38-38-64-61-63-64-62-61-63-66-31-33-63-61-65-31-32-37-33-61-36-34-64-34-62-61-31-65-36-37-33-66-33-66-00-
-------------
-00000000000000000000Version:3
-00000000000000Type of Media:9
-00000000000000000Precedence:f
-00000000000000000000000Flag:d
-00000000000000000Parse Rule:ff1
-0000000000Source of Content:ffffff1
-0000000000000000000Category:ff
-0000000000000000Subcategory:1
-0000000000000000000000Topic:ffffff1
-000000000000Type of Content:fe
-0000000Copyright and Length:fc
-0Security Energy Level Code:fb
-00000000000000000Time Stamp:3ffffffffffff
-00000000000000Serial Number:3fffff
-0000000000000Reserved Bytes:ffffffffff
-00000000000000000Check Code:6755
+
+
+##############测试打包##############
+
+--------------UCLPackage-------------- 
+69-0f-0d-ff-1f-ff-ff-f1-ff-01-0f-ff-ff-f1-fe-fb-fd-ff-ff-ff-ff-f9-f9-4f-1f-3f-5f-7f-9f-48-53-10-02-44-02-03-02-80-01-68-fd-01-fe-c3-01-00-45-e6-b1-9f-e8-8b-8f-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e8-ae-a1-e5-88-92-20-e5-9f-b9-e8-82-b2-e7-99-be-e4-b8-aa-e5-86-9c-e4-b8-9a-e7-89-b9-e8-89-b2-e9-95-87-02-10-17-e6-b1-9f-e8-8b-8f-3b-e4-b9-a1-e6-9d-91-3b-e5-9b-bd-e5-ae-b6-03-00-9e-e7-9c-81-e5-86-9c-e5-a7-94-e6-97-a5-e5-89-8d-e5-9c-a8-e9-87-91-e5-9d-9b-e5-8f-ac-e5-bc-80-e5-85-a8-e7-9c-81-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e5-b7-a5-e4-bd-9c-e6-8e-a8-e8-bf-9b-e4-bc-9a-ef-bc-8c-e5-86-b3-e5-ae-9a-e4-bb-8e-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e7-9c-81-e7-ba-a7-e7-89-b9-e8-89-b2-e5-93-81-e7-89-8c-e5-9f-b9-e8-82-b2-e8-ae-a1-e5-88-92-04-12-2f-e9-82-b9-e5-bb-ba-e4-b8-b0-3a-e6-96-b0-e5-8d-8e-e6-97-a5-e6-8a-a5-5c-72-e5-be-ae-e5-8d-9a-3b-e5-8d-9a-e5-ae-a2-3a-e6-96-b0-e6-b5-aa-05-1f-33-e6-b1-9f-e8-8b-8f-e7-9c-81-e5-a7-94-5c-72-32-30-31-37-5c-72-e9-87-91-e5-9d-9b-5c-72-e5-9f-b9-e8-82-b2-e8-ae-a1-e5-88-92-5c-72-e7-be-8e-e4-b8-bd-06-08-10-e7-be-8e-e4-b8-bd-3b-e4-b9-a1-e6-9d-91-07-00-0f-e6-96-b0-e5-8d-8e-e6-97-a5-e6-8a-a5-08-00-0c-e7-9a-b1-e5-bb-ba-e4-b8-b0-09-00-0d-e6-96-87-e6-9c-ac-3b-31-30-4d-0e-10-11-75-63-6c-31-3b-75-63-6c-32-3b-75-63-6c-33-0f-00-52-e6-b1-9f-e8-8b-8f-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e8-ae-a1-e5-88-92-2c-20-e5-85-a8-e7-9c-81-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e5-b7-a5-e4-bd-9c-e6-8e-a8-e8-bf-9b-e4-bc-9a-0f-18-ff-38-f0-03-08-4c-68-74-74-70-3a-2f-2f-6a-69-61-6e-67-73-75-2e-73-69-6e-61-2e-63-6f-6d-2e-63-6e-2f-6e-65-77-73-2f-62-2f-32-30-31-37-2d-30-35-2d-33-31-2f-64-65-74-61-69-6c-2d-69-66-79-66-71-71-79-68-39-30-38-30-30-31-35-2e-73-68-74-6d-6c-04-00-07-73-69-6e-61-05-04-0d-62-61-69-64-75-3b-73-69-6e-61-0c-0c-43-37-36-66-39-62-39-31-62-65-37-30-30-65-30-64-31-38-61-30-63-63-35-63-65-38-65-61-36-64-65-39-36-65-38-65-37-34-34-66-38-36-62-63-39-31-39-31-37-30-34-65-35-37-31-61-30-31-63-37-66-65-35-62-65-0d-00-09-e9-87-8d-e8-a6-81-0e-04-0b-73-69-61-6e-3b-73-65-75-0f-0c-43-36-39-39-31-38-63-33-62-31-32-63-64-37-64-62-62-35-36-39-62-65-34-38-61-32-63-64-63-36-32-39-33-62-65-32-61-34-66-65-62-37-34-34-31-61-39-36-35-61-35-30-39-37-33-35-38-38-30-64-36-37-63-37-62-00-
+
+--------------显示UCL各部分关键信息--------------
+                        Version:3
+                  Type of Media:9
+                  Prio and Poli:f
+                           Flag:d
+                     Parse Rule:ff1
+              Source of Content:ffffff1
+                       Category:ff
+                    Subcategory:1
+                          Topic:ffffff1
+     Copyright and Type of Cont:fe
+     Security Energy Level Code:fb
+                       Language:fd
+                Size of Content:1f
+                     Time Stamp:7fffffff9f9
+                  Serial Number:4f
+                Multiplex Bytes:1f3f5f7f9f48
+                     Code Check:5310
 The size of propertySet:2
 The category of propertySet: 1
 The category and value of property: 1   江苏今年起实施“12311”计划 培育百个农业特色镇
@@ -153,26 +227,31 @@ The category and value of property: 5   baidu;sina
 The category and value of property: c   76f9b91be700e0d18a0cc5ce8ea6de96e8e744f86bc9191704e571a01c7fe5be
 The category and value of property: d   重要
 The category and value of property: e   sian;seu
-The category and value of property: f   ac92c2f80eff564d0d5fbfc3d77a7188dacdbacf13cae1273a64d4ba1e673f3f
-UCLPackage: 
-69-fd-ff-1f-ff-ff-f1-ff-01-0f-ff-ff-f1-fe-fc-fb-ff-ff-ff-ff-ff-ff-ff-ff-ff-ff-ff-ff-ff-ff-67-55-02-44-02-03-02-80-01-68-fd-01-fe-c3-01-00-45-e6-b1-9f-e8-8b-8f-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e8-ae-a1-e5-88-92-20-e5-9f-b9-e8-82-b2-e7-99-be-e4-b8-aa-e5-86-9c-e4-b8-9a-e7-89-b9-e8-89-b2-e9-95-87-02-10-17-e6-b1-9f-e8-8b-8f-3b-e4-b9-a1-e6-9d-91-3b-e5-9b-bd-e5-ae-b6-03-00-9e-e7-9c-81-e5-86-9c-e5-a7-94-e6-97-a5-e5-89-8d-e5-9c-a8-e9-87-91-e5-9d-9b-e5-8f-ac-e5-bc-80-e5-85-a8-e7-9c-81-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e5-b7-a5-e4-bd-9c-e6-8e-a8-e8-bf-9b-e4-bc-9a-ef-bc-8c-e5-86-b3-e5-ae-9a-e4-bb-8e-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e7-9c-81-e7-ba-a7-e7-89-b9-e8-89-b2-e5-93-81-e7-89-8c-e5-9f-b9-e8-82-b2-e8-ae-a1-e5-88-92-04-12-2f-e9-82-b9-e5-bb-ba-e4-b8-b0-3a-e6-96-b0-e5-8d-8e-e6-97-a5-e6-8a-a5-5c-72-e5-be-ae-e5-8d-9a-3b-e5-8d-9a-e5-ae-a2-3a-e6-96-b0-e6-b5-aa-05-1f-33-e6-b1-9f-e8-8b-8f-e7-9c-81-e5-a7-94-5c-72-32-30-31-37-5c-72-e9-87-91-e5-9d-9b-5c-72-e5-9f-b9-e8-82-b2-e8-ae-a1-e5-88-92-5c-72-e7-be-8e-e4-b8-bd-06-08-10-e7-be-8e-e4-b8-bd-3b-e4-b9-a1-e6-9d-91-07-00-0f-e6-96-b0-e5-8d-8e-e6-97-a5-e6-8a-a5-08-00-0c-e7-9a-b1-e5-bb-ba-e4-b8-b0-09-00-0d-e6-96-87-e6-9c-ac-3b-31-30-4d-0e-10-11-75-63-6c-31-3b-75-63-6c-32-3b-75-63-6c-33-0f-00-52-e6-b1-9f-e8-8b-8f-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e8-ae-a1-e5-88-92-2c-20-e5-85-a8-e7-9c-81-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e5-b7-a5-e4-bd-9c-e6-8e-a8-e8-bf-9b-e4-bc-9a-0f-18-ff-38-f0-03-08-4c-68-74-74-70-3a-2f-2f-6a-69-61-6e-67-73-75-2e-73-69-6e-61-2e-63-6f-6d-2e-63-6e-2f-6e-65-77-73-2f-62-2f-32-30-31-37-2d-30-35-2d-33-31-2f-64-65-74-61-69-6c-2d-69-66-79-66-71-71-79-68-39-30-38-30-30-31-35-2e-73-68-74-6d-6c-04-00-07-73-69-6e-61-05-04-0d-62-61-69-64-75-3b-73-69-6e-61-0c-0c-43-37-36-66-39-62-39-31-62-65-37-30-30-65-30-64-31-38-61-30-63-63-35-63-65-38-65-61-36-64-65-39-36-65-38-65-37-34-34-66-38-36-62-63-39-31-39-31-37-30-34-65-35-37-31-61-30-31-63-37-66-65-35-62-65-0d-00-09-e9-87-8d-e8-a6-81-0e-04-0b-73-69-61-6e-3b-73-65-75-0f-0c-43-61-63-39-32-63-32-66-38-30-65-66-66-35-36-34-64-30-64-35-66-62-66-63-33-64-37-37-61-37-31-38-38-64-61-63-64-62-61-63-66-31-33-63-61-65-31-32-37-33-61-36-34-64-34-62-61-31-65-36-37-33-66-33-66-00-
-------------
-00000000000000000000Version:3
-00000000000000Type of Media:9
-00000000000000000Precedence:f
-00000000000000000000000Flag:d
-00000000000000000Parse Rule:ff1
-0000000000Source of Content:ffffff1
-0000000000000000000Category:ff
-0000000000000000Subcategory:1
-0000000000000000000000Topic:ffffff1
-000000000000Type of Content:fe
-0000000Copyright and Length:fc
-0Security Energy Level Code:fb
-00000000000000000Time Stamp:3ffffffffffff
-00000000000000Serial Number:3fffff
-0000000000000Reserved Bytes:ffffffffff
-00000000000000000Check Code:6755
+The category and value of property: f   69918c3b12cd7dbb569be48a2cdc6293be2a4feb7441a965a509735880d67c7b
+
+##############测试解包##############
+
+--------------UCLPackage--------------
+69-0f-0d-ff-1f-ff-ff-f1-ff-01-0f-ff-ff-f1-fe-fb-fd-ff-ff-ff-ff-f9-f9-4f-1f-3f-5f-7f-9f-48-53-10-02-44-02-03-02-80-01-68-fd-01-fe-c3-01-00-45-e6-b1-9f-e8-8b-8f-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e8-ae-a1-e5-88-92-20-e5-9f-b9-e8-82-b2-e7-99-be-e4-b8-aa-e5-86-9c-e4-b8-9a-e7-89-b9-e8-89-b2-e9-95-87-02-10-17-e6-b1-9f-e8-8b-8f-3b-e4-b9-a1-e6-9d-91-3b-e5-9b-bd-e5-ae-b6-03-00-9e-e7-9c-81-e5-86-9c-e5-a7-94-e6-97-a5-e5-89-8d-e5-9c-a8-e9-87-91-e5-9d-9b-e5-8f-ac-e5-bc-80-e5-85-a8-e7-9c-81-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e5-b7-a5-e4-bd-9c-e6-8e-a8-e8-bf-9b-e4-bc-9a-ef-bc-8c-e5-86-b3-e5-ae-9a-e4-bb-8e-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e7-9c-81-e7-ba-a7-e7-89-b9-e8-89-b2-e5-93-81-e7-89-8c-e5-9f-b9-e8-82-b2-e8-ae-a1-e5-88-92-04-12-2f-e9-82-b9-e5-bb-ba-e4-b8-b0-3a-e6-96-b0-e5-8d-8e-e6-97-a5-e6-8a-a5-5c-72-e5-be-ae-e5-8d-9a-3b-e5-8d-9a-e5-ae-a2-3a-e6-96-b0-e6-b5-aa-05-1f-33-e6-b1-9f-e8-8b-8f-e7-9c-81-e5-a7-94-5c-72-32-30-31-37-5c-72-e9-87-91-e5-9d-9b-5c-72-e5-9f-b9-e8-82-b2-e8-ae-a1-e5-88-92-5c-72-e7-be-8e-e4-b8-bd-06-08-10-e7-be-8e-e4-b8-bd-3b-e4-b9-a1-e6-9d-91-07-00-0f-e6-96-b0-e5-8d-8e-e6-97-a5-e6-8a-a5-08-00-0c-e7-9a-b1-e5-bb-ba-e4-b8-b0-09-00-0d-e6-96-87-e6-9c-ac-3b-31-30-4d-0e-10-11-75-63-6c-31-3b-75-63-6c-32-3b-75-63-6c-33-0f-00-52-e6-b1-9f-e8-8b-8f-e4-bb-8a-e5-b9-b4-e8-b5-b7-e5-ae-9e-e6-96-bd-e2-80-9c-31-32-33-31-31-e2-80-9d-e8-ae-a1-e5-88-92-2c-20-e5-85-a8-e7-9c-81-e5-88-9b-e6-84-8f-e4-bc-91-e9-97-b2-e5-86-9c-e4-b8-9a-e5-b7-a5-e4-bd-9c-e6-8e-a8-e8-bf-9b-e4-bc-9a-0f-18-ff-38-f0-03-08-4c-68-74-74-70-3a-2f-2f-6a-69-61-6e-67-73-75-2e-73-69-6e-61-2e-63-6f-6d-2e-63-6e-2f-6e-65-77-73-2f-62-2f-32-30-31-37-2d-30-35-2d-33-31-2f-64-65-74-61-69-6c-2d-69-66-79-66-71-71-79-68-39-30-38-30-30-31-35-2e-73-68-74-6d-6c-04-00-07-73-69-6e-61-05-04-0d-62-61-69-64-75-3b-73-69-6e-61-0c-0c-43-37-36-66-39-62-39-31-62-65-37-30-30-65-30-64-31-38-61-30-63-63-35-63-65-38-65-61-36-64-65-39-36-65-38-65-37-34-34-66-38-36-62-63-39-31-39-31-37-30-34-65-35-37-31-61-30-31-63-37-66-65-35-62-65-0d-00-09-e9-87-8d-e8-a6-81-0e-04-0b-73-69-61-6e-3b-73-65-75-0f-0c-43-36-39-39-31-38-63-33-62-31-32-63-64-37-64-62-62-35-36-39-62-65-34-38-61-32-63-64-63-36-32-39-33-62-65-32-61-34-66-65-62-37-34-34-31-61-39-36-35-61-35-30-39-37-33-35-38-38-30-64-36-37-63-37-62-00-
+
+--------------解包后UCL各部分关键信息--------------
+                        Version:3
+                  Type of Media:9
+                  Prio and Poli:f
+                           Flag:d
+                     Parse Rule:ff1
+              Source of Content:ffffff1
+                       Category:ff
+                    Subcategory:1
+                          Topic:ffffff1
+     Copyright and Type of Cont:fe
+     Security Energy Level Code:fb
+                       Language:fd
+                Size of Content:1f
+                     Time Stamp:7fffffff9f9
+                  Serial Number:4f
+                Multiplex Bytes:1f3f5f7f9f48
+                     Code Check:5310
 The size of propertySet:2
 The category of propertySet: 1
 The category and value of property: 1   江苏今年起实施“12311”计划 培育百个农业特色镇
@@ -193,7 +272,8 @@ The category and value of property: 5   baidu;sina
 The category and value of property: c   76f9b91be700e0d18a0cc5ce8ea6de96e8e744f86bc9191704e571a01c7fe5be
 The category and value of property: d   重要
 The category and value of property: e   sian;seu
-The category and value of property: f   ac92c2f80eff564d0d5fbfc3d77a7188dacdbacf13cae1273a64d4ba1e673f3f
+The category and value of property: f   69918c3b12cd7dbb569be48a2cdc6293be2a4feb7441a965a509735880d67c7b
+========== UCL test end==========
 
 Process finished with exit code 0
 ```

@@ -16,7 +16,7 @@ int main()
 {
     testUCLCodeEasy();//UCLCode部分测试函数
 
-    //测试属性部分打包解包
+    //测试UCL打包解包
     testEasy();
     //  cin.get();
     return 0;
