@@ -7,6 +7,10 @@
 #include <cassert>
 #include "property/UCLPropertyHead.h"
 #include "UCL.h"
+#include "tools/md5.h"
+#include "tools/UCLCRC32.h"
+#include "tools/UCLSHA_256.h"
+#include "tools/UCLSHA_512.h"
 
 const UCLPropertyHead &UCL::getUclPropertyHead() const {
     return uclPropertyHead;
@@ -90,6 +94,25 @@ void UCL::setUCL()
 //    uclPropertyHead.setTotalLength();
 }
 
+bool UCL::setProperty(int setPos, UCLPropertyBase &property)
+{
+    propertySets[setPos].setProperty(property);
+    setUCL();
+}
+
+bool UCL::delProperty(int setPos, int propertyPos)
+{
+    assert(propertySets.find(setPos) != propertySets.end());
+    propertySets[setPos].delProperty(propertyPos);
+    setUCL();
+}
+
+UCLPropertyBase UCL::getProperty(int setPos, int propertyPos)
+{
+    assert(propertySets.find(setPos) != propertySets.end());
+    return propertySets[setPos].getProperty(propertyPos);
+}
+
 string UCL::getValue(int setPos, int propertyPos)
 {
     assert(propertySets.find(setPos)!=propertySets.end());
@@ -126,21 +149,22 @@ void UCL::unpackPropertySets(string properties)
             //取出长度值字段
             string lValue = headVPart.substr(2+tmp, lValueBytes);
             uint32_t lValueNum = 0;
+
             for(int j=0; j < lValue.size(); j++)
             {
                 switch (j)
                 {
                     case 0:
-                        lValueNum = (0xffffff00 & lValueNum) | lValue[j];
+                        lValueNum = (0xffffff00 & lValueNum) | (lValue[j] & 0xff);
                         break;
                     case 1:
-                        lValueNum = (0xffff00ff & lValueNum) | (lValue[j]<<8);
+                        lValueNum = (0xffff00ff & lValueNum) | ((lValue[j] & 0xff)<<8);
                         break;
                     case 2:
-                        lValueNum = (0xff00ffff & lValueNum) | (lValue[j]<<16);
+                        lValueNum = (0xff00ffff & lValueNum) | ((lValue[j] & 0xff)<<16);
                         break;
                     case 3:
-                        lValueNum = (0xff00ffff & lValueNum) | (lValue[j]<<24);
+                        lValueNum = (0xff00ffff & lValueNum) | ((lValue[j] & 0xff)<<24);
                         break;
                 }
             }
@@ -155,6 +179,18 @@ void UCL::unpackPropertySets(string properties)
 
 string UCL::pack()
 {
+    setValue(15, 15, "");
+
+    string temp = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
+    map<int, UCLPropertyBase> ps = propertySets[15].getProperties();
+    UCLPropertyBase sigUCLP = ps[15];
+
+    int helper = sigUCLP.getHelper();
+    int alg = sigUCLP.getLPartHead(2, 5);
+    string uclSigTemp = generateSigUCLP(helper, alg, temp);
+
+    setValue(15, 15, uclSigTemp);
+
     return uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
 }
 
@@ -175,11 +211,77 @@ void UCL::unpack(string ucl)
 
     //UCLProperty
     unpackPropertySets(ucl.substr(32));
+
+    assert(checkUCL());
+}
+bool UCL::checkUCL()
+{
+    map<int, UCLPropertyBase> ps = propertySets[15].getProperties();
+    UCLPropertyBase sigUCLP = ps[15];
+
+    string uclSig = getValue(15, 15);
+    setValue(15, 15, "");
+    string temp = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
+
+    int helper = sigUCLP.getHelper();
+    int alg = sigUCLP.getLPartHead(2, 5);
+    string uclSigTemp = generateSigUCLP(helper, alg, temp);
+
+    if(uclSigTemp==uclSig) { return true; }
+    else { return false; }
+}
+
+string UCL::generateSigUCLP(int helper, int alg, string temp)
+{
+    string uclSigTemp;
+
+    switch(alg)
+    {
+        case 1: //CRC32
+            uclSigTemp = crc32(temp);
+            break;
+        case 2: //MD5
+            uclSigTemp = MD5(temp).toString();
+            break;
+        case 3: //SHA-256
+            uclSigTemp = sha256(temp);
+            break;
+        case 4: //SHA-512
+            uclSigTemp = sha512(temp);
+            break;
+        default: break;
+    }
+    uclSigTemp = switchHelper(helper, uclSigTemp);
+
+    return uclSigTemp;
+}
+
+string UCL::switchHelper(int helper, string s)
+{
+    switch(helper)
+    {
+        case 0:
+            break;
+        case 1:
+            //RSA
+            break;
+        case 2:
+            //ECDSA
+            break;
+        case 3:
+            //DSA
+            break;
+        case 4:
+            //ECC
+            break;
+        default: break;
+    }
+    return s;
 }
 
 void UCL::showUCL()
 {
-    uclCode.showCode();
+//    uclCode.showCode();
 //    uclCodeExtension.showCodeExt();
 
     cout << "The size of propertySet:" << (int)uclPropertyHead.getSize() << endl;

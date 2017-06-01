@@ -6,17 +6,21 @@
 #define UCL_CPP_TEST_H
 
 #include <iomanip>
+#include <fstream>
 #include <iostream>
 #include "property/UCLPropertyHead.h"
 #include "property/UCLPropertySet.h"
 #include "UCL.h"
 #include "property/GenerateProperty.h"
+#include <sstream>
+#include "property/GenerateProperty.h"
 
 using namespace std;
 void printPackString(string pack);
 
-void testUCL()
+void testEasy()
 {
+    UCL ucl;
     UCLCode code_test;
 
     code_test.setVersion(1);
@@ -36,129 +40,95 @@ void testUCL()
     code_test.setReservedBytes(0xffffffffff);
     code_test.setVersion(3);//对于已经设置过的域重复设置
 
-    UCL ucl;
     ucl.setUclCode(code_test);
 
-    UCLPropertySet cdps = GenerateProperty::generateCDPS("SEU");
+//    UCLPropertySet snps;
+//    snps.setHeadCategory(0);
+//    UCLPropertyBase nr = GenerateProperty::generateSNPSNR("WuHan");
+//    snps.setProperty(nr);
+//    cout << "SNPS: \n";
+//    printPackString(snps.pack());
+
+    UCLPropertySet cdps;
+    cdps.setHeadCategory(1);
+    UCLPropertyBase title = GenerateProperty::generateCDPSTitle("江苏今年起实施“12311”计划 培育百个农业特色镇");
+    UCLPropertyBase keywords = GenerateProperty::generateCDPSKeywords(3, "江苏;乡村;国家");
+    UCLPropertyBase abstract = GenerateProperty::generateCDPSAbstract("省农委日前在金坛召开全省创意休闲农业工作推进会，决定从今年起实施“12311”创意休闲农业省级特色品牌培育计划");
+    UCLPropertyBase author = GenerateProperty::generateCDPSAuthor(2, 2, "邹建丰:新华日报\\r微博;博客:新浪");
+    UCLPropertyBase entity = GenerateProperty::generateCDPSEntity(31, "江苏省委\\r2017\\r金坛\\r培育计划\\r美丽");
+    UCLPropertyBase tag = GenerateProperty::generateCDPSTag(2, "美丽;乡村");
+    UCLPropertyBase copyright = GenerateProperty::generateCDPSCopyright("新华日报");
+    UCLPropertyBase origin = GenerateProperty::generateCDPSOriginality("皱建丰");
+    UCLPropertyBase file = GenerateProperty::generateCDPSFileDescription("文本;10M");
+    UCLPropertyBase related = GenerateProperty::generateCDPSRelatedUCL(3, "ucl1;ucl2;ucl3");
+    UCLPropertyBase content = GenerateProperty::generateCDPSContentObject("江苏今年起实施“12311”计划, 全省创意休闲农业工作推进会");
+    cdps.setProperty(title);
+    cdps.setProperty(keywords);
+    cdps.setProperty(abstract);
+    cdps.setProperty(author);
+    cdps.setProperty(entity);
+    cdps.setProperty(tag);
+    cdps.setProperty(copyright);
+    cdps.setProperty(origin);
+    cdps.setProperty(file);
+    cdps.setProperty(related);
+    cdps.setProperty(content);
+//    cout << hex << cdps.generateQuickMatcher()<< "  " << cdps.getPropertyHead().getTotalLength() << endl;
     cout << "CDPS: \n";
     printPackString(cdps.pack());
 
-    CGPSRequired cr;
-    cr.provenance = "seu";
-    cr.proDes = 1;
-    cr.security = u8"贼高";
-    cr.secHelper = 0;
-    cr.chain = "seu;thing";
-    cr.chainCount = 2;
-    cr.sigUCL = "default";
-    cr.sigU[0] = 2;
-    cr.sigU[1] = 1;
-    UCLPropertySet cgps = GenerateProperty::generateCGPS(cr);
+    ucl.setPropertySet(cdps);
+
+    UCLPropertySet cgps;
+    cgps.setHeadCategory(15);
+    UCLPropertyBase pro = GenerateProperty::generateCGPSProvenance(1, "http://jiangsu.sina.com.cn/news/b/2017-05-31/detail-ifyfqqyh9080015.shtml");
+    cgps.setProperty(pro);
+    UCLPropertyBase contentid = GenerateProperty::generateCGPSContentid("sina");
+    cgps.setProperty(contentid);
+    UCLPropertyBase prog = GenerateProperty::generateCGPSPropagation(2, "baidu;sina");
+    cgps.setProperty(prog);
+    UCLPropertyBase sigCon = GenerateProperty::generateCGPSSignatureContent("江苏今年起实施“12311”计划, 全省创意休闲农业工作推进会", 3, 0);
+    cgps.setProperty(sigCon);
+    UCLPropertyBase security = GenerateProperty::generateCGPSSecurity("重要");
+    cgps.setProperty(security);
+    UCLPropertyBase chain = GenerateProperty::generateCGPSChain(2, "sian;seu");
+    cgps.setProperty(chain);
+    UCLPropertyBase sigUCL = GenerateProperty::generateCGPSSignatureUCL(3, 0);
+    cgps.setProperty(sigUCL);
     cout << "CGPS: \n";
     printPackString(cgps.pack());
 
-    ucl.setPropertySet(cdps);
     ucl.setPropertySet(cgps);
+//    cout << hex << ucl.generateQuickMatcher()<< "  " << ucl.getUclPropertyHead().getTotalLength();
     cout << "propertySet: \n";
     printPackString(ucl.packPropertySets());
     cout << "UCLPackage: \n";
     printPackString(ucl.pack());
+    ucl.getUclCode().showCode();
     ucl.showUCL();
 
+    string ucl1 = ucl.pack();
+
     UCL ucl2;
-    ucl2.unpack(ucl.pack());
-    ucl2.setValue(1, 1, "China SEU");
-    cout << "After unpack----------\npropertySet: \n";
-    printPackString(ucl2.packPropertySets());
+    ucl2.unpack(ucl1);
     cout << "UCLPackage: \n";
     printPackString(ucl2.pack());
+    ucl2.getUclCode().showCode();
     ucl2.showUCL();
-}
-UCLPropertySet testSetUnpack()
-{
-    UCLPropertyBase pe = GenerateProperty::generateSNPSPE(0xe, "我;爱;你");
-    printPackString(pe.pack());
-
-    UCLPropertyBase nr = GenerateProperty::generateSNPSNR("abc");
-    printPackString(nr.pack());
-
-    UCLPropertySet set0;
-    set0.setHeadCategory(0x0);
-    set0.setProperty(pe);
-    set0.setProperty(nr);
-    set0.setSet();
-    printPackString(set0.pack());
-
-    UCLPropertySet set1;
-    set1.unpack(set0.pack());
-    printPackString(set1.pack());
-    return set1;
 }
 
 void printPackString(string pack)
 {
+//    ostringstream ostr;
     for(int i=0; i <= pack.size(); i++) {
-        cout << hex << ((uint16_t)pack[i] & 0xff) << " : ";
+//        ostr<<hex << (uint16_t)pack[i] << "-";
+        cout << setw(2) << setfill('0') << hex << ((uint16_t)pack[i] & 0xff) << "-";
+
     }
+//    string s=ostr.str();
+//    cout<<"UCL:"<<s<<endl;
+//    cout<<"MD5:"<<getMD5(s);
     cout << "\n------------\n";
-}
-
-UCL testUCLPack()
-{
-    //SNPS
-    UCLPropertyBase pe = GenerateProperty::generateSNPSPE(0xe, "我;爱;你");
-    printPackString(pe.pack());
-
-    UCLPropertyBase nr = GenerateProperty::generateSNPSNR("abc");
-    printPackString(nr.pack());
-
-    UCLPropertySet set0;
-    set0.setHeadCategory(0x0);
-    set0.setProperty(pe);
-    set0.setProperty(nr);
-    set0.setSet();
-    printPackString(set0.pack());
-
-    //CDPS
-    UCLPropertyBase title = GenerateProperty::generateCDPSTitle("abc");
-    printPackString(title.pack());
-
-    UCLPropertyBase keywords = GenerateProperty::generateCDPSKeywords(3, "a;b;c");
-    printPackString(keywords.pack());
-
-    UCLPropertySet set1;
-    set1.setHeadCategory(0x1);
-    set1.setProperty(title);
-    set1.setProperty(keywords);
-    set1.setSet();
-    printPackString(set1.pack());
-
-    //CGPS
-    UCLPropertyBase provenance = GenerateProperty::generateCGPSProvenance(0x2, "SEU");
-    printPackString(provenance.pack());
-
-    UCLPropertyBase contentId = GenerateProperty::generateCGPSContentid("/home/zp");
-    printPackString(contentId.pack());
-
-    UCLPropertySet set2;
-    set2.setHeadCategory(15);
-    set2.setProperty(provenance);
-    set2.setProperty(contentId);
-    set2.setSet();
-    printPackString(set2.pack());
-
-    UCL ucl;
-    ucl.setPropertySet(set0);
-    ucl.setPropertySet(set1);
-    ucl.setPropertySet(set2);
-    ucl.setUCL();
-    printPackString(ucl.packPropertySets());
-
-//    cout << ucl.getValue(0, 1) << endl;
-//    map<int, UCLPropertySet> s = ucl.getPropertySets();
-//    s[0].setHeadCategory(0x05);
-//    cout << setbase(10) << s[0].getPropertyHead().getLPart();
-    return ucl;
 }
 
 void testPropertyPack()

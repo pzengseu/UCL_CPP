@@ -21,7 +21,7 @@ public:
     bool setSize(uint8_t size);
     uint8_t getSize() const;
 
-    bool setQuickMatcher(uint16_t quickMatcher);
+    bool setQuickMatcher(uint16_t quickM);
     uint16_t getQuickMatcher() const;
 };
 #endif //UCL_CPP_UCLPROPERTYHEAD_H

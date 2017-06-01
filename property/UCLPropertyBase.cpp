@@ -171,9 +171,10 @@ string UCLPropertyBase::pack()
     string property;
     property.push_back(tPart);
 
-    for(int i=0; i < getLPartBytesNum(); i++)
+    int n = getLPartBytesNum();
+    for(int i=0; i < n; i++)
     {
-        property.push_back((uint8_t)(lPart>>(i*8)));
+        property.push_back((lPart>>(i*8) & 0xff));
     }
     property += vPart;
 
@@ -188,9 +189,9 @@ void UCLPropertyBase::unpack(string property)
     //lPart
     lPart = (lPart & 0xffffffffffffff00) | property[1];
     int  lPartValueBytesNum = getLPartValueBytesNum();
-    uint16_t quickMatcher = 0;
+    uint64_t quickMatcher = 0;
     quickMatcher = (quickMatcher & 0xff00) | property[TPAER_BYTESNUM + LPARTHEAD_BYTESNUM + lPartValueBytesNum];
-    quickMatcher = (quickMatcher & 0x00ff) | ((uint16_t)property[TPAER_BYTESNUM + LPARTHEAD_BYTESNUM + lPartValueBytesNum + 1]<<8);
+    quickMatcher = (quickMatcher & 0x00ff) | ((uint16_t)property[TPAER_BYTESNUM +  LPARTHEAD_BYTESNUM + lPartValueBytesNum + 1]<<8);
 
     switch (lPartValueBytesNum-1)
     {

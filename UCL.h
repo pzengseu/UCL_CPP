@@ -54,6 +54,11 @@ public:
     bool setPropertySet(UCLPropertySet &propertySet);
     bool delPropertySet(uint8_t category);
 
+    //设置 删除属性
+    bool setProperty(int setPos, UCLPropertyBase &property);
+    bool delProperty(int setPos, int propertyPos);
+    UCLPropertyBase getProperty(int setPos, int propertyPos);
+
     //获取第setPos集合的第propertyPos属性的vPart
     string getValue(int setPos, int propertyPos);
     //设置第setPos集合的第propertyPos属性的vPart
@@ -81,8 +86,15 @@ public:
     //UCL　Package打包解包
     string pack();
     void unpack(string ucl);
-
+    //检验UCL包数字签名
+    bool checkUCL();
     //打印UCL各部分
     void showUCL();
+
+    static string generateSigUCLP(int helper, int alg, string temp);
+    static string switchHelper(int helper, string s);
 };
+
+string switchHelper(int helper, string temp);
+string generateSigUCLP(int helper, int alg, string temp);
 #endif //UCL_UCL_H
