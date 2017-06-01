@@ -31,19 +31,24 @@ void test_code()
 
     code_test.setVersion(1);
     code_test.setTypeOfMedia(9);
-    code_test.setPrecedence(15);
+    code_test.setPrioAndPoli(15);
     code_test.setFlag(13);
     code_test.setParseRule(0xfff1);//ff1有效
     code_test.setSourOfCont(0xfffffff1);//ffffff1有效
     code_test.setCategory(255);
     code_test.setSubCategory(257);//0x01有效
     code_test.setTopic(0xffffff1);
-    code_test.setTypeOfContent(254);
-    code_test.setCopyAndLeng(252);
+    code_test.setCopyAndTypeOfCont(254);
     code_test.setSecuEnerLeveCode(251);
-    code_test.setTimeStamp(0x3ffffffffffff);
-    code_test.setSerialNumber(0x3fffff);
-    code_test.setReservedBytes(0xffffffffff);
+    code_test.setLanguage(253);
+    code_test.setSizeOfContent(31);
+    code_test.setTimeStamp(0x3fffffffff9f9);
+    /*
+     * serinal number and multiplex bytes test cases
+     * 0xCff1f3 - 0x8fffff31; 0x8f1f - 0x1f3f5f7f9f; 0x4f - 0x1f3f5f7f9f48; 0xf - 0x1f3f5f7f9f48
+     */
+    code_test.setSerialNumber(0x4f);
+    code_test.setMultiplexBytes(0x1f3f5f7f9f48);
 
     code_test.setVersion(3);//对于已经设置过的域重复设置
     //code_test.setVersion(1);
