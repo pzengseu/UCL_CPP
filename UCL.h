@@ -11,7 +11,9 @@
 #include "property/UCLPropertySet.h"
 #include "code/header_file/UCLCode.h"
 #include "code/header_file/UCLCodeExtension.h"
+#include "property/UCLPropertiesInfo.h"
 
+static UCLPropertiesInfo UPI = UCLPropertiesInfo();
 class UCL{
 private:
     UCLCode uclCode;
@@ -25,7 +27,7 @@ public:
         uclCode = UCLCode();
         uclCodeExtension = UCLCodeExtension();
         uclPropertyHead = UCLPropertyHead();
-        uclPropertyHead.setCategory(0x2);  //英文
+        uclPropertyHead.setCategory(0x1);  //中文
         uclPropertyHead.setTotalLength();
     }
     virtual ~ UCL() {}
@@ -83,7 +85,7 @@ public:
     string packPropertySets();
     void unpackPropertySets(string properties);
 
-    //UCL　Package打包解包
+    //UCL　Package打包解包，UCL扩展部分暂无考虑
     string pack();
     void unpack(string ucl);
     //检验UCL包数字签名

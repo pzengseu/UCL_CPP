@@ -8,5 +8,5 @@ set(SOURCE_FILES main.cpp
         property/UCLPropertyBase.h property/UCLPropertyBase.cpp property/UCLPropertyHead.cpp property/UCLPropertyHead.h
         property/UCLPropertySet.h  property/UCLPropertySet.cpp UCL.h UCL.cpp test.h property/GenerateProperty.h property/GenerateProperty.cpp
         tools/md5.h tools/md5.cpp tools/UCLCRC32.h tools/UCLCRC32.cpp tools/UCLSHA_256.h tools/UCLSHA_256.cpp
-        tools/UCLSHA_512.h tools/UCLSHA_512.cpp testUCLCode.h testUCLCode.cpp)
+        tools/UCLSHA_512.h tools/UCLSHA_512.cpp testUCLCode.h testUCLCode.cpp property/UCLPropertiesInfo.h property/UCLPropertiesInfo.cpp)
 add_executable(UCL_CPP ${SOURCE_FILES})

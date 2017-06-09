@@ -4,6 +4,8 @@
 #include <bitset>
 #include <cassert>
 #include "UCLPropertySet.h"
+#include "UCLPropertiesInfo.h"
+#include "../UCL.h"
 
 bool UCLPropertySet::setPropertyHead(UCLPropertyHead propertyHead)
 {
@@ -159,10 +161,25 @@ void UCLPropertySet::unpack(string propertySet)
 
 void UCLPropertySet::showPropertySet()
 {
-    cout << "The category of propertySet: " << (int)propertyHead.getCategory() << endl;
-    map<int, UCLPropertyBase>::iterator property = properties.begin();
-    for(; property!=properties.end(); property++)
+    if (propertyHead.getCategory() == 1 || propertyHead.getCategory() == 15) {
+        cout << "属性集合名: " << UPI.getPropertySetCategory(propertyHead.getCategory()) << endl;
+        cout << "属性集类别: " << (int)propertyHead.getCategory() << "    属性个数: " << (int)propertyHead.getSize()<<endl;
+        map<int, UCLPropertyBase>::iterator property = properties.begin();
+        for (; property != properties.end(); property++) {
+            cout << "属性类别: "<<(int)property->second.getCategory()<<"    属性名: "
+                 <<UPI.getPropertyCategroy(propertyHead.getCategory(), property->second.getCategory()) << endl;
+            UPI.showProperty(propertyHead.getCategory(), property->second);
+        }
+    }
+    else
     {
-        cout << "The category and value of property: " << (int)property->second.getCategory() << "   " << property->second.getVPart() << endl;
+        cout << "自定义属性集合" << endl;
+        cout << "属性集类别: " << (int)propertyHead.getCategory() << "    属性个数: " << (int)propertyHead.getSize()<<endl;
+        map<int, UCLPropertyBase>::iterator property = properties.begin();
+        for (; property != properties.end(); property++) {
+            cout << "属性类别和属性值: " << (int) property->second.getCategory() << "   "
+                 << property->second.getVPart() << endl;
+
+        }
     }
 }

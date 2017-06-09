@@ -22,6 +22,7 @@ void testEasy()
 {
     cout << "\n========== UCL test begin==========\n";
     UCL ucl;
+
     UCLCode code_test;
 
     code_test.setVersion(1);
@@ -62,8 +63,8 @@ void testEasy()
     UCLPropertyBase title = GenerateProperty::generateCDPSTitle("江苏今年起实施“12311”计划 培育百个农业特色镇");
     UCLPropertyBase keywords = GenerateProperty::generateCDPSKeywords(3, "江苏;乡村;国家");
     UCLPropertyBase abstract = GenerateProperty::generateCDPSAbstract("省农委日前在金坛召开全省创意休闲农业工作推进会，决定从今年起实施“12311”创意休闲农业省级特色品牌培育计划");
-    UCLPropertyBase author = GenerateProperty::generateCDPSAuthor(2, 2, "邹建丰:新华日报\\r微博;博客:新浪");
-    UCLPropertyBase entity = GenerateProperty::generateCDPSEntity(31, "江苏省委\\r2017\\r金坛\\r培育计划\\r美丽");
+    UCLPropertyBase author = GenerateProperty::generateCDPSAuthor(3, 2, "邹建丰:新华日报\\r微博;博客:新浪");
+    UCLPropertyBase entity = GenerateProperty::generateCDPSEntity(31, "江苏省委\\r2017\\r金坛\\r培育计划\\r美丽;nice");
     UCLPropertyBase tag = GenerateProperty::generateCDPSTag(2, "美丽;乡村");
     UCLPropertyBase copyright = GenerateProperty::generateCDPSCopyright("新华日报");
     UCLPropertyBase origin = GenerateProperty::generateCDPSOriginality("皱建丰");
@@ -115,7 +116,6 @@ void testEasy()
     cout << "--------------UCLPackage-------------- \n";
     printPackString(ucl.pack());
     cout << "--------------显示UCL各部分关键信息--------------\n";
-    ucl.getUclCode().showCode();
     ucl.showUCL();
 
     string ucl1 = ucl.pack();
@@ -126,7 +126,6 @@ void testEasy()
     cout << "--------------UCLPackage--------------\n";
     printPackString(ucl2.pack());
     cout << "--------------解包后UCL各部分关键信息--------------\n";
-    ucl2.getUclCode().showCode();
     ucl2.showUCL();
 
     cout << "========== UCL test end==========\n";

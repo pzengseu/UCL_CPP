@@ -281,10 +281,11 @@ string UCL::switchHelper(int helper, string s)
 
 void UCL::showUCL()
 {
-//    uclCode.showCode();
+    uclCode.showCode();
 //    uclCodeExtension.showCodeExt();
 
-    cout << "The size of propertySet:" << (int)uclPropertyHead.getSize() << endl;
+    cout << "元语言类型: " << UPI.getPropertyLangType(uclPropertyHead.getCategory()) << endl;
+    cout << "属性集个数: " << (int)uclPropertyHead.getSize() << endl;
     map<int, UCLPropertySet>::iterator proSet = propertySets.begin();
     for(; proSet!=propertySets.end(); proSet++)
     {
