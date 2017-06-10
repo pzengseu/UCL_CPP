@@ -18,6 +18,11 @@ private:
     map<int, string> propertySetCategoryMap;
     map<int, map<int, string>> propertyCategoryMap;
 
+    map<int, string> entity;
+    map<int, string> promap; //provenance
+    map<int, string> contentIdRulemap;
+    map<int, string> seliMap;
+
     map<int, string> signatureMap;
     map<int, string> hash;
 public:
@@ -32,7 +37,7 @@ public:
     void initPropertyCategroyMap();
     string getPropertyCategroy(int categroy, int proCategory);
 
-    void initAlgorithm();
+    void initInfo();
 
     vector<string> split(string str, string pattern);
 
@@ -49,6 +54,9 @@ public:
     void showCGPSContentId(UCLPropertyBase content);
     void showCGPSPropagationPath(UCLPropertyBase propagationPath);
     void showCGPSSignatureContent(UCLPropertyBase sigContent);
+    void showCGPSSELI(UCLPropertyBase seli);
+    void showCGPSChainRespons(UCLPropertyBase cr);
+    void showCGPSSignatureUP(UCLPropertyBase sup);
 };
 
 

@@ -11,6 +11,7 @@
 #include "tools/UCLCRC32.h"
 #include "tools/UCLSHA_256.h"
 #include "tools/UCLSHA_512.h"
+#include "test.h"
 
 const UCLPropertyHead &UCL::getUclPropertyHead() const {
     return uclPropertyHead;
@@ -89,8 +90,10 @@ string UCL::generateHeadVPart()
 
 void UCL::setUCL()
 {
+    //VPart会影响QuickMatcher位置,QuickMatcher位置也为影响VPart
     uclPropertyHead.setQuickMatcher(generateQuickMatcher());
     uclPropertyHead.setVPart(generateHeadVPart());
+    uclPropertyHead.setQuickMatcher(generateQuickMatcher());
 //    uclPropertyHead.setTotalLength();
 }
 
@@ -179,7 +182,7 @@ void UCL::unpackPropertySets(string properties)
 
 string UCL::pack()
 {
-    setValue(15, 15, "");
+    setValue(15, 15, "hello");
 
     string temp = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
     map<int, UCLPropertyBase> ps = propertySets[15].getProperties();
@@ -220,12 +223,14 @@ bool UCL::checkUCL()
     UCLPropertyBase sigUCLP = ps[15];
 
     string uclSig = getValue(15, 15);
-    setValue(15, 15, "");
+    setValue(15, 15, "hello");
     string temp = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
 
     int helper = sigUCLP.getHelper();
     int alg = sigUCLP.getLPartHead(2, 5);
     string uclSigTemp = generateSigUCLP(helper, alg, temp);
+
+    setValue(15, 15, uclSigTemp);
 
     if(uclSigTemp==uclSig) { return true; }
     else { return false; }
@@ -284,11 +289,14 @@ void UCL::showUCL()
     uclCode.showCode();
 //    uclCodeExtension.showCodeExt();
 
+    cout << "--------------属性部分----------------" << endl;
     cout << "元语言类型: " << UPI.getPropertyLangType(uclPropertyHead.getCategory()) << endl;
     cout << "属性集个数: " << (int)uclPropertyHead.getSize() << endl;
+    cout << "--------------具体属性集----------------" << endl;
     map<int, UCLPropertySet>::iterator proSet = propertySets.begin();
     for(; proSet!=propertySets.end(); proSet++)
     {
+        cout << "**************************" << endl;
         proSet->second.showPropertySet();
     }
 }

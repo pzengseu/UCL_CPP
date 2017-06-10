@@ -7,6 +7,8 @@
 #include <iterator>
 #include <bitset>
 #include "UCLPropertiesInfo.h"
+#include "../code/header_file/UCLCode.h"
+#include "../UCL.h"
 
 UCLPropertiesInfo::UCLPropertiesInfo()
 {
@@ -14,7 +16,7 @@ UCLPropertiesInfo::UCLPropertiesInfo()
     initPropertySetCategoryMap();
     initPropertyCategroyMap();
 
-    initAlgorithm();
+    initInfo();
 }
 
 vector<string> UCLPropertiesInfo::split(string str, string pattern)
@@ -86,6 +88,7 @@ void UCLPropertiesInfo::initPropertyCategroyMap()
     cdps[6] = "内容标记";
     cdps[7] = "版权信息";
     cdps[8] = "原创声明";
+    cdps[9] = "文件信息";
     cdps[14] = "关联UCL";
     cdps[15] = "内容对象";
     propertyCategoryMap[1] = cdps;
@@ -107,8 +110,29 @@ string UCLPropertiesInfo::getPropertyCategroy(int categroy, int proCategory)
 }
 
 
-void UCLPropertiesInfo::initAlgorithm()
+void UCLPropertiesInfo::initInfo()
 {
+    entity[0] = "人";
+    entity[1] = "时";
+    entity[2] = "地";
+    entity[3] = "事";
+    entity[4] = "因";
+    entity[5] = "其它";
+
+    promap[1] = "网址或域名";
+    promap[2] = "机构名";
+    promap[3] = "应用相关";
+
+    contentIdRulemap[1] = "URI";
+    contentIdRulemap[2] = "DOI";
+    contentIdRulemap[3] = "ISBN";
+    contentIdRulemap[4] = "ISRC";
+
+    seliMap[0] = "自行标定";
+    seliMap[1] = "第一级内容提供商认证";
+    seliMap[2] = "第二级内容提供商认证";
+    seliMap[14] = "权威内容中心认证";
+
     signatureMap[0] = "未对内容对象进行数字签名";
     signatureMap[1] = "RSA";
     signatureMap[2] = "ECDSA";
@@ -164,6 +188,26 @@ void UCLPropertiesInfo::showProperty(int category, UCLPropertyBase propertyBase)
             case 3:
                 showCGPSProvenance(propertyBase);
                 break;
+            case 4:
+                showCGPSContentId(propertyBase);
+                break;
+            case 5:
+                showCGPSPropagationPath(propertyBase);
+                break;
+            case 12:
+                showCGPSSignatureContent(propertyBase);
+                break;
+            case 13:
+                showCGPSSELI(propertyBase);
+                break;
+            case 14:
+                showCGPSChainRespons(propertyBase);
+                break;
+            case 15:
+                showCGPSSignatureUP(propertyBase);
+                break;
+            default:
+                cout << "****自定义属性****" << endl;
         }
     }
 }
@@ -179,7 +223,7 @@ void UCLPropertiesInfo::showProperty(int category, UCLPropertyBase propertyBase)
  */
 void UCLPropertiesInfo::showPropertyBase(UCLPropertyBase propertyBase)
 {
-    cout << "属性值: "<<propertyBase.getVPart();
+    cout << "属性值: "<<propertyBase.getVPart() << endl;
 }
 
 //CDPS, Keywords
@@ -246,14 +290,6 @@ void UCLPropertiesInfo::showCDPSAuthor(UCLPropertyBase author)
 //CDPS, entity
 void UCLPropertiesInfo::showCDPSEntity(UCLPropertyBase ent)
 {
-    map<int, string> entity;
-    entity[0] = "人";
-    entity[1] = "时";
-    entity[2] = "地";
-    entity[3] = "事";
-    entity[4] = "因";
-    entity[5] = "其它";
-
     bitset<6> bqm(31);
     int es[bqm.count()];
     int j = 0;
@@ -316,18 +352,62 @@ void UCLPropertiesInfo::showCDPSRelatedUCL(UCLPropertyBase relatedUCL)
         cout << "关联UCL数量超过7个" << endl;
     }
 
+    cout << "--------------------------关联UCL开始-----------------------------" << endl;
+    //暂未考虑Code扩展
     string rus = relatedUCL.getVPart();
-    cout << "待续----------------------";
+    int pos = 0;
+    while (pos < rus.size())
+    {
+        string code = rus.substr(pos, 32);
+        pos += 32;
+        UCLCode uc;
+        uc.unpack(code);
+        if ((uc.getFlag() & 0x2) == 0)
+        {
+            cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
+            uc.showCode();
+            cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
+        }
+        else
+        {
+            uint8_t lh = rus[pos + 1];
+            int propertyLenBytes = ((lh >> 6) & 0x3) + 1;
+            string lValue = rus.substr(pos + 2, propertyLenBytes);
+            int len = 0;
+            switch (propertyLenBytes)
+            {
+                case 1:
+                    len = (0xff & lValue[0]);
+                    break;
+                case 2:
+                    len = (0xff & lValue[0]) +(0xff00 & (lValue[1] << 8));
+                    break;
+                case 3:
+                    len = (0xff & lValue[0]) +(0xff00 & (lValue[1] << 8)) +
+                          (0xff0000 & (lValue[2] << 16));
+                    break;
+                case 4:
+                    len = (0xff & lValue[0]) +(0xff00 & (lValue[1] << 8)) +
+                            (0xff0000 & (lValue[2] << 16)) + (0xff000000 & (lValue[3] << 24));
+                    break;
+            }
+            string ucls = code + rus.substr(pos, len);
+            UCL ucl;
+            ucl.unpack(ucls);
+
+            cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
+            ucl.showUCL();
+            cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
+            pos += len;
+        }
+    }
+
+    cout << "--------------------------关联UCL结束-----------------------------" << endl;
 }
 
 //CGPS, provenance
 void UCLPropertiesInfo::showCGPSProvenance(UCLPropertyBase provenance)
 {
-    map<int, string> promap;
-    promap[1] = "网址或域名";
-    promap[2] = "机构名";
-    promap[3] = "应用相关";
-
     cout << "内容出处描述形式:  " << promap[provenance.getLPartHead(3, 5)] << endl;
     cout << "内容出处: " << provenance.getVPart() << endl;
 }
@@ -335,13 +415,7 @@ void UCLPropertiesInfo::showCGPSProvenance(UCLPropertyBase provenance)
 //CGPS, content id
 void UCLPropertiesInfo::showCGPSContentId(UCLPropertyBase content)
 {
-    map<int, string> rulemap;
-    rulemap[1] = "URI";
-    rulemap[2] = "DOI";
-    rulemap[3] = "ISBN";
-    rulemap[4] = "ISRC";
-
-    cout << "内容ID解析规则: " << rulemap[content.getHelper()] << endl;
+    cout << "内容ID解析规则: " << contentIdRulemap[content.getHelper()] << endl;
     cout << "详细内容ID信息: " << content.getVPart() << endl;
 }
 
@@ -374,7 +448,36 @@ void UCLPropertiesInfo::showCGPSSignatureContent(UCLPropertyBase sigContent)
 }
 
 //CGPS, Security Energy Level Information
+void UCLPropertiesInfo::showCGPSSELI(UCLPropertyBase seli)
+{
+    cout << "安全能级信息的认证等级: " << seliMap[seli.getHelper()] << endl;
+    cout << "安全能级详细信息: " << seli.getVPart() << endl;
+}
 
 //CGPS, Chain of Responsibility
+void UCLPropertiesInfo::showCGPSChainRespons(UCLPropertyBase cr)
+{
+    int count = cr.getLPartHead(2, 5) + 1;
+    if (count <= 15)
+    {
+        cout << "责任主体数量: " << count << endl;
+    }
+    else
+    {
+        cout << "责任主体数量超过15个" << endl;
+    }
+
+    cout << "责任主体详细信息: ";
+    vector<string> key = split(cr.getVPart(), ";");
+
+    copy(key.begin(), key.end(), ostream_iterator<string>(cout, " "));
+    cout << endl;
+}
 
 //CGPS, Signature of UCL Package
+void UCLPropertiesInfo::showCGPSSignatureUP(UCLPropertyBase sup)
+{
+    cout << "数字摘要算法: " << hash[sup.getLPartHead(2, 5)];
+    cout << "   数字签名算法: " << signatureMap[sup.getHelper()] << endl;
+    cout << "摘要或签名信息: " << sup.getVPart() << endl;
+}

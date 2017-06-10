@@ -133,6 +133,7 @@ bool UCLPropertyBase::setTotalLength()
         setLPartValueBytesNum(4);
         lPart = (lPart & 0xffffff00000000ff) | ((totalLength + LPARTVALUE_BYTES_MAX)<<8);
     }
+
     return true;
 }
 

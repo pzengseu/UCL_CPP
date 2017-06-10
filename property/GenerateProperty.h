@@ -81,7 +81,7 @@ public:
     static UCLPropertyBase generateCGPSProvenance(uint8_t des, string vPart, uint8_t helper=0);
 
     //content id
-    static UCLPropertyBase generateCGPSContentid(string vPart, uint8_t helper=0);
+    static UCLPropertyBase generateCGPSContentid(string vPart, uint8_t helper=1);
 
     //propagation path
     static UCLPropertyBase generateCGPSPropagation(uint8_t count, string vPart, uint8_t helper=0);

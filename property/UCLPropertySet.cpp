@@ -109,6 +109,7 @@ void UCLPropertySet::setSet()
 {
     propertyHead.setQuickMatcher(generateQuickMatcher());
     propertyHead.setVPart(generateHeadVPart());
+    propertyHead.setQuickMatcher(generateQuickMatcher());
 //    propertyHead.setTotalLength();
 }
 
@@ -125,8 +126,7 @@ void UCLPropertySet::unpack(string propertySet)
     uint32_t tmp = 0;
     for(int i=0; i < bqm.size(); i++)
     {
-        if(bqm.test(i))
-        {
+        if(bqm.test(i))        {
             //计算属性元素长度值字段字节数
             int lValueBytes = (int)(headVPart[1+tmp] >> 6) + 1;
             //取出长度值字段
@@ -163,12 +163,13 @@ void UCLPropertySet::showPropertySet()
 {
     if (propertyHead.getCategory() == 1 || propertyHead.getCategory() == 15) {
         cout << "属性集合名: " << UPI.getPropertySetCategory(propertyHead.getCategory()) << endl;
-        cout << "属性集类别: " << (int)propertyHead.getCategory() << "    属性个数: " << (int)propertyHead.getSize()<<endl;
+        cout << "属性集类别: " << (int)propertyHead.getCategory() << "    属性个数: " << dec << (int)propertyHead.getSize() <<endl;
         map<int, UCLPropertyBase>::iterator property = properties.begin();
         for (; property != properties.end(); property++) {
             cout << "属性类别: "<<(int)property->second.getCategory()<<"    属性名: "
                  <<UPI.getPropertyCategroy(propertyHead.getCategory(), property->second.getCategory()) << endl;
             UPI.showProperty(propertyHead.getCategory(), property->second);
+            cout << "------------------------------------" << endl;
         }
     }
     else
@@ -179,7 +180,7 @@ void UCLPropertySet::showPropertySet()
         for (; property != properties.end(); property++) {
             cout << "属性类别和属性值: " << (int) property->second.getCategory() << "   "
                  << property->second.getVPart() << endl;
-
+            cout << "------------------------------------" << endl;
         }
     }
 }
