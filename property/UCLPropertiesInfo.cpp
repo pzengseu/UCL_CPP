@@ -300,6 +300,7 @@ void UCLPropertiesInfo::showCDPSEntity(UCLPropertyBase ent)
     }
 
     vector<string> ev = split(ent.getVPart(), "\\r");
+    cout << "实体类别数量: " << ev.size() << endl;
 
     for (int i = 0; i < ev.size(); i++)
     {
