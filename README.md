@@ -30,7 +30,7 @@ code_test.setTimeStamp(0x3fffffffff9f9);
 3. 自定义属性
 ```
 UCLPropertyBase nr;
-GenerateProperty::setProperty(nr, 0x2, 0, " ");
+nr.setProperty(nr, 0x2, 0, " ");
 ```
 即新建了属性nr，可参考GenerateProerty类。
 
@@ -38,16 +38,16 @@ GenerateProperty::setProperty(nr, 0x2, 0, " ");
 ```
 UCLPropertySet cdps;
 cdps.setHeadCategory(1);
-UCLPropertyBase title = GenerateProperty::generateCDPSTitle("江苏今年起实施“12311”计划 培育百个农业特色镇");
-UCLPropertyBase keywords = GenerateProperty::generateCDPSKeywords(3, "江苏;乡村;国家");
-UCLPropertyBase abstract = GenerateProperty::generateCDPSAbstract("省农委日前在金坛召开全省创意休闲农业工作推进会，决定从今年起实施“12311”创意休闲农业省级特色品牌培育计划");
-UCLPropertyBase author = GenerateProperty::generateCDPSAuthor(3, 2, "邹建丰:新华日报\\r张三;李四:新浪");
-UCLPropertyBase entity = GenerateProperty::generateCDPSEntity(31, "江苏省委\\r2017\\r金坛\\r培育计划\\r美丽;nice");
-UCLPropertyBase tag = GenerateProperty::generateCDPSTag(2, "美丽;乡村");
-UCLPropertyBase copyright = GenerateProperty::generateCDPSCopyright("新华日报");
-UCLPropertyBase origin = GenerateProperty::generateCDPSOriginality("皱建丰");
-UCLPropertyBase file = GenerateProperty::generateCDPSFileDescription("文本;10M");
-UCLPropertyBase content = GenerateProperty::generateCDPSContentObject("江苏今年起实施“12311”计划, 全省创意休闲农业工作推进会");
+UCLPropertyBase title = GenCDPSProperty::genTitle("江苏今年起实施“12311”计划 培育百个农业特色镇");
+UCLPropertyBase keywords = GenCDPSProperty::genKeywords(3, "江苏;乡村;国家");
+UCLPropertyBase abstract = GenCDPSProperty::genAbstract("省农委日前在金坛召开全省创意休闲农业工作推进会，决定从今年起实施“12311”创意休闲农业省级特色品牌培育计划");
+UCLPropertyBase author = GenCDPSProperty::genAuthor(3, 2, "邹建丰:新华日报\\r张三;李四:新浪");
+UCLPropertyBase entity = GenCDPSProperty::genEntity(31, "江苏省委\\r2017\\r金坛\\r培育计划\\r美丽;nice");
+UCLPropertyBase tag = GenCDPSProperty::genTag(2, "美丽;乡村");
+UCLPropertyBase copyright = GenCDPSProperty::genCopyright("新华日报");
+UCLPropertyBase origin = GenCDPSProperty::genOriginality("皱建丰");
+UCLPropertyBase file = GenCDPSProperty::genFileDescription("文本;10M");
+UCLPropertyBase content = GenCDPSProperty::genContObject("江苏今年起实施“12311”计划, 全省创意休闲农业工作推进会");
 cdps.setProperty(title);
 cdps.setProperty(keywords);
 cdps.setProperty(abstract);
@@ -70,21 +70,20 @@ ucl.setPropertySet(cdps);
 ```
 UCLPropertySet cgps;
 cgps.setHeadCategory(15);
-UCLPropertyBase pro = GenerateProperty::generateCGPSProvenance(1, "http://jiangsu.sina.com.cn/news/b/2017-05-31/detail-ifyfqqyh9080015.shtml");
+UCLPropertyBase pro = GenCGPSProperty::genProvenance(1, "http://jiangsu.sina.com.cn/news/b/2017-05-31/detail-ifyfqqyh9080015.shtml");
 cgps.setProperty(pro);
-UCLPropertyBase contentid = GenerateProperty::generateCGPSContentid("sina");
+UCLPropertyBase contentid = GenCGPSProperty::genContId("sina");
 cgps.setProperty(contentid);
-UCLPropertyBase prog = GenerateProperty::generateCGPSPropagation(2, "baidu;sina");
+UCLPropertyBase prog = GenCGPSProperty::genPropagation(2, "baidu;sina");
 cgps.setProperty(prog);
-UCLPropertyBase sigCon = GenerateProperty::generateCGPSSignatureContent("江苏今年起实施“12311”计划, 全省创意休闲农业工作推进会", 2, 0);
+UCLPropertyBase sigCon = GenCGPSProperty::genContSig("江苏今年起实施“12311”计划, 全省创意休闲农业工作推进会", 2, 0);
 cgps.setProperty(sigCon);
-UCLPropertyBase security = GenerateProperty::generateCGPSSecurity("重要");
+UCLPropertyBase security = GenCGPSProperty::genSecEL("重要");
 cgps.setProperty(security);
-UCLPropertyBase chain = GenerateProperty::generateCGPSChain(2, "sian;seu");
+UCLPropertyBase chain = GenCGPSProperty::genChainOfRes(2, "sian;seu");
 cgps.setProperty(chain);
-UCLPropertyBase sigUCL = GenerateProperty::generateCGPSSignatureUCL(3, 0);
+UCLPropertyBase sigUCL = GenCGPSProperty::genUCLSig(3, 0);
 cgps.setProperty(sigUCL);
-
 ucl.setPropertySet(cgps);
 ```
 
@@ -94,14 +93,12 @@ UCLPropertySet personal;
 personal.setHeadCategory(10);
 
 UCLPropertyBase name;
-GenerateProperty::setProperty(name, 1, 1, "曾朋");
+name.setProperty(1, 1, "曾朋");
 personal.setProperty(name);
 
 UCLPropertyBase school;
-GenerateProperty::setProperty(school, 2, 1, "SEU");
+school.setProperty(2, 1, "SEU");
 personal.setProperty(school);
-
-ucl.setPropertySet(personal);
 ```
 
 7. UCL中增加关联UCL
@@ -115,7 +112,7 @@ rstr += rCode.pack();
 UCL rUCL = generateRUCL();
 rstr += rUCL.pack();
 
-UCLPropertyBase related = GenerateProperty::generateCDPSRelatedUCL(2, rstr);
+UCLPropertyBase related = GenCDPSProperty::genRelatedUCL(2, rstr);
 ucl.setProperty(1, related);
 ```
 
@@ -182,6 +179,7 @@ ucl2.unpack(ucl.pack());
 张三 李四 ----- 新浪 
 ------------------------------------
 属性类别: 5    属性名: 内容实体
+实体类别数量: 5
 人 : 江苏省委 
 时 : 2017 
 地 : 金坛 
@@ -358,6 +356,7 @@ ucl2.unpack(ucl.pack());
 张三 李四 ----- 新浪 
 ------------------------------------
 属性类别: 5    属性名: 内容实体
+实体类别数量: 5
 人 : 江苏省委 
 时 : 2017 
 地 : 金坛 
@@ -489,6 +488,7 @@ ucl2.unpack(ucl.pack());
 ========== UCL test end==========
 
 Process finished with exit code 0
+
 ```
 
 
