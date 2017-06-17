@@ -78,5 +78,8 @@ public:
     //打包解包单个属性
     string pack();
     void unpack(string property);
+
+    //简化category, helper和vPart部分的设置
+    void setProperty(uint8_t category, uint8_t helper, string vPart);
 };
 #endif //UCL_CPP_UCLPROPERTYBASE_H

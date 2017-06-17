@@ -8,16 +8,19 @@
 #include <iomanip>
 #include <fstream>
 #include <iostream>
-#include "property/UCLPropertyHead.h"
-#include "property/UCLPropertySet.h"
+#include "../property/UCLPropertyHead.h"
+#include "../property/UCLPropertySet.h"
 #include "UCL.h"
-#include "property/GenerateProperty.h"
+#include "../property/GenerateProperty.h"
 #include <sstream>
-#include "property/GenerateProperty.h"
+#include "../property/GenerateProperty.h"
 
-void testEasy();
+void testCommand();
 void printPackString(string pack);
 UCL generateRUCL();
+
+UCLPropertySet generateCDPS();
+UCLPropertySet generateCGPS();
 UCLPropertySet generatePersonalPropertySet();
 
 #endif //UCL_CPP_TEST_H

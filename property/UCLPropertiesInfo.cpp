@@ -8,7 +8,7 @@
 #include <bitset>
 #include "UCLPropertiesInfo.h"
 #include "../code/header_file/UCLCode.h"
-#include "../UCL.h"
+#include "../UCL/UCL.h"
 
 UCLPropertiesInfo::UCLPropertiesInfo()
 {

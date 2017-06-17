@@ -7,11 +7,11 @@
 
 #include <vector>
 #include <map>
-#include "property/UCLPropertyHead.h"
-#include "property/UCLPropertySet.h"
-#include "code/header_file/UCLCode.h"
-#include "code/header_file/UCLCodeExtension.h"
-#include "property/UCLPropertiesInfo.h"
+#include "../property/UCLPropertyHead.h"
+#include "../property/UCLPropertySet.h"
+#include "../code/header_file/UCLCode.h"
+#include "../code/header_file/UCLCodeExtension.h"
+#include "../property/UCLPropertiesInfo.h"
 
 static UCLPropertiesInfo UPI = UCLPropertiesInfo();
 class UCL{

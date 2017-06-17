@@ -3,8 +3,8 @@
 #include <list>
 #include <bitset>
 #include <assert.h>
-#include "test.h"
-#include "testUCLCode.h"
+#include "UCL/test.h"
+#include "UCL/testUCLCode.h"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ void testUCL()
 //    testUCLCodeEasy();
 
     //测试UCL打包解包
-    testEasy();
+    testCommand();
 }
 
 int main()

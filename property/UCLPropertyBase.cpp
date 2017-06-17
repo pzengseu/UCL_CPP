@@ -217,3 +217,11 @@ void UCLPropertyBase::unpack(string property)
     //vPart
     vPart = property.substr(TPAER_BYTESNUM + LPARTHEAD_BYTESNUM + lPartValueBytesNum + getQuickMatcherBytesNum());
 }
+
+void UCLPropertyBase::setProperty(uint8_t category, uint8_t helper, string vPart)
+{
+    assert(helper < 16);
+    setCategory(category);
+    setHelper(helper);
+    setVPart(vPart);
+}

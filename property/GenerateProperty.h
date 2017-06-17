@@ -1,7 +1,8 @@
 //
 // Created by zp on 12/21/16.
 //
-/*
+/**
+ * @deprecated
  * GenerateProperty.h生成标准UCL定义的属性和必选属性集合，自定义属性或属性集合可参考该类自定义实现
  */
 #ifndef UCL_CPP2_GENERATEPROPERTY_H

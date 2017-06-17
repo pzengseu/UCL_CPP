@@ -5,12 +5,12 @@
 #include <map>
 #include <bitset>
 #include <cassert>
-#include "property/UCLPropertyHead.h"
+#include "../property/UCLPropertyHead.h"
 #include "UCL.h"
-#include "tools/md5.h"
-#include "tools/UCLCRC32.h"
-#include "tools/UCLSHA_256.h"
-#include "tools/UCLSHA_512.h"
+#include "../tools/md5.h"
+#include "../tools/UCLCRC32.h"
+#include "../tools/UCLSHA_256.h"
+#include "../tools/UCLSHA_512.h"
 #include "test.h"
 
 const UCLPropertyHead &UCL::getUclPropertyHead() const {
