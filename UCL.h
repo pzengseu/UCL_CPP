@@ -93,6 +93,10 @@ public:
     //打印UCL各部分
     void showUCL();
 
+    //生成hash值
+    static string genHash(int alg, string temp);
+    //数字签名值
+    static string genSig(int helper, string temp);
     static string generateSigUCLP(int helper, int alg, string temp);
     static string switchHelper(int helper, string s);
 };

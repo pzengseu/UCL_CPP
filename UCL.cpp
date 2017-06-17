@@ -190,7 +190,9 @@ string UCL::pack()
 
     int helper = sigUCLP.getHelper();
     int alg = sigUCLP.getLPartHead(2, 5);
-    string uclSigTemp = generateSigUCLP(helper, alg, temp);
+    // 对于数字签名算法此处应该先生成hash值，然后私钥加密
+    string hash = genHash(alg, temp);   //生成摘要
+    string uclSigTemp = genSig(helper, hash);  //私钥加密摘要
 
     setValue(15, 15, uclSigTemp);
 
@@ -228,14 +230,70 @@ bool UCL::checkUCL()
 
     int helper = sigUCLP.getHelper();
     int alg = sigUCLP.getLPartHead(2, 5);
-    string uclSigTemp = generateSigUCLP(helper, alg, temp);
+    // 对于数字签名算法此处应该先用公钥解密，然后比较Hash值
+    string hashFromSig = genSig(helper, uclSig);  //公钥解密成Hash值
+    string hashFromTemp = genHash(alg, temp);  //比较Hash值
 
-    setValue(15, 15, uclSigTemp);
+    setValue(15, 15, uclSig);
 
-    if(uclSigTemp==uclSig) { return true; }
+    if(hashFromSig == hashFromTemp) { return true; }
     else { return false; }
 }
 
+string UCL::genHash(int alg, string temp)
+{
+    string hash;
+
+    switch(alg)
+    {
+        case 1: //CRC32
+            hash = crc32(temp);
+            break;
+        case 2: //MD5
+            hash = MD5(temp).toString();
+            break;
+        case 3: //SHA-256
+            hash = sha256(temp);
+            break;
+        case 4: //SHA-512
+            hash = sha512(temp);
+            break;
+        default: break;
+    }
+
+    return hash;
+}
+
+string UCL::genSig(int helper, string temp)
+{
+    switch(helper)
+    {
+        case 0:
+            break;
+        case 1:
+            //RSA
+            break;
+        case 2:
+            //ECDSA
+            break;
+        case 3:
+            //DSA
+            break;
+        case 4:
+            //ECC
+            break;
+        default: break;
+    }
+    return temp;
+}
+
+/**
+ * @deprecated
+ * @param helper
+ * @param alg
+ * @param temp
+ * @return
+ */
 string UCL::generateSigUCLP(int helper, int alg, string temp)
 {
     string uclSigTemp;
@@ -261,6 +319,12 @@ string UCL::generateSigUCLP(int helper, int alg, string temp)
     return uclSigTemp;
 }
 
+/**
+ * @deprecated
+ * @param helper
+ * @param s
+ * @return
+ */
 string UCL::switchHelper(int helper, string s)
 {
     switch(helper)
