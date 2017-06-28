@@ -226,17 +226,17 @@ bool UCL::checkUCL()
 
     string uclSig = getValue(15, 15);
     setValue(15, 15, "hello");
-    string temp = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
+    string originUCL = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
 
     int helper = sigUCLP.getHelper();
     int alg = sigUCLP.getLPartHead(2, 5);
     // 对于数字签名算法此处应该先用公钥解密，然后比较Hash值
     string hashFromSig = genSig(helper, uclSig);  //公钥解密成Hash值
-    string hashFromTemp = genHash(alg, temp);  //比较Hash值
+    string hashFromOriginUCL = genHash(alg, originUCL);  //比较Hash值
 
     setValue(15, 15, uclSig);
 
-    if(hashFromSig == hashFromTemp) { return true; }
+    if(hashFromSig == hashFromOriginUCL) { return true; }
     else { return false; }
 }
 
