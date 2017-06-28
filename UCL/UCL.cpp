@@ -90,7 +90,12 @@ string UCL::generateHeadVPart()
 
 void UCL::setUCL()
 {
-    //VPart会影响QuickMatcher位置,QuickMatcher位置也为影响VPart
+    /*
+     * VPart会影响QuickMatcher位置,QuickMatcher位置也会影响VPart
+     * generateQuickMatcher()根据propertySets生成quickMatcher
+     * generateHeadVPart()根据quickMatcher生成vPart
+     * vPart的设置会影响quickMatcher的位置
+    */
     uclPropertyHead.setQuickMatcher(generateQuickMatcher());
     uclPropertyHead.setVPart(generateHeadVPart());
     uclPropertyHead.setQuickMatcher(generateQuickMatcher());
@@ -182,14 +187,15 @@ void UCL::unpackPropertySets(string properties)
 
 string UCL::pack()
 {
-    setValue(15, 15, "hello");
-
-    string temp = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
     map<int, UCLPropertyBase> ps = propertySets[15].getProperties();
     UCLPropertyBase sigUCLP = ps[15];
 
     int helper = sigUCLP.getHelper();
     int alg = sigUCLP.getLPartHead(2, 5);
+
+    setValue(15, 15, "");
+    string temp = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
+
     // 对于数字签名算法此处应该先生成hash值，然后私钥加密
     string hash = genHash(alg, temp);   //生成摘要
     string uclSigTemp = genSig(helper, hash);  //私钥加密摘要
@@ -225,7 +231,7 @@ bool UCL::checkUCL()
     UCLPropertyBase sigUCLP = ps[15];
 
     string uclSig = getValue(15, 15);
-    setValue(15, 15, "hello");
+    setValue(15, 15, "");
     string originUCL = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
 
     int helper = sigUCLP.getHelper();

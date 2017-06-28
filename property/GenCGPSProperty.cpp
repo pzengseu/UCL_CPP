@@ -81,7 +81,7 @@ UCLPropertyBase GenCGPSProperty::genUCLSig(uint8_t alg, uint8_t helper)
 
     UCLPropertyBase signature;
     signature.setLPartHead(2, 5, alg);
-    signature.setProperty(15, helper, "hello");
+    signature.setProperty(15, helper, "");
 
     return signature;
 }
