@@ -88,6 +88,18 @@ string UCL::generateHeadVPart()
 
     return value;
 }
+void UCL::updatePropertyLength()
+{
+    uclPropertyHead.setTotalLength();
+}
+bool UCL::setUCLTotalLength()
+{
+    propertySets[15].updateTotalLength();
+    updatePropertyLength();
+    uint64_t totalLength = uclPropertyHead.getTotalLength()+32;
+    //根据totalLength设置code部分内容长度
+    uclCode.setSizeOfContent(totalLength);
+};
 
 void UCL::setUCL()
 {

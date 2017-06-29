@@ -45,6 +45,11 @@ uint8_t UCLPropertySet::getHeadHelper()
     return propertyHead.getHelper();
 }
 
+void UCLPropertySet::updateTotalLength()
+{
+    propertyHead.setTotalLength();
+}
+
 bool UCLPropertySet::setProperty(UCLPropertyBase property)
 {
     properties[property.getCategory()] = property;
