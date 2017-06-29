@@ -200,7 +200,6 @@ string UCL::pack()
     // 对于数字签名算法此处应该先生成hash值，然后私钥加密
     string hash = genHash(alg, temp);   //生成摘要
     string uclSigTemp = genSig(helper, hash);  //私钥加密摘要
-
     setValue(15, 15, uclSigTemp);
 
     return uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
@@ -240,7 +239,7 @@ bool UCL::checkUCL()
     //生成原始hash值
     string hashFromOriginUCL = genHash(alg, originUCL);
     //给定原始数据和签名后的数据,进行验证
-    bool res = verify(helper,hashFromOriginUCL,uclSig);
+    bool res = sigVerify(helper,hashFromOriginUCL,uclSig);
 
     setValue(15, 15, uclSig);
 
@@ -296,12 +295,13 @@ string UCL::genSig(int helper, string originalData)
 }
 
 /**
- * @deprecated
+ *
  * @param helper
- * @param s
+ * @param originalData
+ * @param signData
  * @return
  */
-bool UCL::verify(int helper, const string &originalData, const string &signData)
+bool UCL::sigVerify(int helper, const string &originalData, const string &signData)
 {
     bool res = true;
     switch(helper)
