@@ -98,6 +98,7 @@ public:
     uint64_t getSizeOfContent() const;
     bool setSizeOfContent(const uint64_t sizeOfContent);
 
+    uint8_t getLengthRange(uint64_t sizeOfContent);
     //time stamp
     uint64_t getTimeStamp() const;
     bool setTimeStamp(const uint64_t timeStamp);
