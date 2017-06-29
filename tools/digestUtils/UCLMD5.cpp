@@ -1,5 +1,5 @@
 #include <cstring>
-#include "md5.h"
+#include "UCLMD5.h"
 
 using namespace std;
 
