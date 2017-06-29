@@ -18,7 +18,7 @@ std::string UCLRSA::RSASign(const std::string &originalData) {
     }
     unsigned int siglen;
     int RSASize = RSA_size(RSAPriKey);
-    unsigned char *RSAsignBin = new unsigned char[1024];
+    unsigned char *RSAsignBin = new unsigned char[RSASize];
     int res = RSA_sign(NID_sha1, (const unsigned char *) originalData.c_str(), originalData.size(),
              RSAsignBin, &siglen, RSAPriKey);
     if(res != 1){
