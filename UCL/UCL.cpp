@@ -237,9 +237,9 @@ bool UCL::checkUCL()
 
     int helper = sigUCLP.getHelper();
     int alg = sigUCLP.getLPartHead(2, 5);
-    // 对于数字签名算法此处应该先用公钥解密，然后比较Hash值
-//    string hashFromSig = genSig(helper, uclSig);  //公钥解密成Hash值
-    string hashFromOriginUCL = genHash(alg, originUCL);  //比较Hash值
+    //生成原始hash值
+    string hashFromOriginUCL = genHash(alg, originUCL);
+    //给定原始数据和签名后的数据,进行验证
     bool res = verify(helper,hashFromOriginUCL,uclSig);
 
     setValue(15, 15, uclSig);
