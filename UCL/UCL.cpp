@@ -7,10 +7,11 @@
 #include <cassert>
 #include "../property/UCLPropertyHead.h"
 #include "UCL.h"
-#include "../tools/md5.h"
-#include "../tools/UCLCRC32.h"
-#include "../tools/UCLSHA_256.h"
-#include "../tools/UCLSHA_512.h"
+#include "../tools/digestUtils/UCLMD5.h"
+#include "../tools/digestUtils/UCLCRC32.h"
+#include "../tools/digestUtils/UCLSHA_256.h"
+#include "../tools/digestUtils/UCLSHA_512.h"
+#include "../tools/signatureUtils/UCLRSA.h"
 #include "test.h"
 
 const UCLPropertyHead &UCL::getUclPropertyHead() const {
@@ -237,13 +238,13 @@ bool UCL::checkUCL()
     int helper = sigUCLP.getHelper();
     int alg = sigUCLP.getLPartHead(2, 5);
     // 对于数字签名算法此处应该先用公钥解密，然后比较Hash值
-    string hashFromSig = genSig(helper, uclSig);  //公钥解密成Hash值
+//    string hashFromSig = genSig(helper, uclSig);  //公钥解密成Hash值
     string hashFromOriginUCL = genHash(alg, originUCL);  //比较Hash值
+    bool res = verify(helper,hashFromOriginUCL,uclSig);
 
     setValue(15, 15, uclSig);
 
-    if(hashFromSig == hashFromOriginUCL) { return true; }
-    else { return false; }
+    return res;
 }
 
 string UCL::genHash(int alg, string temp)
@@ -270,14 +271,15 @@ string UCL::genHash(int alg, string temp)
     return hash;
 }
 
-string UCL::genSig(int helper, string temp)
+string UCL::genSig(int helper, string originalData)
 {
+    string signData = originalData;
     switch(helper)
     {
         case 0:
             break;
-        case 1:
-            //RSA
+        case 1: //RSA
+            signData = UCLRSA::RSASign(originalData);
             break;
         case 2:
             //ECDSA
@@ -290,39 +292,7 @@ string UCL::genSig(int helper, string temp)
             break;
         default: break;
     }
-    return temp;
-}
-
-/**
- * @deprecated
- * @param helper
- * @param alg
- * @param temp
- * @return
- */
-string UCL::generateSigUCLP(int helper, int alg, string temp)
-{
-    string uclSigTemp;
-
-    switch(alg)
-    {
-        case 1: //CRC32
-            uclSigTemp = crc32(temp);
-            break;
-        case 2: //MD5
-            uclSigTemp = MD5(temp).toString();
-            break;
-        case 3: //SHA-256
-            uclSigTemp = sha256(temp);
-            break;
-        case 4: //SHA-512
-            uclSigTemp = sha512(temp);
-            break;
-        default: break;
-    }
-    uclSigTemp = switchHelper(helper, uclSigTemp);
-
-    return uclSigTemp;
+    return signData;
 }
 
 /**
@@ -331,14 +301,15 @@ string UCL::generateSigUCLP(int helper, int alg, string temp)
  * @param s
  * @return
  */
-string UCL::switchHelper(int helper, string s)
+bool UCL::verify(int helper, const string &originalData, const string &signData)
 {
+    bool res = true;
     switch(helper)
     {
         case 0:
             break;
-        case 1:
-            //RSA
+        case 1:  //RSA
+            res = UCLRSA::RSAVerify(originalData,signData);
             break;
         case 2:
             //ECDSA
@@ -351,7 +322,7 @@ string UCL::switchHelper(int helper, string s)
             break;
         default: break;
     }
-    return s;
+    return res;
 }
 
 void UCL::showUCL()
