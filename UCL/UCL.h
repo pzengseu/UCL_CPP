@@ -96,7 +96,7 @@ public:
     //生成hash值
     static string genHash(int alg, string temp);
     //数字签名值
-    static string genSig(int helper, string temp);
+    static string genSig(int helper, const string &originalData);
     static bool sigVerify(int helper, const string &originData,const string &signData);
 };
 #endif //UCL_UCL_H

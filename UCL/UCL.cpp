@@ -270,7 +270,7 @@ string UCL::genHash(int alg, string temp)
     return hash;
 }
 
-string UCL::genSig(int helper, string originalData)
+string UCL::genSig(int helper, const string &originalData)
 {
     string signData = originalData;
     switch(helper)
