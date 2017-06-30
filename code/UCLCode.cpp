@@ -302,7 +302,55 @@ uint64_t UCLCode::getSizeOfContent() const
 }
 bool UCLCode::setSizeOfContent(const uint64_t sizeOfContent)
 {
-    return setBits(SIZEOFCONTENT_START_BYTE, SIZEOFCONTENT_START_BIT, SIZEOFCONTENT_BIT_LENGTH, sizeOfContent);
+    uint8_t lengthRange=0, maxLengthUnit=0, sizes=0;
+
+    //判断sizeOfContent长度
+    if(sizeOfContent<1024)
+    {
+        //B
+        lengthRange = getLengthRange(sizeOfContent);
+        maxLengthUnit=0;
+    }
+    else if(sizeOfContent>=1024&&(sizeOfContent/1024)<1024)
+    {
+        //KB
+        lengthRange = getLengthRange(sizeOfContent/1024);
+        maxLengthUnit=1;
+    }
+    else if((sizeOfContent/1024)>=1024&&(sizeOfContent/1024/1024)<1024)
+    {
+        //MB
+        lengthRange = getLengthRange(sizeOfContent/1024/1024);
+        maxLengthUnit=2;
+    }
+    else if((sizeOfContent/1024/1024)>=1024&&(sizeOfContent/1024/1024/1024)<1024)
+    {
+        //GB
+        lengthRange = getLengthRange(sizeOfContent/1024/1024/1024);
+        maxLengthUnit=3;
+    }
+    sizes=(maxLengthUnit<<3)|lengthRange;
+    return setBits(SIZEOFCONTENT_START_BYTE, SIZEOFCONTENT_START_BIT, SIZEOFCONTENT_BIT_LENGTH, sizes);
+}
+
+uint8_t UCLCode::getLengthRange(uint64_t sizeOfContent)
+{
+    if(sizeOfContent<4)
+        return 0;
+    else if(sizeOfContent>=4&&sizeOfContent<16)
+        return 1;
+    else if(sizeOfContent>=16&&sizeOfContent<64)
+        return 2;
+    else if(sizeOfContent>=64&&sizeOfContent<128)
+        return 3;
+    else if(sizeOfContent>=128&&sizeOfContent<256)
+        return 4;
+    else if(sizeOfContent>=256&&sizeOfContent<512)
+        return 5;
+    else if(sizeOfContent>=512&&sizeOfContent<768)
+        return 6;
+    else if(sizeOfContent>=768&&sizeOfContent<1024)
+        return 7;
 }
 
 //time stamp

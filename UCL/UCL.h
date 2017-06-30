@@ -45,6 +45,7 @@ public:
      * property
      */
     //uclPropertyHead
+    void updatePropertyLength();
     const UCLPropertyHead &getUclPropertyHead() const;
     void setUclPropertyHead(const UCLPropertyHead &uclPropertyHead);
 
@@ -65,6 +66,8 @@ public:
     string getValue(int setPos, int propertyPos);
     //设置第setPos集合的第propertyPos属性的vPart
     void setValue(int setPos, int propertyPos, string value);
+    //判断数字签名类型
+    uint8_t initSignature(int helper,int alg);
 
     //设置uclProperthHead类别
     void setHeadCategory(uint8_t category);
@@ -78,6 +81,8 @@ public:
     //根据propertySets生成uclPropertyHead的vPart
     string generateHeadVPart();
 
+    //获取UCL总长度（code和property）
+    bool setUCLTotalLength();
     //属性集合有变需调用该函数
     void setUCL();
 
