@@ -66,6 +66,8 @@ public:
     string getValue(int setPos, int propertyPos);
     //设置第setPos集合的第propertyPos属性的vPart
     void setValue(int setPos, int propertyPos, string value);
+    //判断数字签名类型
+    uint8_t initSignature(int helper,int alg);
 
     //设置uclProperthHead类别
     void setHeadCategory(uint8_t category);

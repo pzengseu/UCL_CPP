@@ -150,6 +150,99 @@ void UCL::setValue(int setPos, int propertyPos, string value)
     setUCL();
 }
 
+uint8_t UCL::initSignature(int helper,int alg)
+{
+    uint8_t signType = helper;//propertySets[15].getProperty(15).getHelper();
+    uint8_t abstractType = alg;//propertySets[15].getProperty(15).getLPartHead(2,5);
+    if(signType == 0x00)
+    {
+        //未使用签名需要使用摘要填充
+        if(abstractType == 0x01)
+        {
+            //CRC32
+            string str ="";
+            for(int i=0;i<4;i++)
+            {
+                str+='0';
+            }
+            setValue(15, 15, str);
+        }
+        else if(abstractType == 0x02)
+        {
+            //MD5
+            string str ="";
+            for(int i=0;i<32;i++)
+            {
+                str+='0';
+            }
+            setValue(15, 15, str);
+        }
+        else if(abstractType == 0x03)
+        {
+            //SHA-256
+            string str ="";
+            for(int i=0;i<32;i++)
+            {
+                str+='0';
+            }
+            setValue(15, 15, str);
+        }
+        else if(abstractType == 0x04)
+        {
+            //SHA-512
+            string str ="";
+            for(int i=0;i<64;i++)
+            {
+                str+='0';
+            }
+            setValue(15, 15, str);
+        }
+    }
+    else if(signType == 0x01)
+    {
+        //RSA
+        string str ="";
+        for(int i=0;i<128;i++)
+        {
+            str+='0';
+        }
+        setValue(15, 15, str);
+    }
+    else if(signType == 0x02)
+    {
+        //ECDSA
+        string str ="";
+        for(int i=0;i<32;i++)
+        {
+            str+='0';
+        }
+        setValue(15, 15, str);
+    }
+    else if(signType == 0x03)
+    {
+        //DSA
+        string str ="";
+        for(int i=0;i<128;i++)
+        {
+            str+='0';
+        }
+        setValue(15, 15, str);
+    }
+    else if(signType == 0x04)
+    {
+        //ECC
+        string str ="";
+        for(int i=0;i<20;i++)
+        {
+            str+='0';
+        }
+        setValue(15, 15, str);
+    }
+    else if(signType == 0x05)
+    {
+        //HMAC
+    }
+}
 string UCL::packPropertySets()
 {
     return uclPropertyHead.pack();
@@ -206,6 +299,12 @@ string UCL::pack()
     int helper = sigUCLP.getHelper();
     int alg = sigUCLP.getLPartHead(2, 5);
 
+    //根据对应签名长度，先填充对应位数，计算长度后填充签名
+    //内容数字签名，类别号12，全UCL包数字签名，类别号15
+    initSignature(helper,alg);
+    //设定UCL总长度
+    setUCLTotalLength();
+
     setValue(15, 15, "");
     string temp = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
 
@@ -237,6 +336,7 @@ void UCL::unpack(string ucl)
 
     assert(checkUCL());
 }
+
 bool UCL::checkUCL()
 {
     map<int, UCLPropertyBase> ps = propertySets[15].getProperties();
