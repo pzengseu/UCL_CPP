@@ -1,16 +1,12 @@
 //
 // Created by fly on 17-6-28.
 //
+
 #include "UCLDSA.h"
-#include <iostream>
 
-using namespace std;
+char *UCLDSA::DSASign(const std::string &originalData) {
 
-unsigned int siglen;
-
-std::string UCLDSA::DSASign(const std::string &originalData) {
-
-    FILE *PriKeyFile = fopen("../KeyFiles/dsa_private_key.pem", "rb");
+    FILE *PriKeyFile = fopen("../tools/signatureUtils/keyFiles/dsa_private_key.pem", "rb");
     if (PriKeyFile == NULL) {
         assert(false);
         return "";
@@ -20,24 +16,28 @@ std::string UCLDSA::DSASign(const std::string &originalData) {
         assert(false);
         return "";
     }
-//    unsigned int siglen;
+    unsigned int siglen;
     int DSASize = DSA_size(DSAPriKey);
     unsigned char *DSAsignBin = new unsigned char[DSASize];
-    DSA_sign(NID_sha1, (const unsigned char *) originalData.c_str(), originalData.size(),
+    int res = DSA_sign(NID_sha1, (const unsigned char *) originalData.c_str(), originalData.size(),
              DSAsignBin, &siglen, DSAPriKey);
-    string DSAsignBase64;
+    if(res != 1){
+        assert(false);
+        return "";
+    }
+    char *DSAsignBase64;
     DSAsignBase64 = Base64Encode(DSAsignBin, siglen);
+
     delete[] DSAsignBin;
     DSA_free(DSAPriKey);
     fclose(PriKeyFile);
     CRYPTO_cleanup_all_ex_data();
-    cerr << siglen << endl;
     return DSAsignBase64;
 }
 
 bool UCLDSA::DSAVerify(const std::string &originalData, const std::string &signData) {
 
-    FILE *PubKeyFile = fopen("../KeyFiles/dsa_public_key.pem", "rb");
+    FILE *PubKeyFile = fopen("../tools/signatureUtils/keyFiles/dsa_public_key.pem", "rb");
     if (PubKeyFile == NULL) {
         assert(false);
         return "";
@@ -50,7 +50,6 @@ bool UCLDSA::DSAVerify(const std::string &originalData, const std::string &signD
     unsigned char *DSAsignBin;
     size_t length;
     DSAsignBin = (unsigned char *) Base64Decode(signData.c_str(), signData.length(), &length);
-    cerr << length << endl;
 
     int ret = DSA_verify(NID_sha1, (const unsigned char *) originalData.c_str(), originalData.size(),
                          DSAsignBin, length, DSAPubKey);
