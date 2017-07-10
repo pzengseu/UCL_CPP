@@ -8,10 +8,8 @@
 #include <openssl/pem.h>
 #include <cstring>
 
-void Base64Encode(const unsigned char *buffer, size_t length, char **base64Text);
+char *Base64Encode(const unsigned char *input, int length);
 
-size_t calcDecodeLength(const char *b64input);
-
-void Base64Decode(const char *b64message, unsigned char **buffer, size_t *length);
+char *Base64Decode(const char *input, size_t inputLength, size_t *binLength);
 
 #endif //UCL_CPP_BASE64CODE_H
