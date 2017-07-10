@@ -4,7 +4,7 @@
 
 #include "UCLRSA.h"
 
-std::string UCLRSA::RSASign(const std::string &originalData) {
+char *UCLRSA::RSASign(const std::string &originalData) {
 
     FILE *PriKeyFile = fopen("../tools/signatureUtils/keyFiles/rsa_private_key.pem", "rb");
     if (PriKeyFile == NULL) {
@@ -26,7 +26,8 @@ std::string UCLRSA::RSASign(const std::string &originalData) {
         return "";
     }
     char *RSAsignBase64;
-    Base64Encode(RSAsignBin, siglen, &RSAsignBase64);
+    RSAsignBase64 = Base64Encode(RSAsignBin, siglen);
+
     delete[] RSAsignBin;
     RSA_free(RSAPriKey);
     fclose(PriKeyFile);
@@ -48,7 +49,7 @@ bool UCLRSA::RSAVerify(const std::string &originalData, const std::string &signD
     }
     unsigned char *RSAsignBin;
     size_t length;
-    Base64Decode(signData.c_str(), &RSAsignBin, &length);
+    RSAsignBin = (unsigned char*)Base64Decode(signData.c_str(), signData.length(), &length);
 
     int ret = RSA_verify(NID_sha1, (const unsigned char *) originalData.c_str(), originalData.size(),
                          RSAsignBin, length, RSAPubKey);

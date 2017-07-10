@@ -12,7 +12,7 @@
 
 class UCLRSA{
 public:
-    static std::string RSASign(const std::string &originalData);
+    static char *RSASign(const std::string &originalData);
 
     static bool RSAVerify(const std::string &originalData, const std::string &signData);
 };
