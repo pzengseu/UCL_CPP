@@ -12,6 +12,7 @@
 #include "../tools/digestUtils/UCLSHA_256.h"
 #include "../tools/digestUtils/UCLSHA_512.h"
 #include "../tools/signatureUtils/UCLRSA.h"
+#include "../tools/signatureUtils/UCLDSA.h"
 #include "test.h"
 
 const UCLPropertyHead &UCL::getUclPropertyHead() const {
@@ -30,58 +31,47 @@ void UCL::setPropertySets(const map<int, UCLPropertySet> &propertySets) {
     UCL::propertySets = propertySets;
 }
 
-bool UCL::setPropertySet(UCLPropertySet &propertySet)
-{
+bool UCL::setPropertySet(UCLPropertySet &propertySet) {
     propertySets[propertySet.getHeadCategory()] = propertySet;
     setUCL();
 }
 
-bool UCL::delPropertySet(uint8_t category)
-{
+bool UCL::delPropertySet(uint8_t category) {
     propertySets.erase(category);
 }
 
-void UCL::setHeadCategory(uint8_t category)
-{
+void UCL::setHeadCategory(uint8_t category) {
     uclPropertyHead.setCategory(category);
 }
 
-uint8_t UCL::getHeadCategory()
-{
+uint8_t UCL::getHeadCategory() {
     return uclPropertyHead.getCategory();
 }
 
-void UCL::setHeadHelper(uint8_t helper)
-{
+void UCL::setHeadHelper(uint8_t helper) {
     uclPropertyHead.setHelper(helper);
 }
 
-uint8_t UCL::getHeadHelper()
-{
+uint8_t UCL::getHeadHelper() {
     return uclPropertyHead.getHelper();
 }
 
-uint16_t UCL::generateQuickMatcher()
-{
+uint16_t UCL::generateQuickMatcher() {
     bitset<16> qmb;
     map<int, UCLPropertySet>::iterator iter = propertySets.begin();
-    for(; iter != propertySets.end(); iter++)
-    {
+    for (; iter != propertySets.end(); iter++) {
         qmb.set(iter->first);
     }
 
     return qmb.to_ulong();
 }
 
-string UCL::generateHeadVPart()
-{
+string UCL::generateHeadVPart() {
     bitset<16> qmb(uclPropertyHead.getQuickMatcher());
     string value;
 
-    for(int i=0; i < 16; i++)
-    {
-        if(qmb.test(i))
-        {
+    for (int i = 0; i < 16; i++) {
+        if (qmb.test(i)) {
             value += propertySets[i].pack();
         }
     }
@@ -89,8 +79,7 @@ string UCL::generateHeadVPart()
     return value;
 }
 
-void UCL::setUCL()
-{
+void UCL::setUCL() {
     /*
      * VPart会影响QuickMatcher位置,QuickMatcher位置也会影响VPart
      * generateQuickMatcher()根据propertySets生成quickMatcher
@@ -103,77 +92,66 @@ void UCL::setUCL()
 //    uclPropertyHead.setTotalLength();
 }
 
-bool UCL::setProperty(int setPos, UCLPropertyBase &property)
-{
+bool UCL::setProperty(int setPos, UCLPropertyBase &property) {
     propertySets[setPos].setProperty(property);
     setUCL();
 }
 
-bool UCL::delProperty(int setPos, int propertyPos)
-{
+bool UCL::delProperty(int setPos, int propertyPos) {
     assert(propertySets.find(setPos) != propertySets.end());
     propertySets[setPos].delProperty(propertyPos);
     setUCL();
 }
 
-UCLPropertyBase UCL::getProperty(int setPos, int propertyPos)
-{
+UCLPropertyBase UCL::getProperty(int setPos, int propertyPos) {
     assert(propertySets.find(setPos) != propertySets.end());
     return propertySets[setPos].getProperty(propertyPos);
 }
 
-string UCL::getValue(int setPos, int propertyPos)
-{
-    assert(propertySets.find(setPos)!=propertySets.end());
+string UCL::getValue(int setPos, int propertyPos) {
+    assert(propertySets.find(setPos) != propertySets.end());
     return propertySets[setPos].getPropertyVPart(propertyPos);
 //    map<int, UCLPropertyBase> properties = propertySets[setPos].getProperties();
 //    assert(properties.find(propertyPos)!=properties.end());
 //    return properties[propertyPos].getVPart();
 }
 
-void UCL::setValue(int setPos, int propertyPos, string value)
-{
-    assert(propertySets.find(setPos)!=propertySets.end());
+void UCL::setValue(int setPos, int propertyPos, string value) {
+    assert(propertySets.find(setPos) != propertySets.end());
     propertySets[setPos].setPropertyVPart(propertyPos, value);
     setUCL();
 }
 
-string UCL::packPropertySets()
-{
+string UCL::packPropertySets() {
     return uclPropertyHead.pack();
 }
 
-void UCL::unpackPropertySets(string properties)
-{
+void UCL::unpackPropertySets(string properties) {
     uclPropertyHead.unpack(properties);
     bitset<16> bqm(uclPropertyHead.getQuickMatcher());
     string headVPart = uclPropertyHead.getVPart();
     uint32_t tmp = 0;
-    for(int i=0; i < bqm.size(); i++)
-    {
-        if(bqm.test(i))
-        {
+    for (int i = 0; i < bqm.size(); i++) {
+        if (bqm.test(i)) {
             //计算属性集合头部属性长度值字段字节数
-            int lValueBytes = (int)(headVPart[1+tmp] >> 6) + 1;
+            int lValueBytes = (int) (headVPart[1 + tmp] >> 6) + 1;
             //取出长度值字段
-            string lValue = headVPart.substr(2+tmp, lValueBytes);
+            string lValue = headVPart.substr(2 + tmp, lValueBytes);
             uint32_t lValueNum = 0;
 
-            for(int j=0; j < lValue.size(); j++)
-            {
-                switch (j)
-                {
+            for (int j = 0; j < lValue.size(); j++) {
+                switch (j) {
                     case 0:
                         lValueNum = (0xffffff00 & lValueNum) | (lValue[j] & 0xff);
                         break;
                     case 1:
-                        lValueNum = (0xffff00ff & lValueNum) | ((lValue[j] & 0xff)<<8);
+                        lValueNum = (0xffff00ff & lValueNum) | ((lValue[j] & 0xff) << 8);
                         break;
                     case 2:
-                        lValueNum = (0xff00ffff & lValueNum) | ((lValue[j] & 0xff)<<16);
+                        lValueNum = (0xff00ffff & lValueNum) | ((lValue[j] & 0xff) << 16);
                         break;
                     case 3:
-                        lValueNum = (0xff00ffff & lValueNum) | ((lValue[j] & 0xff)<<24);
+                        lValueNum = (0xff00ffff & lValueNum) | ((lValue[j] & 0xff) << 24);
                         break;
                 }
             }
@@ -186,8 +164,7 @@ void UCL::unpackPropertySets(string properties)
     }
 }
 
-string UCL::pack()
-{
+string UCL::pack() {
     map<int, UCLPropertyBase> ps = propertySets[15].getProperties();
     UCLPropertyBase sigUCLP = ps[15];
 
@@ -197,16 +174,14 @@ string UCL::pack()
     setValue(15, 15, "");
     string temp = uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
 
-    // 对于数字签名算法此处应该先生成hash值，然后私钥加密
     string hash = genHash(alg, temp);   //生成摘要
-    string uclSigTemp = genSig(helper, hash);  //私钥加密摘要
+    string uclSigTemp = genSig(helper, hash);  //生成签名
     setValue(15, 15, uclSigTemp);
 
     return uclCode.pack() /*+ uclCodeExtension.pack()*/ + packPropertySets();
 }
 
-void UCL::unpack(string ucl)
-{
+void UCL::unpack(string ucl) {
     //UCLCode
     string sUCLCode = ucl.substr(0, 32);
     uclCode.unpack(sUCLCode);
@@ -225,8 +200,8 @@ void UCL::unpack(string ucl)
 
     assert(checkUCL());
 }
-bool UCL::checkUCL()
-{
+
+bool UCL::checkUCL() {
     map<int, UCLPropertyBase> ps = propertySets[15].getProperties();
     UCLPropertyBase sigUCLP = ps[15];
 
@@ -239,19 +214,17 @@ bool UCL::checkUCL()
     //生成原始hash值
     string hashFromOriginUCL = genHash(alg, originUCL);
     //给定原始数据和签名后的数据,进行验证
-    bool res = sigVerify(helper,hashFromOriginUCL,uclSig);
+    bool res = sigVerify(helper, hashFromOriginUCL, uclSig);
 
     setValue(15, 15, uclSig);
 
     return res;
 }
 
-string UCL::genHash(int alg, string temp)
-{
+string UCL::genHash(int alg, string temp) {
     string hash;
 
-    switch(alg)
-    {
+    switch (alg) {
         case 1: //CRC32
             hash = crc32(temp);
             break;
@@ -264,32 +237,35 @@ string UCL::genHash(int alg, string temp)
         case 4: //SHA-512
             hash = sha512(temp);
             break;
-        default: break;
+        default:
+            break;
     }
 
     return hash;
 }
 
-string UCL::genSig(int helper, const string &originalData)
-{
+string UCL::genSig(int helper, const string &originalData) {
     string signData = originalData;
-    switch(helper)
-    {
+    switch (helper) {
         case 0:
             break;
-        case 1: //RSA
+        case 1:  //RSA
             signData = UCLRSA::RSASign(originalData);
             break;
         case 2:
             //ECDSA
             break;
-        case 3:
-            //DSA
+        case 3:  //DSA
+            signData = UCLDSA::DSASign(originalData);
             break;
-        case 4:
-            //ECC
+        case 4:  //ECC
+
             break;
-        default: break;
+        case 5:  //HMAC
+
+            break;
+        default:
+            break;
     }
     return signData;
 }
@@ -301,42 +277,41 @@ string UCL::genSig(int helper, const string &originalData)
  * @param signData
  * @return
  */
-bool UCL::sigVerify(int helper, const string &originalData, const string &signData)
-{
+bool UCL::sigVerify(int helper, const string &originalData, const string &signData) {
     bool res = true;
-    switch(helper)
-    {
+    switch (helper) {
         case 0:
             break;
         case 1:  //RSA
-            res = UCLRSA::RSAVerify(originalData,signData);
+            res = UCLRSA::RSAVerify(originalData, signData);
             break;
         case 2:
             //ECDSA
             break;
-        case 3:
-            //DSA
+        case 3:  //DSA
+            res = UCLDSA::DSAVerify(originalData, signData);
             break;
-        case 4:
-            //ECC
+        case 4:  //ECC
             break;
-        default: break;
+        case 5:  //HMAC
+
+            break;
+        default:
+            break;
     }
     return res;
 }
 
-void UCL::showUCL()
-{
+void UCL::showUCL() {
     uclCode.showCode();
 //    uclCodeExtension.showCodeExt();
 
     cout << "--------------属性部分----------------" << endl;
     cout << "元语言类型: " << UPI.getPropertyLangType(uclPropertyHead.getCategory()) << endl;
-    cout << "属性集个数: " << (int)uclPropertyHead.getSize() << endl;
+    cout << "属性集个数: " << (int) uclPropertyHead.getSize() << endl;
     cout << "--------------具体属性集----------------" << endl;
     map<int, UCLPropertySet>::iterator proSet = propertySets.begin();
-    for(; proSet!=propertySets.end(); proSet++)
-    {
+    for (; proSet != propertySets.end(); proSet++) {
         cout << "**************************" << endl;
         proSet->second.showPropertySet();
     }
