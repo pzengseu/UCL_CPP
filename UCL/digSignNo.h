@@ -15,17 +15,17 @@
 #define DSA          3
 #define ECC          4
 #define HMAC         5
+//Unit of length:Byte
+#define CRC32_LEN    4
+#define MD5_LEN      32
+#define SHA_256_LEN  32
+#define SHA_512_LEN  64
 
-#define CRC32_LEN    32
-#define MD5_LEN      256
-#define SHA_256_LEN  256
-#define SHA_512_LEN  512
-
-#define RSA_LEN      1024
-#define ECDSA_LEN    256
-#define DSA_LEN      1024
-#define ECC_LEN      160
-#define HMAC_MD5     128
-#define HMAC_SHA1    160
+#define RSA_LEN      128
+#define ECDSA_LEN    32
+#define DSA_LEN      128
+#define ECC_LEN      20
+#define HMAC_MD5     16
+#define HMAC_SHA1    20
 
 #endif //UCL_CPP_DIGSIGNNO_H

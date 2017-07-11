@@ -146,9 +146,8 @@ uint8_t UCL::initSignature(int helper,int alg)
         //未使用签名需要使用摘要填充
         if(abstractType == CRC32)
         {
-            //CRC32
             string str ="";
-            for(int i=0;i<4;i++)
+            for(int i=0;i<CRC32_LEN;i++)
             {
                 str+='0';
             }
@@ -156,9 +155,8 @@ uint8_t UCL::initSignature(int helper,int alg)
         }
         else if(abstractType == MD5)
         {
-            //MD5
             string str ="";
-            for(int i=0;i<32;i++)
+            for(int i=0;i<MD5_LEN;i++)
             {
                 str+='0';
             }
@@ -166,9 +164,8 @@ uint8_t UCL::initSignature(int helper,int alg)
         }
         else if(abstractType == SHA_256)
         {
-            //SHA-256
             string str ="";
-            for(int i=0;i<32;i++)
+            for(int i=0;i<SHA_256_LEN;i++)
             {
                 str+='0';
             }
@@ -176,9 +173,8 @@ uint8_t UCL::initSignature(int helper,int alg)
         }
         else if(abstractType == SHA_512)
         {
-            //SHA-512
             string str ="";
-            for(int i=0;i<64;i++)
+            for(int i=0;i<SHA_512_LEN;i++)
             {
                 str+='0';
             }
@@ -187,9 +183,8 @@ uint8_t UCL::initSignature(int helper,int alg)
     }
     else if(signType == RSA)
     {
-        //RSA
         string str ="";
-        for(int i=0;i<128;i++)
+        for(int i=0;i<RSA_LEN;i++)
         {
             str+='0';
         }
@@ -197,9 +192,8 @@ uint8_t UCL::initSignature(int helper,int alg)
     }
     else if(signType == ECDSA)
     {
-        //ECDSA
         string str ="";
-        for(int i=0;i<32;i++)
+        for(int i=0;i<ECDSA_LEN;i++)
         {
             str+='0';
         }
@@ -207,9 +201,8 @@ uint8_t UCL::initSignature(int helper,int alg)
     }
     else if(signType == DSA)
     {
-        //DSA
         string str ="";
-        for(int i=0;i<128;i++)
+        for(int i=0;i<DSA_LEN;i++)
         {
             str+='0';
         }
@@ -217,9 +210,8 @@ uint8_t UCL::initSignature(int helper,int alg)
     }
     else if(signType == ECC)
     {
-        //ECC
         string str ="";
-        for(int i=0;i<20;i++)
+        for(int i=0;i<ECC_LEN;i++)
         {
             str+='0';
         }
