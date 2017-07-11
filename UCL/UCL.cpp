@@ -15,6 +15,7 @@
 #include "../tools/signature/UCLDSA.h"
 #include "../tools/signature/UCLECDSA.h"
 #include "test.h"
+#include "digSignNo.h"
 
 const UCLPropertyHead &UCL::getUclPropertyHead() const {
     return uclPropertyHead;
@@ -143,7 +144,7 @@ uint8_t UCL::initSignature(int helper,int alg)
     if(signType == 0x00)
     {
         //未使用签名需要使用摘要填充
-        if(abstractType == 0x01)
+        if(abstractType == CRC32)
         {
             //CRC32
             string str ="";
@@ -153,7 +154,7 @@ uint8_t UCL::initSignature(int helper,int alg)
             }
             setValue(15, 15, str);
         }
-        else if(abstractType == 0x02)
+        else if(abstractType == MD5)
         {
             //MD5
             string str ="";
@@ -163,7 +164,7 @@ uint8_t UCL::initSignature(int helper,int alg)
             }
             setValue(15, 15, str);
         }
-        else if(abstractType == 0x03)
+        else if(abstractType == SHA_256)
         {
             //SHA-256
             string str ="";
@@ -173,7 +174,7 @@ uint8_t UCL::initSignature(int helper,int alg)
             }
             setValue(15, 15, str);
         }
-        else if(abstractType == 0x04)
+        else if(abstractType == SHA_512)
         {
             //SHA-512
             string str ="";
@@ -184,7 +185,7 @@ uint8_t UCL::initSignature(int helper,int alg)
             setValue(15, 15, str);
         }
     }
-    else if(signType == 0x01)
+    else if(signType == RSA)
     {
         //RSA
         string str ="";
@@ -194,7 +195,7 @@ uint8_t UCL::initSignature(int helper,int alg)
         }
         setValue(15, 15, str);
     }
-    else if(signType == 0x02)
+    else if(signType == ECDSA)
     {
         //ECDSA
         string str ="";
@@ -204,7 +205,7 @@ uint8_t UCL::initSignature(int helper,int alg)
         }
         setValue(15, 15, str);
     }
-    else if(signType == 0x03)
+    else if(signType == DSA)
     {
         //DSA
         string str ="";
@@ -214,7 +215,7 @@ uint8_t UCL::initSignature(int helper,int alg)
         }
         setValue(15, 15, str);
     }
-    else if(signType == 0x04)
+    else if(signType == ECC)
     {
         //ECC
         string str ="";
@@ -224,7 +225,7 @@ uint8_t UCL::initSignature(int helper,int alg)
         }
         setValue(15, 15, str);
     }
-    else if(signType == 0x05)
+    else if(signType == HMAC)
     {
         //HMAC
     }
@@ -343,7 +344,7 @@ string UCL::genHash(int alg, string temp) {
             hash = crc32(temp);
             break;
         case 2: //MD5
-            hash = MD5(temp).toString();
+            hash = UCLMD5(temp).toString();
             break;
         case 3: //SHA-256
             hash = sha256(temp);

@@ -12,12 +12,12 @@ using std::string;
 using std::ifstream;
 
 /* MD5 declaration. */
-class MD5 {
+class UCLMD5 {
 public:
-    MD5();
-    MD5(const void *input, size_t length);
-    MD5(const string &str);
-    MD5(ifstream &in);
+    UCLMD5();
+    UCLMD5(const void *input, size_t length);
+    UCLMD5(const string &str);
+    UCLMD5(ifstream &in);
     void update(const void *input, size_t length);
     void update(const string &str);
     void update(ifstream &in);
@@ -33,8 +33,8 @@ private:
     string bytesToHexString(const byte *input, size_t length);
 
     /* class uncopyable */
-    MD5(const MD5&);
-    MD5& operator=(const MD5&);
+    UCLMD5(const UCLMD5&);
+    UCLMD5& operator=(const UCLMD5&);
 private:
     uint32 _state[4];   /* state (ABCD) */
     uint32 _count[2];   /* number of bits, modulo 2^64 (low-order word first) */
