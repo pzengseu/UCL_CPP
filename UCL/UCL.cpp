@@ -7,12 +7,13 @@
 #include <cassert>
 #include "../property/UCLPropertyHead.h"
 #include "UCL.h"
-#include "../tools/digestUtils/UCLMD5.h"
-#include "../tools/digestUtils/UCLCRC32.h"
-#include "../tools/digestUtils/UCLSHA_256.h"
-#include "../tools/digestUtils/UCLSHA_512.h"
-#include "../tools/signatureUtils/UCLRSA.h"
-#include "../tools/signatureUtils/UCLDSA.h"
+#include "../tools/digest/UCLMD5.h"
+#include "../tools/digest/UCLCRC32.h"
+#include "../tools/digest/UCLSHA_256.h"
+#include "../tools/digest/UCLSHA_512.h"
+#include "../tools/signature/UCLRSA.h"
+#include "../tools/signature/UCLDSA.h"
+#include "../tools/signature/UCLECDSA.h"
 #include "test.h"
 
 const UCLPropertyHead &UCL::getUclPropertyHead() const {
@@ -252,8 +253,8 @@ string UCL::genSig(int helper, const string &originalData) {
         case 1:  //RSA
             signData = UCLRSA::RSASign(originalData);
             break;
-        case 2:
-            //ECDSA
+        case 2:  //ECDSA
+            signData = UCLECDSA::ECDSASign(originalData);
             break;
         case 3:  //DSA
             signData = UCLDSA::DSASign(originalData);
@@ -285,13 +286,14 @@ bool UCL::sigVerify(int helper, const string &originalData, const string &signDa
         case 1:  //RSA
             res = UCLRSA::RSAVerify(originalData, signData);
             break;
-        case 2:
-            //ECDSA
+        case 2:  //ECDSA
+            res = UCLECDSA::ECDSAVerify(originalData, signData);
             break;
         case 3:  //DSA
             res = UCLDSA::DSAVerify(originalData, signData);
             break;
         case 4:  //ECC
+
             break;
         case 5:  //HMAC
 

@@ -134,7 +134,7 @@ UCLPropertySet generateCGPS()
     cgps.setProperty(security);
     UCLPropertyBase chain = GenCGPSProperty::genChainOfRes(2, "sian;seu");
     cgps.setProperty(chain);
-    UCLPropertyBase sigUCL = GenCGPSProperty::genUCLSig(SHA_512, DSA);
+    UCLPropertyBase sigUCL = GenCGPSProperty::genUCLSig(SHA_512, ECDSA);
     cgps.setProperty(sigUCL);
 
     return cgps;
