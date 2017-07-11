@@ -19,9 +19,13 @@ char *UCLRSA::RSASign(const std::string &originalData) {
     unsigned int siglen;
     int RSASize = RSA_size(RSAPriKey);
     unsigned char *RSAsignBin = new unsigned char[RSASize];
-    int res = RSA_sign(NID_sha1, (const unsigned char *) originalData.c_str(), originalData.size(),
-             RSAsignBin, &siglen, RSAPriKey);
-    if(res != 1){
+    std::string convertData = originalData;
+    if (originalData.length() == 128) {
+        convertData = sha256(originalData);
+    }
+    int res = RSA_sign(NID_sha1, (const unsigned char *) convertData.c_str(), convertData.size(),
+                       RSAsignBin, &siglen, RSAPriKey);
+    if (res != 1) {
         assert(false);
         return "";
     }
@@ -49,9 +53,12 @@ bool UCLRSA::RSAVerify(const std::string &originalData, const std::string &signD
     }
     unsigned char *RSAsignBin;
     size_t length;
-    RSAsignBin = (unsigned char*)Base64Decode(signData.c_str(), signData.length(), &length);
-
-    int ret = RSA_verify(NID_sha1, (const unsigned char *) originalData.c_str(), originalData.size(),
+    RSAsignBin = (unsigned char *) Base64Decode(signData.c_str(), signData.length(), &length);
+    std::string convertData = originalData;
+    if (originalData.length() == 128) {
+        convertData = sha256(originalData);
+    }
+    int ret = RSA_verify(NID_sha1, (const unsigned char *) convertData.c_str(), convertData.size(),
                          RSAsignBin, length, RSAPubKey);
     RSA_free(RSAPubKey);
     fclose(PubKeyFile);
