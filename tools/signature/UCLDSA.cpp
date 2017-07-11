@@ -6,7 +6,7 @@
 
 char *UCLDSA::DSASign(const std::string &originalData) {
 
-    FILE *PriKeyFile = fopen("../tools/signatureUtils/keyFiles/dsa_private_key.pem", "rb");
+    FILE *PriKeyFile = fopen("../tools/signature/keyFiles/dsa_private_key.pem", "rb");
     if (PriKeyFile == NULL) {
         assert(false);
         return "";
@@ -37,7 +37,7 @@ char *UCLDSA::DSASign(const std::string &originalData) {
 
 bool UCLDSA::DSAVerify(const std::string &originalData, const std::string &signData) {
 
-    FILE *PubKeyFile = fopen("../tools/signatureUtils/keyFiles/dsa_public_key.pem", "rb");
+    FILE *PubKeyFile = fopen("../tools/signature/keyFiles/dsa_public_key.pem", "rb");
     if (PubKeyFile == NULL) {
         assert(false);
         return "";

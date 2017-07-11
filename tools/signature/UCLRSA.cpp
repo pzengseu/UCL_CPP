@@ -6,7 +6,7 @@
 
 char *UCLRSA::RSASign(const std::string &originalData) {
 
-    FILE *PriKeyFile = fopen("../tools/signatureUtils/keyFiles/rsa_private_key.pem", "rb");
+    FILE *PriKeyFile = fopen("../tools/signature/keyFiles/rsa_private_key.pem", "rb");
     if (PriKeyFile == NULL) {
         assert(false);
         return "";
@@ -41,7 +41,7 @@ char *UCLRSA::RSASign(const std::string &originalData) {
 
 bool UCLRSA::RSAVerify(const std::string &originalData, const std::string &signData) {
 
-    FILE *PubKeyFile = fopen("../tools/signatureUtils/keyFiles/rsa_public_key.pem", "rb");
+    FILE *PubKeyFile = fopen("../tools/signature/keyFiles/rsa_public_key.pem", "rb");
     if (PubKeyFile == NULL) {
         assert(false);
         return "";
