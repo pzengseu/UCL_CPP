@@ -5,6 +5,7 @@
 #include "test.h"
 #include "../property/GenCDPSProperty.h"
 #include "../property/GenCGPSProperty.h"
+#include "digSignNo.h"
 
 void testCommand()
 {
@@ -62,7 +63,7 @@ void testCommand()
 
 //    cout << "\n##############测试打包##############\n\n";
     cout << "--------------UCLPackage-------------- \n";
-    assert(ucl.pack() == ucl.pack());
+//    assert(ucl.pack() == ucl.pack());
     printPackString(ucl.pack());
     cout << "--------------显示UCL各部分关键信息--------------\n";
     ucl.showUCL();
@@ -133,7 +134,7 @@ UCLPropertySet generateCGPS()
     cgps.setProperty(security);
     UCLPropertyBase chain = GenCGPSProperty::genChainOfRes(2, "sian;seu");
     cgps.setProperty(chain);
-    UCLPropertyBase sigUCL = GenCGPSProperty::genUCLSig(3, 1);
+    UCLPropertyBase sigUCL = GenCGPSProperty::genUCLSig(SHA_512, ECDSA);
     cgps.setProperty(sigUCL);
 
     return cgps;

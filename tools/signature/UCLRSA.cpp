@@ -4,9 +4,9 @@
 
 #include "UCLRSA.h"
 
-std::string UCLRSA::RSASign(const std::string &originalData) {
+char *UCLRSA::RSASign(const std::string &originalData) {
 
-    FILE *PriKeyFile = fopen("../tools/signatureUtils/keyFiles/rsa_private_key.pem", "rb");
+    FILE *PriKeyFile = fopen("../tools/signature/keyFiles/rsa_private_key.pem", "rb");
     if (PriKeyFile == NULL) {
         assert(false);
         return "";
@@ -19,14 +19,19 @@ std::string UCLRSA::RSASign(const std::string &originalData) {
     unsigned int siglen;
     int RSASize = RSA_size(RSAPriKey);
     unsigned char *RSAsignBin = new unsigned char[RSASize];
-    int res = RSA_sign(NID_sha1, (const unsigned char *) originalData.c_str(), originalData.size(),
-             RSAsignBin, &siglen, RSAPriKey);
-    if(res != 1){
+    std::string convertData = originalData;
+    if (originalData.length() == 128) {
+        convertData = sha256(originalData);
+    }
+    int res = RSA_sign(NID_sha1, (const unsigned char *) convertData.c_str(), convertData.size(),
+                       RSAsignBin, &siglen, RSAPriKey);
+    if (res != 1) {
         assert(false);
         return "";
     }
     char *RSAsignBase64;
-    Base64Encode(RSAsignBin, siglen, &RSAsignBase64);
+    RSAsignBase64 = Base64Encode(RSAsignBin, siglen);
+
     delete[] RSAsignBin;
     RSA_free(RSAPriKey);
     fclose(PriKeyFile);
@@ -36,7 +41,7 @@ std::string UCLRSA::RSASign(const std::string &originalData) {
 
 bool UCLRSA::RSAVerify(const std::string &originalData, const std::string &signData) {
 
-    FILE *PubKeyFile = fopen("../tools/signatureUtils/keyFiles/rsa_public_key.pem", "rb");
+    FILE *PubKeyFile = fopen("../tools/signature/keyFiles/rsa_public_key.pem", "rb");
     if (PubKeyFile == NULL) {
         assert(false);
         return "";
@@ -48,9 +53,12 @@ bool UCLRSA::RSAVerify(const std::string &originalData, const std::string &signD
     }
     unsigned char *RSAsignBin;
     size_t length;
-    Base64Decode(signData.c_str(), &RSAsignBin, &length);
-
-    int ret = RSA_verify(NID_sha1, (const unsigned char *) originalData.c_str(), originalData.size(),
+    RSAsignBin = (unsigned char *) Base64Decode(signData.c_str(), signData.length(), &length);
+    std::string convertData = originalData;
+    if (originalData.length() == 128) {
+        convertData = sha256(originalData);
+    }
+    int ret = RSA_verify(NID_sha1, (const unsigned char *) convertData.c_str(), convertData.size(),
                          RSAsignBin, length, RSAPubKey);
     RSA_free(RSAPubKey);
     fclose(PubKeyFile);
