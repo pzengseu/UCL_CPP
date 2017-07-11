@@ -15,6 +15,7 @@
 #define DSA          3
 #define ECC          4
 #define HMAC         5
+
 //Unit of length:Byte
 #define CRC32_LEN    4
 #define MD5_LEN      32

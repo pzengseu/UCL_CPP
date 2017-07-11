@@ -330,7 +330,7 @@ bool UCLCode::setSizeOfContent(const uint64_t sizeOfContent)
     }
     sizes=(maxLengthUnit<<3)|lengthRange;
     return setBits(SIZEOFCONTENT_START_BYTE, SIZEOFCONTENT_START_BIT, SIZEOFCONTENT_BIT_LENGTH, sizes);
-    }
+}
 
 uint8_t UCLCode::getLengthRange(uint64_t sizeOfContent)
 {
