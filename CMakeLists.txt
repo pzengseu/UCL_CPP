@@ -15,6 +15,6 @@ set(SOURCE_FILES main.cpp
         UCL/test.cpp property/GenCDPSProperty.h property/GenCDPSProperty.cpp property/GenCGPSProperty.cpp
         property/GenCGPSProperty.h tools/signatureUtils/Base64Code.h tools/signatureUtils/Base64Code.cpp
         tools/signatureUtils/UCLRSA.h tools/signatureUtils/UCLRSA.cpp tools/signatureUtils/UCLDSA.h
-        tools/signatureUtils/UCLDSA.cpp)
+        tools/signatureUtils/UCLDSA.cpp UCL/digSignNo.h)
 add_executable(UCL_CPP ${SOURCE_FILES})
 target_link_libraries(UCL_CPP ssl crypto)
