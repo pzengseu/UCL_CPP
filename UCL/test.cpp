@@ -128,13 +128,13 @@ UCLPropertySet generateCGPS()
     cgps.setProperty(contentid);
     UCLPropertyBase prog = GenCGPSProperty::genPropagation(2, "baidu;sina");
     cgps.setProperty(prog);
-    UCLPropertyBase sigCon = GenCGPSProperty::genContSig("江苏今年起实施“12311”计划, 全省创意休闲农业工作推进会", 2, 0);
+    UCLPropertyBase sigCon = GenCGPSProperty::genContSig("江苏今年起实施“12311”计划, 全省创意休闲农业工作推进会", SHA_512, ECDSA);
     cgps.setProperty(sigCon);
     UCLPropertyBase security = GenCGPSProperty::genSecEL("重要");
     cgps.setProperty(security);
     UCLPropertyBase chain = GenCGPSProperty::genChainOfRes(2, "sian;seu");
     cgps.setProperty(chain);
-    UCLPropertyBase sigUCL = GenCGPSProperty::genUCLSig(SHA_512, ECDSA);
+    UCLPropertyBase sigUCL = GenCGPSProperty::genUCLSig(MD5, RSA);
     cgps.setProperty(sigUCL);
 
     return cgps;
@@ -203,7 +203,7 @@ UCL generateRUCL()
     cgps.setProperty(pro);
     UCLPropertyBase chain = GenerateProperty::generateCGPSChain(2, "sian;seu");
     cgps.setProperty(chain);
-    UCLPropertyBase sigUCL = GenerateProperty::generateCGPSSignatureUCL(1, 0);
+    UCLPropertyBase sigUCL = GenerateProperty::generateCGPSSignatureUCL(SHA_256, DSA);
     cgps.setProperty(sigUCL);
 //    cout << "--------------CGPS-------------- \n";
 //    printPackString(cgps.pack());
