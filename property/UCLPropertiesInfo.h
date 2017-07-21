@@ -14,6 +14,7 @@ using namespace std;
 class UCLPropertiesInfo
 {
 private:
+    //受控映射表
     map<int, string> propertyHeadMap;
     map<int, string> propertySetCategoryMap;
     map<int, map<int, string>> propertyCategoryMap;
@@ -31,12 +32,15 @@ public:
     void initPropertyHeadMap();
     string getPropertyLangType(int type);
 
+    //属性集合映射
     void initPropertySetCategoryMap();
     string getPropertySetCategory(int type);
 
+    //属性映射
     void initPropertyCategroyMap();
     string getPropertyCategroy(int categroy, int proCategory);
 
+    //初始化属性部分受控映射表
     void initInfo();
 
     vector<string> split(string str, string pattern);

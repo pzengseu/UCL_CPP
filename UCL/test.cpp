@@ -15,17 +15,17 @@ void testCommand()
     UCLCode code_test;
 
     code_test.setVersion(1);
-    code_test.setTypeOfMedia(9);
-    code_test.setPrioAndPoli(15);
+    code_test.setTypeOfMedia(8);
+    code_test.setPrioAndPoli(0);
     code_test.setFlag(50); //00110010
-    code_test.setParseRule(0xfff1);//ff1有效
-    code_test.setSourOfCont(0xfffffff1);//ffffff1有效
+    code_test.setParseRule(0);//ff1有效
+    code_test.setSourOfCont(1);//ffffff1有效
     code_test.setCategory(255);
     code_test.setSubCategory(257);//0x01有效
     code_test.setTopic(0xffffff1);
-    code_test.setCopyAndTypeOfCont(254);
+    code_test.setCopyAndTypeOfCont(19);
     code_test.setSecuEnerLeveCode(251);
-    code_test.setLanguage(253);
+    code_test.setLanguage(8);
     code_test.setSizeOfContent(31);
     code_test.setTimeStamp(0x3fffffffff9f9);
     /*
@@ -124,7 +124,7 @@ UCLPropertySet generateCGPS()
     cgps.setHeadCategory(15);
     UCLPropertyBase pro = GenCGPSProperty::genProvenance(1, "http://jiangsu.sina.com.cn/news/b/2017-05-31/detail-ifyfqqyh9080015.shtml");
     cgps.setProperty(pro);
-    UCLPropertyBase contentid = GenCGPSProperty::genContId("sina");
+    UCLPropertyBase contentid = GenCGPSProperty::genContId("sina", 1);
     cgps.setProperty(contentid);
     UCLPropertyBase prog = GenCGPSProperty::genPropagation(2, "baidu;sina");
     cgps.setProperty(prog);
@@ -188,7 +188,7 @@ UCL generateRUCL()
 
     UCLPropertySet cdps;
     cdps.setHeadCategory(1);
-    UCLPropertyBase title = GenerateProperty::generateCDPSTitle("江苏今年起实施“12311”计划 培育百个农业特色镇");
+    UCLPropertyBase title = GenCDPSProperty::genTitle("江苏今年起实施“12311”计划 培育百个农业特色镇");
     cdps.setProperty(title);
 
 //    cout << hex << cdps.generateQuickMatcher()<< "  " << cdps.getPropertyHead().getTotalLength() << endl;
@@ -199,11 +199,11 @@ UCL generateRUCL()
 
     UCLPropertySet cgps;
     cgps.setHeadCategory(15);
-    UCLPropertyBase pro = GenerateProperty::generateCGPSProvenance(1, "http://jiangsu.sina.com.cn/news/b/2017-05-31/detail-ifyfqqyh9080015.shtml");
+    UCLPropertyBase pro = GenCGPSProperty::genProvenance(1, "http://jiangsu.sina.com.cn/news/b/2017-05-31/detail-ifyfqqyh9080015.shtml");
     cgps.setProperty(pro);
-    UCLPropertyBase chain = GenerateProperty::generateCGPSChain(2, "sian;seu");
+    UCLPropertyBase chain = GenCGPSProperty::genChainOfRes(2, "sian;seu");
     cgps.setProperty(chain);
-    UCLPropertyBase sigUCL = GenerateProperty::generateCGPSSignatureUCL(SHA_256, DSA);
+    UCLPropertyBase sigUCL = GenCGPSProperty::genUCLSig(SHA_256, DSA);
     cgps.setProperty(sigUCL);
 //    cout << "--------------CGPS-------------- \n";
 //    printPackString(cgps.pack());

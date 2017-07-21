@@ -38,6 +38,7 @@ bool UCLPropertyHead::setQuickMatcher(uint16_t quickM)
     //设置LPart　quickMatcher部分
     uint8_t lPartValueBytesNum = getLPartValueBytesNum();
     switch (lPartValueBytesNum)
+
     {
         case 1:
             lPart = (lPart & 0xffffffff0000ffff) | (quickMatcher<<16);

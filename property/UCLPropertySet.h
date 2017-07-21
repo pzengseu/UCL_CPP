@@ -37,8 +37,6 @@ public:
     void setHeadHelper(uint8_t helper);
     uint8_t getHeadHelper();
 
-    //更新总长度
-    void updateTotalLength();
     //设置属性 删除属性
     bool setProperty(UCLPropertyBase property);
     bool delProperty(uint8_t category);

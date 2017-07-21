@@ -300,6 +300,7 @@ uint64_t UCLCode::getSizeOfContent() const
 {
     return getBits(SIZEOFCONTENT_START_BYTE, SIZEOFCONTENT_START_BIT, SIZEOFCONTENT_BIT_LENGTH);
 }
+
 bool UCLCode::setSizeOfContent(const uint64_t sizeOfContent)
 {
     uint8_t lengthRange=0, maxLengthUnit=0, sizes=0;

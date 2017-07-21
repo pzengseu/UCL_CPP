@@ -7,8 +7,8 @@ set(SOURCE_FILES main.cpp
         code/header_file/UCLCode.h code/header_file/UCLFormatV2.h code/UCLCode.cpp code/UCLCodeExtension.cpp
         code/header_file/UCLCodeExtension.h property/UCLPropertyBase.h property/UCLPropertyBase.cpp
         property/UCLPropertyHead.cpp property/UCLPropertyHead.h property/UCLPropertySet.h
-        property/UCLPropertySet.cpp UCL/UCL.h UCL/UCL.cpp UCL/test.h property/GenerateProperty.h
-        property/GenerateProperty.cpp tools/digest/UCLMD5.h tools/digest/UCLMD5.cpp
+        property/UCLPropertySet.cpp UCL/UCL.h UCL/UCL.cpp UCL/test.h
+        tools/digest/UCLMD5.h tools/digest/UCLMD5.cpp
         tools/digest/UCLCRC32.h tools/digest/UCLCRC32.cpp tools/digest/UCLSHA_256.h
         tools/digest/UCLSHA_256.cpp tools/digest/UCLSHA_512.h tools/digest/UCLSHA_512.cpp
         UCL/testUCLCode.h UCL/testUCLCode.cpp property/UCLPropertiesInfo.h property/UCLPropertiesInfo.cpp

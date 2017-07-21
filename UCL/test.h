@@ -11,9 +11,7 @@
 #include "../property/UCLPropertyHead.h"
 #include "../property/UCLPropertySet.h"
 #include "UCL.h"
-#include "../property/GenerateProperty.h"
 #include <sstream>
-#include "../property/GenerateProperty.h"
 
 void testCommand();
 void printPackString(string pack);
