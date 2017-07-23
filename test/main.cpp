@@ -3,8 +3,8 @@
 #include <list>
 #include <bitset>
 #include <assert.h>
-#include "UCL/test.h"
-#include "UCL/testUCLCode.h"
+#include "test.h"
+#include "testUCLCode.h"
 
 using namespace std;
 

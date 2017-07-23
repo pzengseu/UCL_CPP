@@ -14,7 +14,7 @@
 #include "../tools/signature/UCLRSA.h"
 #include "../tools/signature/UCLDSA.h"
 #include "../tools/signature/UCLECDSA.h"
-#include "test.h"
+#include "../test/test.h"
 #include "digSignNo.h"
 
 const UCLPropertyHead &UCL::getUclPropertyHead() const {

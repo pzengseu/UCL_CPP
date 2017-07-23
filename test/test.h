@@ -10,7 +10,7 @@
 #include <iostream>
 #include "../property/UCLPropertyHead.h"
 #include "../property/UCLPropertySet.h"
-#include "UCL.h"
+#include "../UCL/UCL.h"
 #include <sstream>
 
 void testCommand();

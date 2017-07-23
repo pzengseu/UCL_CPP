@@ -78,6 +78,8 @@ bool UCLPropertyBase::setLPartHead(uint8_t start, uint8_t end, uint8_t head)
     lPart = bLH.to_ulong();
     head <<= start;
     lPart = lPart | head;
+
+    return true;
 }
 
 uint8_t UCLPropertyBase::getLPartHead() const

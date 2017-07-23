@@ -5,7 +5,7 @@
 #include "test.h"
 #include "../property/GenCDPSProperty.h"
 #include "../property/GenCGPSProperty.h"
-#include "digSignNo.h"
+#include "../UCL/digSignNo.h"
 
 void testCommand()
 {
@@ -77,7 +77,8 @@ void testCommand()
     ucl2.showUCL();
 
     cout << "========== UCL test end==========\n";
-    cout << ucl.getUclPropertyHead().getTotalLength();
+    cout << ucl.getUclPropertyHead().getTotalLength() << endl;
+    cout << ucl.getUclCode().getSizeOfContent();
 //    printPackString(ucl.pack());
 //    printPackString(ucl2.pack());
 }
